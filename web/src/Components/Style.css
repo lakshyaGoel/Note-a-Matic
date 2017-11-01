@@ -1,0 +1,35 @@
+.Header {
+  text-align: center;
+}
+
+.Header-header {
+  background-color: hsl(0, 0%, 21%);
+  height: 1rem;
+  padding: 20px;
+  color: white;
+}
+
+.Header-intro {
+  font-size: large;
+}
+
+.customFooter{
+  padding: 1rem 1.5rem 1.5rem;
+}
+
+.customLeftSideBar{
+  display: table-cell;
+  width: 15%;
+  background: hsl(0, 0%, 21%);
+}
+
+.customRightSideBar{
+  display: table-cell;
+  width:25%;
+}
+
+.ContentArea{
+  width: 100%;
+  display: table;
+  height: 85vh;
+}
