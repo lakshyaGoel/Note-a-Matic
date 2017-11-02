@@ -184,7 +184,7 @@ class Card extends Component {
                 <CardContent>
                     This is inside card. main content.
                     Click like and unlike button! Now working!<br/>
-                    Also, Add Friend button working!<br/>
+                    Also, Add Friend button working!
                     <CardButtons/>
                     <TagField>
                         <Tag tagName="Item1"/>
