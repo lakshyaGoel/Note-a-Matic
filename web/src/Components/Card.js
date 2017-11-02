@@ -184,7 +184,13 @@ class Card extends Component {
                 <CardContent>
                     This is inside card. main content.
                     Click like and unlike button! Now working!<br/>
-                    Also, Add Friend button working!
+                    Also, Add Friend button working!<br />
+                    <p style={ {fontWeight:700, color:"green", fontSize:36} }>
+                        Thank you to commit freaquently, I really appreciate that, But
+                    </p>
+                    <p style={ {fontWeight:700, color:"red", fontSize:36} }>
+                        Guys, don't commit code which stop whole system.
+                        </p>
                     <CardButtons/>
                     <TagField>
                         <Tag tagName="Item1"/>

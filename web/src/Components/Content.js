@@ -8,8 +8,9 @@ import Modal from "./Modal";
 class Content extends Component {
   render() {
     return (
-        <div>
+        <div>{/*
             <Pin />
+            */}
             <Modal active={false}/>
             {/*
              active version is here
