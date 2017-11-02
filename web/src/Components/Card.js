@@ -171,14 +171,6 @@ class Card extends Component {
     render(){
         return (
             <CardContainer>
-                {/*
-                 # require goods
-                 -[x] image part
-                 -[x] like/unlike
-                 - show tags
-                 -[x] description
-                 -[x] add friends?
-                 */}
                 <CardHeadImage/>
                 <CardHeader title={this.props.cardTitle}/>
                 <CardContent>
