@@ -183,6 +183,8 @@ class Card extends Component {
                 <CardHeader title={this.props.cardTitle}/>
                 <CardContent>
                     This is inside card. main content.
+                    Click like and unlike button! Now working!<br/>
+                    Also, Add Friend button working!<br/>
                     <CardButtons/>
                     <TagField>
                         <Tag tagName="Item1"/>
