@@ -11,6 +11,7 @@ class Content extends Component {
             <Pin />
             <div className="columns is-multiline">
                 <Card cardTitle="title" />
+                Temporary Commit!
             </div>
         </div>
     );
