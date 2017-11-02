@@ -6,15 +6,16 @@ class Header extends Component {
 
   render() {
     return (
-      <nav className="navbar is-light">
+      <nav className="navbar is-light backgroun">
         <div className="navbar-menu">
           <div className="navbar-start">
-            <a className="navbar-item title" href="/">5117 React Project Template</a>
+            <a className="navbar-item title" href="/">Note Pro</a>
+            
           </div>
-
-          <LoginLogout {...this.props} />
+              <LoginLogout {...this.props} />
         </div>
       </nav>
+
     )
   }
   
