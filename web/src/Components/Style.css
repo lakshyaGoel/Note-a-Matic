@@ -33,3 +33,13 @@
   display: table;
   height: 85vh;
 }
+
+.landingStyle{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  background-image: url("landingImg.jpg");
+  background-size: 50% 80%;
+  background-repeat: no-repeat;
+}
