@@ -58,13 +58,15 @@ class ModalCardFooter extends Component {
 class Modal extends Component {
     constructor(props){
         super(props);
-        if(typeof props.active === "undefined"){
-            props.active = false;
+        this.state = {};
+        this.state.active = props.active;
+        if(typeof this.state.active === "undefined"){
+            this.state.active = false;
         }
     }
     render(){
         return (
-            <ModalContainer active={this.props.active}>
+            <ModalContainer active={this.state.active}>
                 <ModalCardBody>
                     This is the main part of the modal
                 </ModalCardBody>
