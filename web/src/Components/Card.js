@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
 
 
-function isSet(item){
-    if(typeof item == "undefined"){
-        return false;
-    }else{
-        return true;
-    }
-}
 class CardHeadImage extends Component {
     render(){
         return (
