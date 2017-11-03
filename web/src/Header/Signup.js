@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class LoginLogout extends Component {
+class Signup extends Component {
 
   constructor(props) {
     super(props);
@@ -25,12 +25,12 @@ class LoginLogout extends Component {
 
     const loginLogoutButton = this.isLoggedIn()
       ? (
-        <button className="button" class="button is-link is-outlined" onClick={this.logout}>
-          Log Out
+        <button className="button" class="button is-link is-outlined" onClick={this.login}>
+          Sign Up
         </button>
       ) : (
         <button className="button" class="button is-link is-outlined" onClick={this.login}>
-          Log In
+          Sign Up
         </button>
       );
       
@@ -47,4 +47,4 @@ class LoginLogout extends Component {
   }
 }
 
-export default LoginLogout;
+export default Signup;
