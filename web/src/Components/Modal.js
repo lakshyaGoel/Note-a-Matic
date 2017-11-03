@@ -13,6 +13,10 @@ class ModalContainer extends Component {
         this.setState({"active": false});
     }
 
+    showModal(){
+        this.setState({"active": true});
+    }
+
     render(){
         return (
             <div className={this.state.active? "modal is-active": "modal"}>
@@ -63,12 +67,14 @@ class Modal extends Component {
         if(typeof this.state.active === "undefined"){
             this.state.active = false;
         }
+
     }
+
     render(){
         return (
             <ModalContainer active={this.state.active}>
                 <ModalCardBody>
-                    This is the main part of the modal
+                    {this.props.content}
                 </ModalCardBody>
                 <ModalCardFooter/>
             </ModalContainer>

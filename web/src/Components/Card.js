@@ -148,17 +148,35 @@ class TagField extends Component{
 class Tag extends Component{
     constructor(props){
         super(props);
+        this.state = {};
+        this.state.is_render = props.is_render;
+        if(typeof this.state.is_render === "undefined"){
+            this.state.is_render = true;
+        }else if(this.state.is_render !== true){
+            this.state.is_render = false;
+        }
+
+        this.deleteContent = this.deleteContent.bind(this);
+    }
+
+
+    deleteContent(){
+        this.setState({"is_render": false});
     }
 
     render(){
-        return (
-        <div className="control">
-            <div className="tags has-addons">
-                <a className="tag is-light">{this.props.tagName}</a>
-                <a className="tag is-delete"> </a>
+        var renderContent = (
+            <div className="control">
+                <div className="tags has-addons">
+                    <a className="tag is-light">{this.props.tagName}</a>
+                    <a className="tag is-delete" onClick={this.deleteContent}> </a>
+                </div>
             </div>
-        </div>
-        )
+        );
+        if(!this.state.is_render){
+            renderContent = null;
+        }
+        return renderContent;
     }
 }
 
@@ -174,21 +192,7 @@ class Card extends Component {
                 <CardHeadImage/>
                 <CardHeader title={this.props.cardTitle}/>
                 <CardContent>
-                    This is inside card. main content.
-                    Click like and unlike button! Now working!<br/>
-                    Also, Add Friend button working!<br />
-                    <p style={ {fontWeight:700, color:"green", fontSize:36} }>
-                        Thank you to commit freaquently, I really appreciate that, But
-                    </p>
-                    <p style={ {fontWeight:700, color:"red", fontSize:36} }>
-                        Guys, don't commit code which stop whole system.
-                        </p>
-                    <CardButtons/>
-                    <TagField>
-                        <Tag tagName="Item1"/>
-                        <Tag tagName="Item2"/>
-                        <Tag tagName="Item3"/>
-                    </TagField>
+                    {this.props.children}
                 </CardContent>
                 <CardFooter />
             </CardContainer>
@@ -197,3 +201,4 @@ class Card extends Component {
 }
 
 export default Card;
+export {Card, Tag, TagField, CardButtons};
