@@ -1,29 +1,40 @@
 import React, { Component } from 'react';
 
+import { isSet } from "../functions";
+
 class ModalContainer extends Component {
     constructor(props){
         super(props);
-        this.state = {};
+        this.state = {
+            active: isSet(this.props.active, false)
+        };
 
-        this.state.active = this.props.active;
         this.hideModal = this.hideModal.bind(this);
+        this.showModal = this.showModal.bind(this);
     }
 
     hideModal(){
         this.setState({"active": false});
     }
 
+    showModal(){
+        this.setState({"active": true});
+    }
+
     render(){
         return (
-            <div className={this.state.active? "modal is-active": "modal"}>
-                <div className="modal-background"></div>
-                <div className="modal-card">
-                    <header className="modal-card-head">
-                        <p className="modal-card-title">{this.props.title}</p>
-                        <button className="delete" aria-label="close" onClick={this.hideModal}>
-                        </button>
-                    </header>
-                    {this.props.children}
+            <div className="">
+                <a onClick={this.showModal} className="button">{this.props.buttonLabel}</a>
+                <div className={this.state.active? "modal is-active": "modal"}>
+                    <div className="modal-background"></div>
+                    <div className="modal-card">
+                        <header className="modal-card-head">
+                            <p className="modal-card-title">{this.props.title}</p>
+                            <button className="delete" aria-label="close" onClick={this.hideModal}>
+                            </button>
+                        </header>
+                        {this.props.children}
+                    </div>
                 </div>
             </div>
         )
@@ -58,17 +69,20 @@ class ModalCardFooter extends Component {
 class Modal extends Component {
     constructor(props){
         super(props);
-        this.state = {};
-        this.state.active = props.active;
+        this.state = {
+            active: isSet(props.active, false)
+        };
         if(typeof this.state.active === "undefined"){
-            this.state.active = false;
+            this.setState(state=>({active: false}));
         }
+
     }
+
     render(){
         return (
-            <ModalContainer active={this.state.active}>
+            <ModalContainer active={this.state.active} buttonLabel={this.props.buttonLabel} title={this.props.title}>
                 <ModalCardBody>
-                    This is the main part of the modal
+                    {this.props.content}
                 </ModalCardBody>
                 <ModalCardFooter/>
             </ModalContainer>

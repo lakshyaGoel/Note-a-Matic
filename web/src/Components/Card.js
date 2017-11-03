@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 
+import {isSet} from "../functions";
 
 class CardHeadImage extends Component {
     constructor(props){
         super(props);
-        this.state = {};
-        this.state.imgURL = props.imgURL;
-        if(typeof this.state.imgURL === "undefined"){
-            this.state.imgURL = "https://bulma.io/images/placeholders/1280x960.png";
-        }
+        this.state = {
+            imgURL: isSet(props.imgURL, "https://bulma.io/images/placeholders/1280x960.png")
+        };
     }
 
     render(){
         return (
             <div className="card-image">
                 <figure className="image is-4by3">
-                    <img src={this.state.imgURL} alt="Placeholder image"/>
+                    <img src={this.state.imgURL} alt="Placeholder"/>
                 </figure>
             </div>
         );
@@ -49,11 +48,7 @@ class CardContent extends Component {
 class CardFooter extends Component {
     constructor(props){
         super(props);
-        this.state = {};
-        this.state.friendCount = this.props.friendCount;
-        if(typeof this.state.friendCount === "undefined"){
-            this.state.friendCount = 0;
-        }
+        this.state = {friendCount: isSet(this.props.friendCount, 0)};
 
         this.incrementFriendCount = this.incrementFriendCount.bind(this);
     }
@@ -89,16 +84,11 @@ class CardContainer extends Component {
 class CardButtons extends Component {
     constructor(props){
         super(props);
-        this.state = {};
-        this.state.likeCount = props.likeCount;
-        if(typeof this.state.likeCount === "undefined"){
-            this.state.likeCount = 0;
-        }
+        this.state = {
+            likeCount: isSet(props.likeCount, 0),
+            dislikeCount: isSet(props.dislikeCount, 0)
+        };
 
-        this.state.dislikeCount = props.dislikeCount;
-        if(typeof this.state.dislikeCount === "undefined"){
-            this.state.dislikeCount = 0;
-        }
 
         this.incrementLike = this.incrementLike.bind(this);
         this.incrementDislike = this.incrementDislike.bind(this);
@@ -148,55 +138,42 @@ class TagField extends Component{
 class Tag extends Component{
     constructor(props){
         super(props);
+        this.state = {
+            is_render: isSet(props.is_render, false)
+        };
+
+        this.deleteContent = this.deleteContent.bind(this);
+    }
+
+
+    deleteContent(){
+        this.setState({"is_render": false});
     }
 
     render(){
-        return (
-        <div className="control">
-            <div className="tags has-addons">
-                <a className="tag is-light">{this.props.tagName}</a>
-                <a className="tag is-delete"> </a>
+        var renderContent = (
+            <div className="control">
+                <div className="tags has-addons">
+                    <a className="tag is-light">{this.props.tagName}</a>
+                    <a className="tag is-delete" onClick={this.deleteContent}> </a>
+                </div>
             </div>
-        </div>
-        )
+        );
+        if(!this.state.is_render){
+            renderContent = null;
+        }
+        return renderContent;
     }
 }
 
 class Card extends Component {
-    constructor(props){
-        super(props);
-
-    }
-
     render(){
         return (
             <CardContainer>
-                {/*
-                 # require goods
-                 -[x] image part
-                 -[x] like/unlike
-                 - show tags
-                 -[x] description
-                 -[x] add friends?
-                 */}
                 <CardHeadImage/>
                 <CardHeader title={this.props.cardTitle}/>
                 <CardContent>
-                    This is inside card. main content.
-                    Click like and unlike button! Now working!<br/>
-                    Also, Add Friend button working!<br />
-                    <p style={ {fontWeight:700, color:"green", fontSize:36} }>
-                        Thank you to commit freaquently, I really appreciate that, But
-                    </p>
-                    <p style={ {fontWeight:700, color:"red", fontSize:36} }>
-                        Guys, don't commit code which stop whole system.
-                        </p>
-                    <CardButtons/>
-                    <TagField>
-                        <Tag tagName="Item1"/>
-                        <Tag tagName="Item2"/>
-                        <Tag tagName="Item3"/>
-                    </TagField>
+                    {this.props.children}
                 </CardContent>
                 <CardFooter />
             </CardContainer>
@@ -205,3 +182,4 @@ class Card extends Component {
 }
 
 export default Card;
+export {Card, Tag, TagField, CardButtons};
