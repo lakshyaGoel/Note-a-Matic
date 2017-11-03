@@ -52,7 +52,7 @@ class Content extends Component {
                  */}
                 <div className="columns is-multiline">
 
-                    {demoData.map(data => <MainCmponent {...data}/>)}
+                    {demoData.map((data, index) => <MainCmponent {...data} key={index}/>)}
                 </div>
             </div>
         );

@@ -1,21 +1,20 @@
 import React, { Component } from 'react';
 
+import {isSet} from "../functions";
 
 class CardHeadImage extends Component {
     constructor(props){
         super(props);
-        this.state = {};
-        this.state.imgURL = props.imgURL;
-        if(typeof this.state.imgURL === "undefined"){
-            this.state.imgURL = "https://bulma.io/images/placeholders/1280x960.png";
-        }
+        this.state = {
+            imgURL: isSet(props.imgURL, "https://bulma.io/images/placeholders/1280x960.png")
+        };
     }
 
     render(){
         return (
             <div className="card-image">
                 <figure className="image is-4by3">
-                    <img src={this.state.imgURL} alt="Placeholder image"/>
+                    <img src={this.state.imgURL} alt="Placeholder"/>
                 </figure>
             </div>
         );
@@ -49,11 +48,7 @@ class CardContent extends Component {
 class CardFooter extends Component {
     constructor(props){
         super(props);
-        this.state = {};
-        this.state.friendCount = this.props.friendCount;
-        if(typeof this.state.friendCount === "undefined"){
-            this.state.friendCount = 0;
-        }
+        this.state = {friendCount: isSet(this.props.friendCount, 0)};
 
         this.incrementFriendCount = this.incrementFriendCount.bind(this);
     }
@@ -89,16 +84,11 @@ class CardContainer extends Component {
 class CardButtons extends Component {
     constructor(props){
         super(props);
-        this.state = {};
-        this.state.likeCount = props.likeCount;
-        if(typeof this.state.likeCount === "undefined"){
-            this.state.likeCount = 0;
-        }
+        this.state = {
+            likeCount: isSet(props.likeCount, 0),
+            dislikeCount: isSet(props.dislikeCount, 0)
+        };
 
-        this.state.dislikeCount = props.dislikeCount;
-        if(typeof this.state.dislikeCount === "undefined"){
-            this.state.dislikeCount = 0;
-        }
 
         this.incrementLike = this.incrementLike.bind(this);
         this.incrementDislike = this.incrementDislike.bind(this);
@@ -148,13 +138,9 @@ class TagField extends Component{
 class Tag extends Component{
     constructor(props){
         super(props);
-        this.state = {};
-        this.state.is_render = props.is_render;
-        if(typeof this.state.is_render === "undefined"){
-            this.state.is_render = true;
-        }else if(this.state.is_render !== true){
-            this.state.is_render = false;
-        }
+        this.state = {
+            is_render: isSet(props.is_render, false)
+        };
 
         this.deleteContent = this.deleteContent.bind(this);
     }
@@ -181,11 +167,6 @@ class Tag extends Component{
 }
 
 class Card extends Component {
-    constructor(props){
-        super(props);
-
-    }
-
     render(){
         return (
             <CardContainer>
