@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './Style.css';
 
-import Pin from './Pin';
 import MainCmponent from "./mainComponentPart";
 
 var demoData = [
@@ -17,7 +16,7 @@ var demoData = [
     },
     {
         "title": "item2",
-        "description": "This is item demo discription1",
+        "description": "This is item demo discription2",
         "content": "might be main content goes here",
         "tags": [
             {"tagName": "tag1"},
@@ -27,7 +26,7 @@ var demoData = [
     },
     {
         "title": "item3",
-        "description": "This is item demo discription1",
+        "description": "This is item demo discription3",
         "content": "might be main content goes here",
         "tags": [
             {"tagName": "tag1"},
@@ -41,15 +40,7 @@ var demoData = [
 class Content extends Component {
     render(){
         return (
-            <div>{/*
-             <Pin />
-             */}
-                {/*
-                 active version is here
-                 <Modal active={true}/>
-
-
-                 */}
+            <div>
                 <div className="columns is-multiline">
 
                     {demoData.map((data, index) => <MainCmponent {...data} key={index}/>)}
