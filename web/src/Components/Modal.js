@@ -22,22 +22,32 @@ class ModalContainer extends Component {
     }
 
     render(){
-        return (
-            <div className="">
-                <a onClick={this.showModal} className="button">{this.props.buttonLabel}</a>
-                <div className={this.state.active? "modal is-active": "modal"}>
-                    <div className="modal-background"></div>
-                    <div className="modal-card">
-                        <header className="modal-card-head">
-                            <p className="modal-card-title">{this.props.title}</p>
-                            <button className="delete" aria-label="close" onClick={this.hideModal}>
-                            </button>
-                        </header>
-                        {this.props.children}
+        var result;
+        if(this.state.active){
+            result = (
+                <div className="">
+                    <a onClick={this.showModal} className="button">{this.props.buttonLabel}</a>
+                    <div className={this.state.active? "modal is-active": "modal"}>
+                        <div className="modal-background"></div>
+                        <div className="modal-card">
+                            <header className="modal-card-head">
+                                <p className="modal-card-title">{this.props.title}</p>
+                                <button className="delete" aria-label="close" onClick={this.hideModal}>
+                                </button>
+                            </header>
+                            {this.props.children}
+                        </div>
                     </div>
                 </div>
-            </div>
-        )
+            )
+        }else{
+            result = (
+                <div className="">
+                    <a onClick={this.showModal} className="button">{this.props.buttonLabel}</a>
+                </div>
+            )
+        }
+        return result;
     }
 }
 
