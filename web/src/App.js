@@ -15,6 +15,36 @@ import './Style.css';
 //import Landing from './Components/landing';
 
 class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+        displayText: 'All Notes'
+
+    };
+    this.displayTextUser = this.displayTextUser.bind(this);
+    this.displayTextAllNotes = this.displayTextAllNotes.bind(this);
+    this.displayTextMyNotes = this.displayTextMyNotes.bind(this);
+    this.displayTextSharedNotes = this.displayTextSharedNotes.bind(this);
+  }
+  // functions called when each link in the leftpanel is clicked
+  displayTextUser(){
+    this.setState({displayText: 'User Details'})
+    console.log("helloUser");
+    console.log(this.state.displayText);
+  }
+  displayTextAllNotes(){
+    this.setState({displayText: 'All Notes'});
+    console.log("helloAllNotes");
+  }
+  displayTextMyNotes(){
+    this.setState({displayText: 'My Notes'});
+    console.log("helloMyNotes");
+  }
+  displayTextSharedNotes(){
+    this.setState({displayText: 'Shared Notes'});
+    console.log("helloSharedNotes");
+  }
+
 
   render() {
 
@@ -28,10 +58,13 @@ class App extends Component {
           <Header {...this.props} />
             <div className="ContentArea" id="contentArea">
               <div style={{"display":"table-row"}}>
-              <LeftSideBar />
+              <LeftSideBar {...this.props} displayTextUser={this.displayTextUser} displayTextAllNotes={this.displayTextAllNotes} displayTextMyNotes={this.displayTextMyNotes} displayTextSharedNotes={this.displayTextSharedNotes}/>
+
               <BrowserRouter>
                 <Switch>
-                  <Route exact path="/" component={Content}/>
+                  
+                  <Route exact path="/"children={() =>
+    <Content displayText={this.state.displayText} />} />
                   <Route path="/new" component={NewNote}/>>
                 </Switch>
               </BrowserRouter>
