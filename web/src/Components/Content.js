@@ -41,8 +41,11 @@ class Content extends Component {
     render(){
         return (
             <div>
-                <div className="columns is-multiline">
+                <div>
+                    <p className="centre-this">Selected Link {this.props.displayText}</p>
+                </div>
 
+                <div className="columns is-multiline">
                     {demoData.map((data, index) => <MainCmponent {...data} key={index}/>)}
                 </div>
             </div>
