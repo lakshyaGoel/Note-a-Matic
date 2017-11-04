@@ -63,8 +63,7 @@ class App extends Component {
               <BrowserRouter>
                 <Switch>
                   
-                  <Route exact path="/"children={() =>
-    <Content displayText={this.state.displayText} />} />
+                  <Route exact path="/" children={() => <Content displayText={this.state.displayText} />} />
                   <Route path="/new" component={NewNote}/>>
                 </Switch>
               </BrowserRouter>
