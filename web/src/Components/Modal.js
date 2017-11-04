@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 import { isSet } from "../functions";
 
@@ -69,7 +70,11 @@ class ModalCardFooter extends Component {
                 {/*temporary same as example,
                  https://bulma.io/documentation/components/modal/
                  */}
-                <button className="button is-success">Save changes</button>
+                 {/*
+                 //TODO : need a proper parameter to separate page.
+                 see:https://github.com/ReactTraining/react-router/blob/v3/docs/guides/RouteConfiguration.md#adding-an-index
+                 */}
+                <Link to="new" className="button is-success">Edit</Link>
                 <button className="button">Cancel</button>
             </footer>
         )
