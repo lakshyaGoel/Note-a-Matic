@@ -51,3 +51,11 @@
   margin-right: auto;
   border-radius: 50%;
 }
+
+.shareToggleClassHide{
+  display: none;
+}
+
+.shareToggleClassShow{
+  display: block;
+}

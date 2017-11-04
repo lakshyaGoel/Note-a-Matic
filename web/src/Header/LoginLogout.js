@@ -25,11 +25,11 @@ class LoginLogout extends Component {
 
     const loginLogoutButton = this.isLoggedIn()
       ? (
-        <button className="button" class="button is-link is-outlined" onClick={this.logout}>
+        <button className="button is-link is-outlined" onClick={this.logout}>
           Log Out
         </button>
       ) : (
-        <button className="button" class="button is-link is-outlined" onClick={this.login}>
+        <button className="button is-link is-outlined" onClick={this.login}>
           Log In
         </button>
       );
