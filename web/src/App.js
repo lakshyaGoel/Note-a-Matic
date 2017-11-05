@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 
 import { withAuth } from './Auth';
-import { Route,BrowserRouter, Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import LeftSideBar from './Components/LeftSideBar';
-import Content from './Components/Content';
+
 import RightSideBar from './Components/RightSideBar';
 import Footer from './Components/Footer'
 import Header from './Header';
@@ -14,12 +14,15 @@ import NewNote from './Components/NewNote';
 import './Style.css';
 //import Landing from './Components/landing';
 
+import AllNote from './AllNote/index.js';
+import MyNote from './MyNote/index.js';
+import ShareNote from './ShareNote/index.js';
+
 class App extends Component {
   constructor(props){
     super(props);
     this.state = {
         displayText: 'All Notes'
-
     };
     this.displayTextUser = this.displayTextUser.bind(this);
     this.displayTextAllNotes = this.displayTextAllNotes.bind(this);
@@ -28,7 +31,7 @@ class App extends Component {
   }
   // functions called when each link in the leftpanel is clicked
   displayTextUser(){
-    this.setState({displayText: 'User Details'})
+    this.setState({displayText: 'User Details'});
     console.log("helloUser");
     console.log(this.state.displayText);
   }
@@ -60,13 +63,14 @@ class App extends Component {
               <div style={{"display":"table-row"}}>
               <LeftSideBar {...this.props} displayTextUser={this.displayTextUser} displayTextAllNotes={this.displayTextAllNotes} displayTextMyNotes={this.displayTextMyNotes} displayTextSharedNotes={this.displayTextSharedNotes}/>
 
-              <BrowserRouter>
+
                 <Switch>
-                  
-                  <Route exact path="/" children={() => <Content displayText={this.state.displayText} />} />
-                  <Route path="/new" component={NewNote}/>>
+                  <Route exact path="/" children={() => <AllNote />} />
+                  <Route path="/new" component={NewNote}/>
+                  <Route path="/all-note" component={AllNote}/>
+                  <Route path="/my-note" component={MyNote}/>
+                  <Route path="/share-note" component={ShareNote}/>
                 </Switch>
-              </BrowserRouter>
               <RightSideBar/>
               </div>
             </div>
@@ -81,11 +85,11 @@ class App extends Component {
       return (
         <div>
           
-          <div class="wrap">
-            <div class="floatleft"></div>
-            <div class="floatright">
+          <div className="wrap">
+            <div className="floatleft"></div>
+            <div className="floatright">
               <center>   
-                <h1 class="title is-1 title-color grey-darker">Notes Pro</h1>                
+                <h1 className="title is-1 title-color grey-darker">Notes Pro</h1>
                 <LoginLogout {...this.props} />
                 <Signup {...this.props} />
               </center>
