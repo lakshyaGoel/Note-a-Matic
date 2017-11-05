@@ -1,53 +1,21 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './Style.css';
 
-import MainCmponent from "./mainComponentPart";
-
-var demoData = [
-    {
-        "title": "item1",
-        "description": "This is item demo discription1",
-        "content": "might be main content goes here",
-        "tags": [
-            {"tagName": "tag1"},
-            {"tagName": "tag2"},
-            {"tagName": "tag3"}
-        ]
-    },
-    {
-        "title": "item2",
-        "description": "This is item demo discription2",
-        "content": "might be main content goes here",
-        "tags": [
-            {"tagName": "tag1"},
-            {"tagName": "tag2"},
-            {"tagName": "tag3"}
-        ]
-    },
-    {
-        "title": "item3",
-        "description": "This is item demo discription3",
-        "content": "might be main content goes here",
-        "tags": [
-            {"tagName": "tag1"},
-            {"tagName": "tag2"},
-            {"tagName": "tag3"}
-        ]
-    }
-]
-
+import AllNote from '../AllNote/index.js';
 
 class Content extends Component {
     render(){
         return (
             <div>
-                <div>
-                    <p className="centre-this">Selected Link {this.props.displayText}</p>
+                <div className="tabs">
+                    <ul>
+                        <li  className="is-active"><Link to="/all-note">All Notes</Link></li>
+                        <li><Link to="/my-note">My Notes</Link></li>
+                        <li><Link to="/share-note">Share Notes</Link></li>
+                    </ul>
                 </div>
-
-                <div className="columns is-multiline">
-                    {demoData.map((data, index) => <MainCmponent {...data} key={index}/>)}
-                </div>
+                    <AllNote/>
             </div>
         );
     }
