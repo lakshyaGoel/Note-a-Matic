@@ -16,6 +16,7 @@ class CardHeadImage extends Component {
                 <figure className="image is-4by3">
                     <img src={this.state.imgURL} alt="Placeholder"/>
                 </figure>
+                {this.props.children}
             </div>
         );
     }
@@ -170,8 +171,9 @@ class Card extends Component {
     render(){
         return (
             <CardContainer>
-                <CardHeadImage/>
+                <CardHeadImage>
                 <CardHeader title={this.props.cardTitle}/>
+                </CardHeadImage>
                 <CardContent>
                     {this.props.children}
                 </CardContent>
