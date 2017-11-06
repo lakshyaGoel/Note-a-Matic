@@ -139,7 +139,7 @@ class Tag extends Component{
     constructor(props){
         super(props);
         this.state = {
-            is_render: isSet(props.is_render, false)
+            is_render: isSet(props.is_render, true)
         };
 
         this.deleteContent = this.deleteContent.bind(this);
