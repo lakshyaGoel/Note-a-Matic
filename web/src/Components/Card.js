@@ -1,12 +1,21 @@
 import React, { Component } from 'react';
+import textImg from "./text.png";
+import codeImg from "./code.jpg";
 
 import {isSet} from "../functions";
 
 class CardHeadImage extends Component {
     constructor(props){
         super(props);
+        let bgImage = Math.round(Math.random()*10)%2;
+        let imgUrl = "https://bulma.io/images/placeholders/1280x960.png";
+        if(bgImage == 0){// FIXME: temporary: pure text image
+            imgUrl = textImg;
+        }else{// FIXME: temporary: pure text image
+            imgUrl = codeImg;
+        }
         this.state = {
-            imgURL: isSet(props.imgURL, "https://bulma.io/images/placeholders/1280x960.png")
+            imgURL: isSet(props.imgURL, imgUrl)
         };
     }
 
@@ -14,7 +23,7 @@ class CardHeadImage extends Component {
         return (
             <div className="card-image">
                 <figure className="image is-4by3">
-                    <img src={this.state.imgURL} alt="Placeholder"/>
+                    <img src={this.state.imgURL} alt="Placeholder" />
                 </figure>
                 {this.props.children}
             </div>
