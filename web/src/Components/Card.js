@@ -175,7 +175,7 @@ class Card extends Component {
                 <CardContent>
                     {this.props.children}
                 </CardContent>
-                <CardFooter />
+                {this.props.cardFooter}
             </CardContainer>
         );
     }

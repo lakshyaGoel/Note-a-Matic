@@ -27,7 +27,7 @@ class ModalContainer extends Component {
         if(this.state.active){
             result = (
                 <div className="">
-                    <a onClick={this.showModal} className="button">{this.props.buttonLabel}</a>
+                    <a onClick={this.showModal} className="card-footer-item">{this.props.buttonLabel}</a>
                     <div className={this.state.active? "modal is-active": "modal"}>
                         <div className="modal-background"></div>
                         <div className="modal-card">
@@ -43,9 +43,7 @@ class ModalContainer extends Component {
             )
         }else{
             result = (
-                <div className="">
-                    <a onClick={this.showModal} className="button">{this.props.buttonLabel}</a>
-                </div>
+                    <a onClick={this.showModal} className="card-footer-item">{this.props.buttonLabel}</a>
             )
         }
         return result;
