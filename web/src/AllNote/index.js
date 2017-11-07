@@ -25,9 +25,17 @@ class AllNote extends Component {
         this.state = {"dataList": dataList};
     }
 
+    getAuthorizationHeader() {// TODO: make outer function for everywhare.
+              const token = localStorage.getItem('access_token');
+              return !token ? {} : {
+                'Authorization': `Bearer ${token}`
+              };
+            }
+
     componentDidMount(){
         let request = new Request('/api/db/test', {
-            method: 'GET'
+            method: 'GET',
+            headers: this.getAuthorizationHeader()
         });
 
         fetch(request)
