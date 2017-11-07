@@ -5,11 +5,11 @@ import LoginLogout from './LoginLogout';
 class Header extends Component {
   constructor(props){
     super(props);
-    this.state = {disabled: false};
+    this.state = {disabled: false, };
   }
   componentDidMount(){
     var path = window.location.pathname;
-    if(path === "/"){
+    if(path === "/"){// TODO: use React Vertual Dom instead of real dom(document.getElement....)
       document.getElementById("dropDownMenu").classList.add("is-hoverable");
     }else{
       document.getElementById("dropDownMenu").classList.remove("is-hoverable");
