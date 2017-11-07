@@ -5,7 +5,7 @@ const checkJwt = require('../auth').checkJwt;
 const fetch = require('node-fetch');
 
 // test db connection and something like that. not production;
-router.get('/test', function(req, res, next){
+router.get('/test', checkJwt,function(req, res, next){
      console.log("run here in route/db-api/test");
   var result = {"result" : "Hello from server"};
   console.log("send:msg", result);
@@ -24,7 +24,6 @@ router.get('/unprotected', function(req, res, next) {
       todos: results
     });
   });
-
 });
 
 // checkJwt middleware will enforce valid authorization token
