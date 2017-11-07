@@ -8,9 +8,9 @@ var Schema = mongoose.Schema;
 
 var user = new mongoose.Schema({
     id: Schema.Types.ObjectId,
-    img: String, // img url
-    name: String, // note name
-    nickname: String // note nickname
+    img: String, // img url given from auth0
+    name: String, // note name given from auth0
+    nickname: String // note nickname given from auth0
 });
 
 
