@@ -6,6 +6,7 @@ const fetch = require('node-fetch');
 
 // test db connection and something like that. not production;
 router.get('/test', checkJwt,function(req, res, next){
+  // TODO: make insert, select command here and check it work correctly...
      console.log("run here in route/db-api/test");
   var result = {"result" : "Hello from server"};
   console.log("send:msg", result);
