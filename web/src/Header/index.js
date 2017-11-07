@@ -3,7 +3,21 @@ import {Link} from 'react-router-dom';
 import LoginLogout from './LoginLogout';
 
 class Header extends Component {
-
+  constructor(props){
+    super(props);
+    this.state = {disabled: false};
+  }
+  componentDidMount(){
+    var path = window.location.pathname;
+    if(path === "/"){
+      document.getElementById("dropDownMenu").classList.add("is-hoverable");
+    }else{
+      document.getElementById("dropDownMenu").classList.remove("is-hoverable");
+    }
+  }
+  shouldComponentUpdate(){
+    document.getElementById("dropDownMenu").classList.remove("is-hoverable");
+  }
   render() {
     return (
       <nav className="navbar is-transparent">
@@ -20,7 +34,7 @@ class Header extends Component {
         <div className="navbar-end">
           <div id="navMenuTransparentExample" className="navbar-menu">
             <div className="navbar-start">
-              <div className="navbar-item has-dropdown is-hoverable">
+              <div className="navbar-item has-dropdown" id="dropDownMenu">
                 <div className="navbar-link">Add A Note</div>
                 <div id="moreDropdown" className="navbar-dropdown is-boxed">
                   <Link to={'/new/Text'} className="navbar-item">
