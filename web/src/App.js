@@ -14,6 +14,7 @@ import NewNote from './Components/NewNote';
 import './Style.css';
 //import Landing from './Components/landing';
 
+import UserInfo from './UserInfo/index.js';
 import AllNote from './AllNote/index.js';
 import MyNote from './MyNote/index.js';
 import ShareNote from './ShareNote/index.js';
@@ -66,7 +67,8 @@ class App extends Component {
 
                 <Switch>
                   <Route exact path="/" children={() => <AllNote />} />
-                  <Route path="/new" component={NewNote}/>
+                  <Route path="/new/:type" component={NewNote}/>
+                  <Route path="/user-info" children={() => <UserInfo {...this.props}/>}/>
                   <Route path="/all-note" component={AllNote}/>
                   <Route path="/my-note" component={MyNote}/>
                   <Route path="/share-note" component={ShareNote}/>
