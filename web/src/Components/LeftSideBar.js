@@ -12,7 +12,7 @@ class LeftSideBar extends Component {
             <p>LeftSideBar</p>
             
             <img className="img-circle" src={this.props.profile.picture} alt="Placeholder image" />
-            <div><a className="centre-this is-small is-active" href="#" onClick={this.props.displayTextUser.bind(this)}>{this.props.profile.nickname}</a></div>
+            <div><Link className="centre-this is-small is-active" to={"/user-info"} onClick={this.props.displayTextUser.bind(this)}>{this.props.profile.nickname}</Link></div>
             {/*
             <div><a className="centre-this is-active" id="myLink" href="#" onClick={this.props.displayTextAllNotes.bind(this)}>All Notes</a></div>
             <div><a id="myLink" title="Click to do something" href="#" onClick={this.props.displayTextMyNotes.bind(this)}>My Notes</a></div>
