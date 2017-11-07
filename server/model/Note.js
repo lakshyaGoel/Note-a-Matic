@@ -6,7 +6,7 @@ var mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 var Schema = mongoose.Schema;
 
-mongoose.connect(process.env.DB_URL);
+mongoose.connect(process.env.DB_URI);
 
 var note = new mongoose.Schema({
     id: Schema.Types.ObjectId,
@@ -17,8 +17,7 @@ var note = new mongoose.Schema({
     shareUser: [{// item added in share user's schema is below.
         userId: {type: Schema.Types.ObjectId},
         r: {type: Boolean, default: true},// read authority, if true, note can read only, else, note can't see whether share flag is true, default is true.
-        w: {type: Boolean, default: false},// write authority, if true, note can edit, else note cannot edit, default: false
-        x: {type: Boolean, default: false}// execute authority, if true, note can delete item, else note cannot delete, default false
+        w: {type: Boolean, default: false}// write authority, if true, note can edit, else note cannot edit, default: false
     }],
     description: String,// TODO: what is that?
     type: {type: String, default: "note"},// put note type: [note | code], default: note
@@ -39,7 +38,8 @@ var note = new mongoose.Schema({
             userId: {type: Schema.Types.ObjectId},
             createdAt: {type: Date, default: Date.now}//TODO: need to check.  timestamp, (intended working: when added note here, then automatically add this param, end after that, never updated until remove)
         }
-    ]
+    ],
+    updatedAt: {type: Date, default: Date.now}//TODO: need to check.  timestamp, (intended working: when added note here, then automatically add this param, end after that, never updated until remove)
 });
 
 module.exports = mongoose.model("Note", note);
