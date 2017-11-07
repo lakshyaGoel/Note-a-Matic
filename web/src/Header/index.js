@@ -23,7 +23,7 @@ class Header extends Component {
               <div className="navbar-item has-dropdown is-hoverable">
                 <div className="navbar-link">Add A Note</div>
                 <div id="moreDropdown" className="navbar-dropdown is-boxed">
-                  <Link to={'/new/'} className="navbar-item">
+                  <Link to={'/new/Text'} className="navbar-item">
                     <p>
                       <strong>Text Note</strong>
                       <br/>
@@ -31,7 +31,7 @@ class Header extends Component {
                     </p>
                   </Link>
                   <hr className="navbar-divider"/>
-                  <Link to={'/new/'} className="navbar-item ">
+                  <Link to={'/new/Code'} className="navbar-item ">
                     <p>
                       <strong>Code Note</strong>
                       <br/>

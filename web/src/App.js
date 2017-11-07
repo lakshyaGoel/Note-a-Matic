@@ -67,7 +67,7 @@ class App extends Component {
 
                 <Switch>
                   <Route exact path="/" children={() => <AllNote />} />
-                  <Route path="/new" component={NewNote}/>
+                  <Route path="/new/:type" component={NewNote}/>
                   <Route path="/user-info" children={() => <UserInfo {...this.props}/>}/>
                   <Route path="/all-note" component={AllNote}/>
                   <Route path="/my-note" component={MyNote}/>
