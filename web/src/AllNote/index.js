@@ -24,6 +24,24 @@ class AllNote extends Component {
 
         this.state = {"dataList": dataList};
     }
+
+    componentDidMount(){
+        let request = new Request('/api/db/test', {
+            method: 'GET'
+        });
+
+        fetch(request)
+        .then(response => {
+           if(!response.ok) {
+               console.log("run here");
+
+           }
+           console.log("api code detect");
+           return response;
+        }).then(res => {
+            console.log(res.json());
+        });
+    }
     render(){
         return (
             <div>
