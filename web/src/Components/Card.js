@@ -9,7 +9,7 @@ class CardHeadImage extends Component {
         super(props);
         let bgImage = Math.round(Math.random()*10)%2;
         let imgUrl = "https://bulma.io/images/placeholders/1280x960.png";
-        if(bgImage == 0){// FIXME: temporary: pure text image
+        if(bgImage === 0){// FIXME: temporary: pure text image
             imgUrl = textImg;
         }else{// FIXME: temporary: pure text image
             imgUrl = codeImg;

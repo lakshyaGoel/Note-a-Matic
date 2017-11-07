@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { withAuth } from '../Auth';
 import './Style.css';
 import AceEditor from 'react-ace';
 import 'brace/mode/jsx';

@@ -43,9 +43,9 @@ class Header extends Component {
             </div>
           </div>
 
-          <p className="control">
+          <div className="control">
             <LoginLogout {...this.props}/>
-          </p>
+          </div>
         </div>
       </nav>
     )
