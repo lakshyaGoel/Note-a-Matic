@@ -25,7 +25,6 @@ class ShareNote extends Component {
         this.state = {"dataList": dataList};
     }
     render(){
-        // FIXME: make Reactive Tab!
         return (
             <div>
                 <div>
