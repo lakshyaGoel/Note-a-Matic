@@ -19,7 +19,7 @@ var note = new mongoose.Schema({
         r: {type: Boolean, default: true},// read authority, if true, note can read only, else, note can't see whether share flag is true, default is true.
         w: {type: Boolean, default: false}// write authority, if true, note can edit, else note cannot edit, default: false
     }],
-    description: String,// TODO: what is that?
+    description: String,// description
     type: {type: String, default: "note"},// put note type: [note | code], default: note
     codeSetting: {
         mode: {type: String},

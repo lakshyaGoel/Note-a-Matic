@@ -53,6 +53,7 @@ router.get('/test', checkJwt,function(req, res, next){
   });
 
 
+  // BEGIN: Tag Database functionality
   // add tag data to Tags Database
   const Tags = require("../model/Tags");
   var tag = new Tags();
@@ -87,6 +88,7 @@ router.get('/test', checkJwt,function(req, res, next){
       });
     })
   });
+  // END: Tag Database functionality
 });
 
 
