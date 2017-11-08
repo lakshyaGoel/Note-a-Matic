@@ -14,7 +14,7 @@ var note = new mongoose.Schema({
     title: String,// content title
     tags: [Schema.Types.ObjectId],
     share: {type: Boolean, default: false}, // if enable to share, set true, else this note could not share
-    shareUser: [{// TODO: not checked yet. item added in share user's schema is below.
+    shareUser: [{// item added in share user's schema is below.
         userId: {type: Schema.Types.ObjectId},
         r: {type: Boolean, default: true},// read authority, if true, note can read only, else, note can't see whether share flag is true, default is true.
         w: {type: Boolean, default: false}// write authority, if true, note can edit, else note cannot edit, default: false
@@ -27,13 +27,13 @@ var note = new mongoose.Schema({
         autoComplete: {type: Boolean, default: false},
         lineNumber: {type: Boolean, default: false},
     },
-    like: [// TODO: not checked yet.
+    like: [// liked user data to prevent duplicate like and dislike
         {
             userId: {type: Schema.Types.ObjectId},
             createdAt: {type: Date, default: Date.now}
         }
     ],
-    dislike: [// TODO: not checked yet.
+    dislike: [// liked user data to prevent duplicate like and dislike
         {
             userId: {type: Schema.Types.ObjectId},
             createdAt: {type: Date, default: Date.now}
