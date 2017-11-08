@@ -8,9 +8,9 @@ const fetch = require('node-fetch');
 // test db connection and something like that. not production;
 router.get('/test', checkJwt,function(req, res, next){
   // TODO: make insert, select command here and check it work correctly...
-     console.log("run here in route/db-api/test");
+  //    console.log("run here in route/db-api/test");
   var result = {"result" : "Hello from server"};
-  console.log("send:msg", result);
+  // console.log("send:msg", result);
     res.json({"result" : "Hello from server"});
   const Note = require('../model/Note');
   var note = new Note();
@@ -27,29 +27,18 @@ router.get('/test', checkJwt,function(req, res, next){
   note.codeSetting.lineNumber = true;  //default is false, so change true
   // note.like.push({userId: user});// comment out now because there is no user id
   // note.dislike.push({userId: user});// comment out now because there is no user id
-  console.log("save data: ",note);
+  // console.log("save data: ",note);
   note.save(function(err){
     if(err){
-      console.log("eror detect: ", err);
+      // console.log("eror detect: ", err);
       return false;
     }else{
-      console.log("saved correctly");
+      // console.log("saved correctly");
       return true;
     }
   });
 
-  const Tags = require("../model/Tags");
-  var tag = new Tags();
-  tag.tagName = "tag1";
-  // tags.noteId.push()
-  tag.save(function(err){
-    if(err){
-      console.log("problem tehre");
-    }else{
-      console.log("success saving");
-    }
-  });
-
+  // add basic information to user database.
   const User = require("../model/User");
   var user = new User();
   user.img = "/path/to/img.jpg";
@@ -57,19 +46,32 @@ router.get('/test', checkJwt,function(req, res, next){
   user.nickname = "PPAP";
   user.save(function(err){
     if(err){
-      console.log("problem tehre");
+      // console.log("problem tehre");
     }else{
-      console.log("success saving");
+      // console.log("success saving");
     }
   });
 
-  // confirm Tag database to add note functionality.
+
+  // add tag data to Tags Database
+  const Tags = require("../model/Tags");
+  var tag = new Tags();
+  tag.tagName = "tag1";
+  // tags.noteId.push()
+  tag.save(function(err){
+    if(err){
+      // console.log("problem tehre");
+    }else{
+      // console.log("success saving");
+    }
+  });
+  // add Note's id to Tag database.
   var noteQuery = Note.find();
   var notePromise = noteQuery.exec();
   var tagQuery = Tags.where({"tagName": "tag8"});
   var tagPromise = tagQuery.findOne().exec();
   notePromise.then(function(result){
-    console.log("ID: ", result);
+    // console.log("ID: ", result);
     var idList = [];
     for(var i = 0; i < result.length; i++){
       idList.push(result[i]._id);
@@ -78,9 +80,9 @@ router.get('/test', checkJwt,function(req, res, next){
       result.noteId = idList;
       result.save(function(err){
         if(err){
-          console.log("errro");
+          // console.log("errro");
         }else{
-          console.log("done");
+          // console.log("done");
         }
       });
     })
