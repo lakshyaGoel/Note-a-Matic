@@ -48,6 +48,19 @@ router.get('/test', checkJwt,function(req, res, next){
     }else{
       console.log("success saving");
     }
+  });
+
+  const User = require("../model/User");
+  var user = new User();
+  user.img = "/path/to/img.jpg";
+  user.name = "Demo Taro";
+  user.nickname = "PPAP";
+  user.save(function(err){
+    if(err){
+      console.log("problem tehre");
+    }else{
+      console.log("success saving");
+    }
   })
 });
 
