@@ -3,7 +3,7 @@ var router = express.Router();
 
 const checkJwt = require('../auth').checkJwt;
 const fetch = require('node-fetch');
-const Note = require('../model/Note');
+
 
 // test db connection and something like that. not production;
 router.get('/test', checkJwt,function(req, res, next){
@@ -12,6 +12,7 @@ router.get('/test', checkJwt,function(req, res, next){
   var result = {"result" : "Hello from server"};
   console.log("send:msg", result);
     res.json({"result" : "Hello from server"});
+  const Note = require('../model/Note');
   var note = new Note();
   note.title = "db connection test";
   note.content = "main content string data goes here like this sentence.";
@@ -36,6 +37,18 @@ router.get('/test', checkJwt,function(req, res, next){
       return true;
     }
   });
+
+  const Tags = require("../model/Tags");
+  var tag = new Tags();
+  tag.tagName = "tag1";
+  // tags.noteId.push()
+  tag.save(function(err){
+    if(err){
+      console.log("problem tehre");
+    }else{
+      console.log("success saving");
+    }
+  })
 });
 
 // simple API call, no authentication or user info
