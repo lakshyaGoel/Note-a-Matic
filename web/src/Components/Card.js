@@ -55,29 +55,29 @@ class CardContent extends Component {
     }
 }
 
-class CardFooter extends Component {
-    constructor(props){
-        super(props);
-        this.state = {friendCount: isSet(this.props.friendCount, 0)};
-
-        this.incrementFriendCount = this.incrementFriendCount.bind(this);
-    }
-
-    incrementFriendCount(){
-        this.setState({"friendCount": this.state.friendCount + 1});
-    }
-    render(){
-        return (
-            <footer className="card-footer">
-                {/* basic item goes here
-                 temporary, I add save edit delete button same as example
-                 https://bulma.io/documentation/components/card/
-                 */}
-                <a className="card-footer-item" onClick={this.incrementFriendCount}>Add Friends: {this.state.friendCount}</a>
-            </footer>
-        );
-    }
-}
+// class CardFooter extends Component {
+//     constructor(props){
+//         super(props);
+//         this.state = {friendCount: isSet(this.props.friendCount, 0)};
+//
+//         this.incrementFriendCount = this.incrementFriendCount.bind(this);
+//     }
+//
+//     incrementFriendCount(){
+//         this.setState({"friendCount": this.state.friendCount + 1});
+//     }
+//     render(){
+//         return (
+//             <footer className="card-footer">
+//                 {/* basic item goes here
+//                  temporary, I add save edit delete button same as example
+//                  https://bulma.io/documentation/components/card/
+//                  */}
+//                 <a className="card-footer-item" onClick={this.incrementFriendCount}>Add Friends: {this.state.friendCount}</a>
+//             </footer>
+//         );
+//     }
+// }
 
 class CardContainer extends Component {
     render(){
