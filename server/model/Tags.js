@@ -11,8 +11,7 @@ var tags = new mongoose.Schema({
     id: Schema.Types.ObjectId,
     tagName: String, // img url
     noteId: [Schema.ObjectId],// store Note DB's object ID
-    createdAt: {type: Date, default: Date.now }// save the time when the object created, and never change whether you update.
-});
+}, {timestamps: {}});// timestamp automatically set createdAt, and updatedAt
 
 
 mongoose.connect(process.env.DB_URL);

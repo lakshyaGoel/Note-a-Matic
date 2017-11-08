@@ -38,8 +38,7 @@ var note = new mongoose.Schema({
             userId: {type: Schema.Types.ObjectId},
             createdAt: {type: Date, default: Date.now}
         }
-    ],
-    updatedAt: {type: Date, default: Date.now}//TODO: need to check.  timestamp, (intended working: when added note here, then automatically add this param, end after that, never updated until remove)
-});
+    ]
+}, {timestamps: {}});// timestamp automatically set createdAt, and updatedAt
 
 module.exports = mongoose.model("Note", note);
