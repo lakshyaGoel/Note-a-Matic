@@ -176,6 +176,37 @@ class Tag extends Component{
     }
 }
 
+class TagWCount extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            is_render: isSet(props.is_render, true)
+        };
+
+        this.deleteContent = this.deleteContent.bind(this);
+    }
+
+
+    deleteContent(){
+        this.setState({"is_render": false});
+    }
+
+    render(){
+        var renderContent = (
+            <div className="control">
+                <div className="tags has-addons">
+                    <a className="tag is-light">{this.props.tagName}</a>
+                    <a className="tag is-light">{this.props.tagCount}</a>
+                </div>
+            </div>
+        );
+        if(!this.state.is_render){
+            renderContent = null;
+        }
+        return renderContent;
+    }
+}
+
 class Card extends Component {
     render(){
         return (
@@ -193,4 +224,4 @@ class Card extends Component {
 }
 
 export default Card;
-export {Card, Tag, TagField, CardButtons};
+export {Card, Tag, TagWCount, TagField, CardButtons};
