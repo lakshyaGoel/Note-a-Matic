@@ -10,6 +10,7 @@ mongoose.connect(process.env.DB_URI);
 
 var note = new mongoose.Schema({
     id: Schema.Types.ObjectId,
+    userId: Schema.Types.ObjectId,// the _id of user who create this content
     content: String,// main content of note
     title: String,// content title
     tags: [Schema.Types.ObjectId],
