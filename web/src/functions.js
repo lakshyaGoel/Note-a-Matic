@@ -7,3 +7,10 @@ export function isSet(param, defaultValue){
 }
 
 
+// use in client(ReactComponent Class) to set auth header for check login)
+export function getAuthorizationHeader() {
+    const token = localStorage.getItem('access_token');
+    return !token ? {} : {
+        'Authorization': `Bearer ${token}`
+    };
+}

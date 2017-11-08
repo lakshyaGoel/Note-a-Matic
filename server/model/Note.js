@@ -10,10 +10,10 @@ mongoose.connect(process.env.DB_URI);
 
 var note = new mongoose.Schema({
     id: Schema.Types.ObjectId,
-    content: text,// main content of note
-    title: text,// content title
+    content: String,// main content of note
+    title: String,// content title
     tags: [Schema.Types.ObjectId],
-    share: {Boolean, default: false}, // if enable to share, set true, else this note could not share
+    share: {type: Boolean, default: false}, // if enable to share, set true, else this note could not share
     shareUser: [{// item added in share user's schema is below.
         userId: {type: Schema.Types.ObjectId},
         r: {type: Boolean, default: true},// read authority, if true, note can read only, else, note can't see whether share flag is true, default is true.

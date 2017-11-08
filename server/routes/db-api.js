@@ -3,6 +3,7 @@ var router = express.Router();
 
 const checkJwt = require('../auth').checkJwt;
 const fetch = require('node-fetch');
+const Note = require('../model/Note');
 
 // test db connection and something like that. not production;
 router.get('/test', checkJwt,function(req, res, next){
@@ -11,6 +12,30 @@ router.get('/test', checkJwt,function(req, res, next){
   var result = {"result" : "Hello from server"};
   console.log("send:msg", result);
     res.json({"result" : "Hello from server"});
+  var note = new Note();
+  note.title = "db connection test";
+  note.content = "main content string data goes here like this sentence.";
+  note.description = "save data from api call";
+  // note.tags.push(tag); // there is no tag database now, so comment out
+  note.share = true;// default is false, so change true.
+  // note.shareUser.push({userId: user, w: true});// there is not user id yet, so comment out
+  note.type = "code"; // default is "note", so change"code"
+  note.codeSetting.mode = "JavaScript"; // example codeSetting
+  note.codeSetting.theme = "github"; // example codeSetting
+  note.codeSetting.autoComplete = true; //default is false, so change true
+  note.codeSetting.lineNumber = true;  //default is false, so change true
+  // note.like.push({userId: user});// comment out now because there is no user id
+  // note.dislike.push({userId: user});// comment out now because there is no user id
+  console.log("save data: ",note);
+  note.save(function(err){
+    if(err){
+      console.log("eror detect: ", err);
+      return false;
+    }else{
+      console.log("saved correctly");
+      return true;
+    }
+  });
 });
 
 // simple API call, no authentication or user info
