@@ -15,7 +15,7 @@ var user = new mongoose.Schema({
     img: String, // img url given from auth0
     name: String, // note name given from auth0
     nickname: String // note nickname given from auth0
-});
+}, {timestamps: {}});// timestamp automatically set createdAt, and updatedAt
 
 
 mongoose.connect(process.env.DB_URL);

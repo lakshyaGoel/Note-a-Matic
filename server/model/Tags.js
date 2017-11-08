@@ -10,9 +10,8 @@ mongoose.connect(process.env.DB_URI);
 var tags = new mongoose.Schema({
     id: Schema.Types.ObjectId,
     tagName: String, // img url
-    noteId: [Schema.ObjectId],// TODO: need to check, note id
-    createdAt: {type: Date, default: Date.now }//TODO: need to check update task! same as Model/Note.js
-});
+    noteId: [Schema.ObjectId],// store Note DB's object ID
+}, {timestamps: {}});// timestamp automatically set createdAt, and updatedAt
 
 
 mongoose.connect(process.env.DB_URL);
