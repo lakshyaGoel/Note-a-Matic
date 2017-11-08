@@ -6,6 +6,27 @@ const fetch = require('node-fetch');
 
 router.get("/generate-data", checkJwt, function(req, res, next){
 
+    // BEGIN: Tag Database functionality
+    // add tag data to Tags Database
+    // const Tags = require("../model/Tags");
+    // var tagList = ["PPAP", "Comedian", "Anime", "Addictive", "Sing", "Rap", "Hip-Hop", "Homecoming Concert", "Strong", "Hero"];
+    // var count = 0;
+    // for(var i = 0; i < tagList.length; i++){
+    //     var tag = new Tags();
+    //     tag.tagName = tagList[i];
+    //     tag.save(function(err){
+    //         if(err){
+    //             count += 1;
+    //             console.log("error occured: ", count);
+    //         }
+    //     });
+    // }
+    // END: Tag Database functionality(not add noteId yet!)
+
+
+    res.send("");
+
+
 });
 
 // get api to show all note in main panel.
@@ -58,7 +79,7 @@ router.get('/test', checkJwt, function(req, res, next){
         })
     }
 
-    const TagModel = require("../model/Tags");
+    const TagModel = require("../model/Tag");
     var tagPromise = TagModel.find().select("_id");//.exec();// get Promise Object
     const UserModel = require("../model/User");
     var userPromise = UserModel.find().select("_id");
@@ -107,7 +128,7 @@ router.get('/test', checkJwt, function(req, res, next){
 
     // BEGIN: Tag Database functionality
     // add tag data to Tags Database
-    const Tags = require("../model/Tags");
+    const Tags = require("../model/Tag");
     var tag = new Tags();
     var tagName = "tag name!";// add tagName
     tag.tagName = tagName;
