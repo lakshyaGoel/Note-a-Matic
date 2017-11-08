@@ -7,7 +7,7 @@ var Schema = mongoose.Schema;
 
 mongoose.connect(process.env.DB_URI);
 
-var tags = new mongoose.Schema({
+var tag = new mongoose.Schema({
     id: Schema.Types.ObjectId,
     tagName: String, // img url
     noteId: [Schema.ObjectId],// store Note DB's object ID
@@ -16,4 +16,4 @@ var tags = new mongoose.Schema({
 
 mongoose.connect(process.env.DB_URL);
 
-module.exports = mongoose.model("Tags", tags);
+module.exports = mongoose.model("Tag", tag);
