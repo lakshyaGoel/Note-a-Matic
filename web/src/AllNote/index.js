@@ -28,7 +28,7 @@ class AllNote extends Component {
 
 
     componentDidMount(){
-        let request = new Request('/api/db/test_db', {// TODO: if you need to know how it works, fix url to "/api/db/test" instead of "/api/db/test_db". But do not use too much.
+        let request = new Request('/api/db/generate-data', {// TODO: if you need to know how it works, fix url to "/api/db/test" instead of "/api/db/test_db". But do not use too much.
             method: 'GET',
             headers: getAuthorizationHeader()
         });
