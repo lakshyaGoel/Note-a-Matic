@@ -10,11 +10,11 @@ mongoose.connect(process.env.DB_URI);
 
 var note = new mongoose.Schema({
     id: Schema.Types.ObjectId,
-    content: text,// main content of note
-    title: text,// content title
+    content: String,// main content of note
+    title: String,// content title
     tags: [Schema.Types.ObjectId],
-    share: {Boolean, default: false}, // if enable to share, set true, else this note could not share
-    shareUser: [{// item added in share user's schema is below.
+    share: {type: Boolean, default: false}, // if enable to share, set true, else this note could not share
+    shareUser: [{// TODO: not checked yet. item added in share user's schema is below.
         userId: {type: Schema.Types.ObjectId},
         r: {type: Boolean, default: true},// read authority, if true, note can read only, else, note can't see whether share flag is true, default is true.
         w: {type: Boolean, default: false}// write authority, if true, note can edit, else note cannot edit, default: false
@@ -27,16 +27,16 @@ var note = new mongoose.Schema({
         autoComplete: {type: Boolean, default: false},
         lineNumber: {type: Boolean, default: false},
     },
-    like: [
+    like: [// TODO: not checked yet.
         {
             userId: {type: Schema.Types.ObjectId},
-            createdAt: {type: Date, default: Date.now}//TODO: need to check.  timestamp, (intended working: when added note here, then automatically add this param, end after that, never updated until remove)
+            createdAt: {type: Date, default: Date.now}
         }
     ],
-    dislike: [
+    dislike: [// TODO: not checked yet.
         {
             userId: {type: Schema.Types.ObjectId},
-            createdAt: {type: Date, default: Date.now}//TODO: need to check.  timestamp, (intended working: when added note here, then automatically add this param, end after that, never updated until remove)
+            createdAt: {type: Date, default: Date.now}
         }
     ],
     updatedAt: {type: Date, default: Date.now}//TODO: need to check.  timestamp, (intended working: when added note here, then automatically add this param, end after that, never updated until remove)

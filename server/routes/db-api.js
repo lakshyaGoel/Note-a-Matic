@@ -4,6 +4,7 @@ var router = express.Router();
 const checkJwt = require('../auth').checkJwt;
 const fetch = require('node-fetch');
 
+
 // test db connection and something like that. not production;
 router.get('/test', checkJwt,function(req, res, next){
   // TODO: make insert, select command here and check it work correctly...
@@ -11,6 +12,56 @@ router.get('/test', checkJwt,function(req, res, next){
   var result = {"result" : "Hello from server"};
   console.log("send:msg", result);
     res.json({"result" : "Hello from server"});
+  const Note = require('../model/Note');
+  var note = new Note();
+  note.title = "db connection test";
+  note.content = "main content string data goes here like this sentence.";
+  note.description = "save data from api call";
+  // note.tags.push(tag); // there is no tag database now, so comment out
+  note.share = true;// default is false, so change true.
+  // note.shareUser.push({userId: user, w: true});// there is not user id yet, so comment out
+  note.type = "code"; // default is "note", so change"code"
+  note.codeSetting.mode = "JavaScript"; // example codeSetting
+  note.codeSetting.theme = "github"; // example codeSetting
+  note.codeSetting.autoComplete = true; //default is false, so change true
+  note.codeSetting.lineNumber = true;  //default is false, so change true
+  // note.like.push({userId: user});// comment out now because there is no user id
+  // note.dislike.push({userId: user});// comment out now because there is no user id
+  console.log("save data: ",note);
+  note.save(function(err){
+    if(err){
+      console.log("eror detect: ", err);
+      return false;
+    }else{
+      console.log("saved correctly");
+      return true;
+    }
+  });
+
+  const Tags = require("../model/Tags");
+  var tag = new Tags();
+  tag.tagName = "tag1";
+  // tags.noteId.push()
+  tag.save(function(err){
+    if(err){
+      console.log("problem tehre");
+    }else{
+      console.log("success saving");
+    }
+  });
+
+  const User = require("../model/User");
+  var user = new User();
+  user.img = "/path/to/img.jpg";
+  user.name = "Demo Taro";
+  user.nickname = "PPAP";
+  user.save(function(err){
+    if(err){
+      console.log("problem tehre");
+    }else{
+      console.log("success saving");
+    }
+  })
 });
 
 // simple API call, no authentication or user info

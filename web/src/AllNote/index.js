@@ -3,6 +3,7 @@
  */
 import React, { Component } from 'react';
 import MainComponent from "../Components/mainComponentPart";
+import {getAuthorizationHeader} from "../functions";
 
 class AllNote extends Component {
     constructor(props){
@@ -25,23 +26,17 @@ class AllNote extends Component {
         this.state = {"dataList": dataList};
     }
 
-    getAuthorizationHeader() {// TODO: make outer function for everywhare.
-              const token = localStorage.getItem('access_token');
-              return !token ? {} : {
-                'Authorization': `Bearer ${token}`
-              };
-            }
 
     componentDidMount(){
         let request = new Request('/api/db/test', {
             method: 'GET',
-            headers: this.getAuthorizationHeader()
+            headers: getAuthorizationHeader()
         });
 
         fetch(request)
         .then(response => {
            if(!response.ok) {
-               console.log("run here");
+               console.log("Error: could not conect server, in AllNote/index.js");
 
            }
            console.log("api code detect");

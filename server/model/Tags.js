@@ -10,8 +10,8 @@ mongoose.connect(process.env.DB_URI);
 var tags = new mongoose.Schema({
     id: Schema.Types.ObjectId,
     tagName: String, // img url
-    noteId: [],
-    createdAt: {type: Date, default: Date.now }//TODO: need to check. same as Model/Note.js
+    noteId: [Schema.ObjectId],// TODO: need to check, note id
+    createdAt: {type: Date, default: Date.now }//TODO: need to check update task! same as Model/Note.js
 });
 
 
