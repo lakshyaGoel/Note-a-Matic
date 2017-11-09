@@ -4,36 +4,16 @@ var router = express.Router();
 const checkJwt = require('../auth').checkJwt;
 const fetch = require('node-fetch');
 
-router.get("/generate-data", checkJwt, function(req, res, next){
-
-    var generateDemo = require("../util/generate_demodata");
-    generateDemo();
-    // BEGIN: Tag Database functionality
-    // add tag data to Tags Database
-    // const Tags = require("../model/Tags");
-    // var tagList = ["PPAP", "Comedian", "Anime", "Addictive", "Sing", "Rap", "Hip-Hop", "Homecoming Concert", "Strong", "Hero"];
-    // var count = 0;
-    // for(var i = 0; i < tagList.length; i++){
-    //     var tag = new Tags();
-    //     tag.tagName = tagList[i];
-    //     tag.save(function(err){
-    //         if(err){
-    //             count += 1;
-    //             console.log("error occured: ", count);
-    //         }
-    //     });
-    // }
-    // END: Tag Database functionality(not add noteId yet!)
-
-
-    res.send("");
-
-
-});
+// api trigger for generating dummy meaningless demo data,
+// router.get("/generate-data", checkJwt, function(req, res, next){
+//     var generateDemo = require("../util/generate_demodata");
+//     generateDemo();
+//     res.send("");
+// });
 
 // get api to show all note in main panel.
 router.get('/all-note', checkJwt, function(req, res, next){
-
+    res.send("");// add this line temporary to prevent error.
 });// END: router.get('/all-note', checkJwt, function(req, res, next)
 
 // get api to show share note in main panel.
