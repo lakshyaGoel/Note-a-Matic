@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { withAuth } from '../Auth';
 import './Style.css';
+import {Link} from 'react-router-dom';
 import CodeNote from './CodeEditor';
 import {getAuthorizationHeader} from "../functions";
 
@@ -8,12 +9,14 @@ class NewNote extends Component{
     constructor(props){
         super(props);
         this.save = this.save.bind(this);
-        this.cancel = this.cancel.bind(this);
         this.onShare = this.onShare.bind(this);
-        this.state = {private: "Yes", noteType:""};
+        this.handleChange = this.handleChange.bind(this);
+        this.updateDesc = this.updateDesc.bind(this);
+        this.state = {private: "Yes", noteType:"", noteTitle:"", noteDesc:"", tags:"", shared:""};
     }
 
     save(){
+        console.log("All the updated data: " + JSON.stringify(this.state));
         var auth = getAuthorizationHeader();
         let request = new Request('/api/db/add-note', {// TODO: if you need to know how it works, fix url to "/api/db/test" instead of "/api/db/test_db". But do not use too much.
             method: 'POST',
@@ -21,7 +24,7 @@ class NewNote extends Component{
                 "Authorization": auth.Authorization,
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({random: 'some text'}),
+            body: JSON.stringify(this.state),
         });
         fetch(request)
         .then(function (data) {
@@ -31,15 +34,13 @@ class NewNote extends Component{
           console.log('Request failed', error);
         });
     }
-
-    cancel(){
-        console.log("CANCELLED");
-    }
     componentDidMount(){
         var type = this._reactInternalFiber._debugOwner.stateNode.props.match.params.type;
         this.setState({noteType:type});
     }
-
+    handleChange(event){
+        this.setState({[event.target.name]: event.target.value});
+    }
     onShare(event){
         var checked = event.target.defaultValue;
         this.setState({private: checked});
@@ -51,20 +52,33 @@ class NewNote extends Component{
             document.getElementById("shareToggleClass").classList.remove("shareToggleClassShow");
         }
     }
+    updateDesc(value){
+        this.setState({noteDesc:value});
+    }
     render(){
         return(
             <div>
                 <div className="field">
                     <label className="label">Title</label>
                     <div className="control">
-                        <input className="input" type="text" placeholder="What's your note about?"/>
+                    <input value={this.state.noteTitle}
+                            onChange={this.handleChange} 
+                            className="input" 
+                            name="noteTitle"
+                            type="text"
+                            placeholder="What's your note about?"/>
                     </div>
                 </div>
-                {this.state.noteType === "Text" ? <TextNote/> : <CodeNote/>}
+                {this.state.noteType === "Text" ? <TextNote onEditDesc={this.updateDesc}/> : <CodeNote/>}
                 <div className="field">
                     <label className="label">#Tags</label>
                     <div className="control">
-                        <input className="input" type="text" placeholder="Enter the tags starting with # seperated by ','"/>
+                        <input value={this.state.tags}
+                                onChange={this.handleChange}
+                                className="input" 
+                                name="tags"
+                                type="text" 
+                                placeholder="Enter the tags starting with # seperated by ','"/>
                     </div>
                 </div>
                 <div className="field">
@@ -83,7 +97,12 @@ class NewNote extends Component{
                 <div className="field shareToggleClassHide" id="shareToggleClass">
                     <label className="label">People you want to share with</label>
                     <div className="control">
-                        <input className="input" type="text" placeholder="Enter your friend's username seperated by ','"/>
+                        <input value={this.state.shared}
+                                onChange={this.handleChange}
+                                className="input" 
+                                name="shared"
+                                type="text" 
+                                placeholder="Enter your friend's username seperated by ','"/>
                     </div>
                 </div>
                 <div className="field is-grouped">
@@ -91,7 +110,7 @@ class NewNote extends Component{
                         <button className="button is-link" onClick={this.save}>Submit</button>
                     </div>
                     <div className="control">
-                        <button className="button is-text" onClick={this.cancel}>Cancel</button>
+                    <Link to={'/'} className="button is-light">Cancel</Link>
                     </div>
                 </div>
             </div>
@@ -99,13 +118,22 @@ class NewNote extends Component{
         }
 }
 class TextNote extends Component{
+    constructor(props){
+        super(props);
+        this.onChange = this.onChange.bind(this);
+        this.state={desc:""};
+    }
 
+    onChange(event){
+        this.setState({desc:event.target.value});
+        this.props.onEditDesc(event.target.value);
+    }
     render(){
         return(
             <div className="field">
                 <label className="label">Note</label>
                 <div className="control">
-                    <textarea className="textarea" placeholder="Write what you want to save..."></textarea>
+                    <textarea value={this.state.desc} onChange={this.onChange} className="textarea" placeholder="Write what you want to save..."></textarea>
                 </div>
             </div>
         );
