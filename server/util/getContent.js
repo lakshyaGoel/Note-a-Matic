@@ -20,6 +20,8 @@ function getContent(param, userId){
         query.shareUser = {$in: [{userId: userId, r: true, w: false}, {userId: userId, r: true, w: true}]};
     }else if(param === "my"){
         query.userId = userId;
+    }else{// all-note (send all data to the client)
+        return Note.find();
     }
     return Note.find(query);
 }
