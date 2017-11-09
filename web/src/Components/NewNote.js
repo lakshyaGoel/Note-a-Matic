@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withAuth } from '../Auth';
 import './Style.css';
 import CodeNote from './CodeEditor';
+import {getAuthorizationHeader} from "../functions";
 
 class NewNote extends Component{
     constructor(props){
@@ -14,14 +15,27 @@ class NewNote extends Component{
 
     save(){
         console.log("SAVED");
+        let request = new Request('/api/db/add-note', {// TODO: if you need to know how it works, fix url to "/api/db/test" instead of "/api/db/test_db". But do not use too much.
+            method: 'POST',
+            headers: getAuthorizationHeader(),
+            body: {random: 'some text'},
+        });
+
+        fetch(request)
+        .then(function (data) {
+          console.log('Request succeeded with JSON response', data);
+        })
+        .catch(function (error) {
+          console.log('Request failed', error);
+        });
     }
 
     cancel(){
         console.log("CANCELLED");
     }
     componentDidMount(){
-      var type = this._reactInternalFiber._debugOwner.stateNode.props.match.params.type;
-      this.setState({noteType:type});
+        var type = this._reactInternalFiber._debugOwner.stateNode.props.match.params.type;
+        this.setState({noteType:type});
     }
 
     onShare(event){

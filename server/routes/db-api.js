@@ -44,7 +44,9 @@ router.get('/my-note', checkJwt, function(req, res, next){
 
 });// END: router.get('/my-note', checkJwt, function(req, res, next)
 
-
+router.post('/add-note', checkJwt, function(req, res, next){
+    console.log(req.body.random);
+});
 // test db connection and something like that. not production;
 router.get('/test', checkJwt, function(req, res, next){
     // TODO: generate random data and more topic focus Note data adding(20~40 note, 10~20tags, 10~20dummy user)
