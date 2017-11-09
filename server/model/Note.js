@@ -11,6 +11,7 @@ mongoose.connect(process.env.DB_URI);
 var note = new mongoose.Schema({
     id: Schema.Types.ObjectId,
     userId: Schema.Types.ObjectId,// the _id of user who create this content
+    finalEditUserId: Schema.Types.ObjectId,// the User id
     title: String,// content title
     content: String,// main content of note
     description: String,// description
@@ -39,7 +40,8 @@ var note = new mongoose.Schema({
             userId: {type: Schema.Types.ObjectId},
             createdAt: {type: Date, default: Date.now}
         }
-    ]
+    ],
+    history: []
 }, {timestamps: {}});// timestamp automatically set createdAt, and updatedAt
 
 module.exports = mongoose.model("Note", note);

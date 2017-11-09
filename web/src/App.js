@@ -56,6 +56,16 @@ class App extends Component {
     //console.log('props', this.props);
 
     if(this.props.profile){
+      /**
+       * add functionality to add user profile data to the User database.
+       * if there is no user data same as props.profile, then add user data,
+       * else do not do anything.
+       *
+       * I think we should try auth0's database instead of our db. but... its hard for us.
+       *
+       * anyway, save data here.
+       */
+      // console.log("confirm profile: ",this.props.profile);
       return (
         <div className="App">
   

@@ -12,17 +12,31 @@
  * - query that.
  */
 
+var mongoose = require("mongoose");
 function getContent(param, userId){
+    console.log("run this here");
+    var result = [];
+    var dbPromise = [];
     const Note = require("../model/Note");
     var query = {};
+    userId = mongoose.Types.ObjectId(userId);
+
     if(param === "share"){
-        query.share = true;
-        query.shareUser = {$in: [{userId: userId, r: true, w: false}, {userId: userId, r: true, w: true}]};
+        query = {
+            share: true,
+            shareUser: {$in: [{userId: userId, r: true, w: false}, {userId: userId, r: true, w: true}]}
+        };
     }else if(param === "my"){
         query.userId = userId;
-    }else{// all-note (send all data to the client)
-        return Note.find();
+    }else if(param === "all"){
+        query = {
+            $or: [
+                {"share": true, shareUser: {$in: [{userId: userId, r: true, w: false}, {userId: userId, r: true, w: true}]}},
+                {"userId": userId}
+            ]
+        }
     }
+
     return Note.find(query);
 }
 

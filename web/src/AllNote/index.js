@@ -28,11 +28,12 @@ class AllNote extends Component {
 
 
     componentDidMount(){
-        let request = new Request('/api/db/all-note', {// TODO: if you need to know how it works, fix url to "/api/db/test" instead of "/api/db/test_db". But do not use too much.
+        let request = new Request('/api/db/all-note', {
             method: 'GET',
             headers: getAuthorizationHeader()
         });
 
+        // TODO: write re-rendering with setState and binding.
         fetch(request)
         .then(response => {
            if(!response.ok) {

@@ -14,11 +14,12 @@ const fetch = require('node-fetch');
 // get api to show all note in main panel.
 router.get('/all-note', checkJwt, function(req, res, next){
     var getContent = require("../util/getContent");
-    getContent().then(function(result){
+    var userId = "5a04a14dcd7960f3a1206183";
+    getContent("all", userId).then(function(result){
         console.log("before sending: ", result);
         res.send(result);
     }).catch(function(err){
-        console.log("something wrong");
+        console.log("something wrong:" + err);
         res.send("wrong flg");
     });
 });// END: router.get('/all-note', checkJwt, function(req, res, next)
