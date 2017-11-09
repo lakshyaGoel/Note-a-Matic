@@ -14,13 +14,15 @@ class NewNote extends Component{
     }
 
     save(){
-        console.log("SAVED");
+        var auth = getAuthorizationHeader();
         let request = new Request('/api/db/add-note', {// TODO: if you need to know how it works, fix url to "/api/db/test" instead of "/api/db/test_db". But do not use too much.
             method: 'POST',
-            headers: getAuthorizationHeader(),
-            body: {random: 'some text'},
+            headers: {
+                "Authorization": auth.Authorization,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({random: 'some text'}),
         });
-
         fetch(request)
         .then(function (data) {
           console.log('Request succeeded with JSON response', data);
