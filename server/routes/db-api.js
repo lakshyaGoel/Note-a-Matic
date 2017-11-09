@@ -14,7 +14,8 @@ const fetch = require('node-fetch');
 // get api to show all note in main panel.
 router.get('/all-note', checkJwt, function(req, res, next){
     var getContent = require("../util/getContent");
-    var userId = "5a04a14dcd7960f3a1206183";
+    // TODO: set user info to our User database.
+    var userId = "5a04a14dcd7960f3a1206183";// TODO: get userID correctly
     getContent("all", userId).then(function(result){
         console.log("before sending: ", result);
         res.send(result);
@@ -26,12 +27,30 @@ router.get('/all-note', checkJwt, function(req, res, next){
 
 // get api to show share note in main panel.
 router.get('/share-note', checkJwt, function(req, res, next){
-
+    var getContent = require("../util/getContent");
+    // TODO: set user info to our User database.
+    var userId = "5a04a14dcd7960f3a1206183";// TODO: get userID correctly
+    getContent("share", userId).then(function(result){
+        console.log("before sending: ", result);
+        res.send(result);
+    }).catch(function(err){
+        console.log("something wrong:" + err);
+        res.send("wrong flg");
+    });
 });// END: router.get('/share-note', checkJwt, function(req, res, next)
 
 // get api to show my note in main panel.
 router.get('/my-note', checkJwt, function(req, res, next){
-
+    var getContent = require("../util/getContent");
+    // TODO: set user info to our User database.
+    var userId = "5a04a14dcd7960f3a1206183";// TODO: get userID correctly
+    getContent("my", userId).then(function(result){
+        console.log("before sending: ", result);
+        res.send(result);
+    }).catch(function(err){
+        console.log("something wrong:" + err);
+        res.send("wrong flg");
+    });
 });// END: router.get('/my-note', checkJwt, function(req, res, next)
 
 router.post('/add-note', checkJwt, function(req, res, next){
