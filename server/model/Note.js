@@ -11,8 +11,9 @@ mongoose.connect(process.env.DB_URI);
 var note = new mongoose.Schema({
     id: Schema.Types.ObjectId,
     userId: Schema.Types.ObjectId,// the _id of user who create this content
-    content: String,// main content of note
     title: String,// content title
+    content: String,// main content of note
+    description: String,// description
     tags: [Schema.Types.ObjectId],
     share: {type: Boolean, default: false}, // if enable to share, set true, else this note could not share
     shareUser: [{// item added in share user's schema is below.
@@ -20,7 +21,6 @@ var note = new mongoose.Schema({
         r: {type: Boolean, default: true},// read authority, if true, note can read only, else, note can't see whether share flag is true, default is true.
         w: {type: Boolean, default: false}// write authority, if true, note can edit, else note cannot edit, default: false
     }],
-    description: String,// description
     type: {type: String, default: "note"},// put note type: [note | code], default: note
     codeSetting: {
         mode: {type: String},
