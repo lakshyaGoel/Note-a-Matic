@@ -13,7 +13,14 @@ const fetch = require('node-fetch');
 
 // get api to show all note in main panel.
 router.get('/all-note', checkJwt, function(req, res, next){
-    res.send("");// add this line temporary to prevent error.
+    var getContent = require("../util/getContent");
+    getContent().then(function(result){
+        console.log("before sending: ", result);
+        res.send(result);
+    }).catch(function(err){
+        console.log("something wrong");
+        res.send("wrong flg");
+    });
 });// END: router.get('/all-note', checkJwt, function(req, res, next)
 
 // get api to show share note in main panel.

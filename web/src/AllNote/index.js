@@ -28,7 +28,7 @@ class AllNote extends Component {
 
 
     componentDidMount(){
-        let request = new Request('/api/db/generate-data', {// TODO: if you need to know how it works, fix url to "/api/db/test" instead of "/api/db/test_db". But do not use too much.
+        let request = new Request('/api/db/all-note', {// TODO: if you need to know how it works, fix url to "/api/db/test" instead of "/api/db/test_db". But do not use too much.
             method: 'GET',
             headers: getAuthorizationHeader()
         });
@@ -42,7 +42,7 @@ class AllNote extends Component {
            console.log("api code detect");
            return response;
         }).then(res => {
-            //console.log(res.json());
+            console.log(res.json());
         });
     }
     render(){
