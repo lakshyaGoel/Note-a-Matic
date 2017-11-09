@@ -6,6 +6,8 @@ const fetch = require('node-fetch');
 
 router.get("/generate-data", checkJwt, function(req, res, next){
 
+    var generateDemo = require("../util/generate_demodata");
+    generateDemo();
     // BEGIN: Tag Database functionality
     // add tag data to Tags Database
     // const Tags = require("../model/Tags");

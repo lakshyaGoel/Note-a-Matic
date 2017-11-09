@@ -3,6 +3,7 @@
  */
 
 function generateDemoUser(){
+    console.info("generate demo User data");
     var User = require("../model/User");
     var userName = ["Demo Nakamachi", "Pico Taro", "Kosaka Daimaou", "Ninja Slayer", "Serval Chan", "One-Punch man", "Saitama", "Lil Wayne", "Kanye West", "Ty Dolla Sign", "Tinashe"];
     var errorCount = 0;
@@ -21,6 +22,7 @@ function generateDemoUser(){
 }
 
 function generateDemoTag(){
+    console.info("generate demo Tag data");
     var Tag = require("../model/Tag");
     var tagList = ["PPAP", "Comedian", "Anime", "Addictive", "Song", "Rap", "Hip-Hop", "Homecoming Concert", "Strong", "Hero"];
     var errorCount = 0;
@@ -52,28 +54,46 @@ function generateNote(){
         function(result){
             var tagList = result[0];
             var userList = result[1];
+            // console.log("tagList: ",tagList);
+            // console.log("userList: ",userList);
             function findTagByTagName(tagName){
-                return tagList.filter(function(tagObject){
+                var result = tagList.filter(function(tagObject){
                     var result = false;
-                    if(tagObject.tagName.indexOf(tagName) != 0){
+                    if(tagObject.tagName.indexOf(tagName) != -1){
                         result = true;
                     }
                     return result;
                 });
+                if(result.length > 0){
+                    result = result[0];
+                }else{
+                    result = {_id: undefined};
+                }
+                return result;
             }
 
             function findUserByUserName(userName){
-                return userList.filter(function(userObject){
+                var result = userList.filter(function(userObject){
                     var result = false;
                     if(userObject.name.indexOf(userName) != -1){
                         result = true;
                     }
                     return result;
                 });
+
+                if(result.length > 0){
+                    result = result[0];
+                }else{
+                    result = {};
+                    result._id = undefined;
+                }
+                return result;
             }
 
+            var Note = require("../model/Note");
+
             function generateNoteParts(title, content, currentCallNumber){
-                var result = {};
+                var result = new Note();
                 result.content = content;
                 result.title = title;
                 var tempContent = result.content.split(" ");
@@ -102,8 +122,43 @@ function generateNote(){
                 return result;
             }
 
-            function getSharedUserItem(userName, editAuth){
-                result = {};
+            function getSharedUserItem(userName){
+                var result = {};
+                var userData = findUserByUserName(userName);
+                // console.log(userData);
+                if(isSet(userData._id, false)){
+                    result.userId = userData._id;
+                    result.r = true;
+                    result.w = true;
+                }
+                return result;
+            }
+
+            function getSharedUserList(userNameList){
+                var result = [];
+                for(var i = 0; i < userNameList.length; i++){
+                    result.push(getSharedUserItem(userNameList[i]));
+                }
+                return result;
+            }
+
+            function getLikeDislikeUserItem(userName){
+                var result = {};
+                var userData = findUserByUserName(userName);
+                console.log("like dislike insde: ",userData);
+                if(isSet(userData._id, false)){
+                    result.userId = userData._id;
+                    result.createdAt = new Date();
+                }
+                return result;
+            }
+
+            function getLikeDislikeUserList(userNameList){
+                var result = [];
+                for(var i = 0; i < userNameList.length; i++){
+                    result.push(getLikeDislikeUserItem(userNameList[i]));
+                }
+                return result;
             }
 
             var note1 = generateNoteParts("PPAP", "I have a pen, I have an apple, Oh! Apple Pen. I have a pen, I have pinnaple. Oh! Pinnaple Pen, Apple Pen. Pineapple Pen! Oh! Pen Pineapple Apple Pen!", 0);
@@ -126,15 +181,42 @@ function generateNote(){
             note8.tags = getTagIdList(["Song", "Addictive", "Hio-Hop"]);
             note9.tags = getTagIdList(["Song", "Addictive", "Hio-Hop"]);
 
+            note1.shareUser = getSharedUserList(["Demo Nakamachi", "Pico Taro", "Kosaka Daimaou"]);
+            note2.shareUser = getSharedUserList(["Demo Nakamachi", "One-Punch man", "Saitama"]);
+            note3.shareUser = getSharedUserList(["Demo Nakamachi", "Ninja Slayer"]);
+            note4.shareUser = getSharedUserList(["Demo Nakamachi", "Serval Chan"]);
+            note5.shareUser = getSharedUserList(["Demo Nakamachi", "Ty Dolla Sign"]);
+            note6.shareUser = getSharedUserList(["Demo Nakamachi", "Lil Wayne", "Ty Dolla Sign"]);
+            note7.shareUser = getSharedUserList(["Demo Nakamachi", "Tinashe"]);
+            note8.shareUser = getSharedUserList(["Demo Nakamachi"]);
+            note9.shareUser = getSharedUserList(["Demo Nakamachi"]);
 
+            note1.like = getLikeDislikeUserList(["Pico Taro", "Kosaka Daimaou"]);
+            note2.like = getLikeDislikeUserList(["Demo Nakamachi", "Pico Taro", "Kosaka Daimaou"]);
+            note3.like = getLikeDislikeUserList(["Demo Nakamachi"]);
+
+            note4.dislike = getLikeDislikeUserItem(["Kosaka Daimaou"]);
+
+            note1.save(function(err){});
+            note2.save(function(err){});
+            note3.save(function(err){});
+            note4.save(function(err){});
+            note5.save(function(err){});
+            note6.save(function(err){});
+            note7.save(function(err){});
+            note8.save(function(err){});
+            note9.save(function(err){});
         }
     );// END: Promise.all([tagPromise, userPromise])
 }
 
 function generateDemoData(){
-    var generateUserPromise = Promise.resolve(generateDemoUser());
-    var generateTagPromise = Promise.resolve(generateDemoTag());
-    Promise.all([generateUserPromise, generateUserPromise]).then(
-        generateNote()
-    );
+    // generateNote();
+    // var generateUserPromise = Promise.resolve(generateDemoUser());
+    // var generateTagPromise = Promise.resolve(generateDemoTag());
+    // Promise.all([generateUserPromise, generateTagPromise]).then(
+    //     generateNote()
+    // );
 }
+
+module.exports = generateDemoData;
