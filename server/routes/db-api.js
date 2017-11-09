@@ -45,7 +45,7 @@ router.get('/my-note', checkJwt, function(req, res, next){
 });// END: router.get('/my-note', checkJwt, function(req, res, next)
 
 router.post('/add-note', checkJwt, function(req, res, next){
-    console.log(req.body.random);
+    console.log(req.body);
 });
 // test db connection and something like that. not production;
 router.get('/test', checkJwt, function(req, res, next){
