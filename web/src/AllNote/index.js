@@ -48,6 +48,7 @@ class AllNote extends Component {
            console.log("api code detect");
            return response;
         }).then(res => {
+            console.log(res);
             console.log(res.json());
         });
     }

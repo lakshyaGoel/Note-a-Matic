@@ -5,7 +5,7 @@
 function generateDemoUser(){
     console.info("generate demo User data");
     var User = require("../model/User");
-    var userName = ["Demo Nakamachi", "Pico Taro", "Kosaka Daimaou", "Ninja Slayer", "Serval Chan", "One-Punch man", "Saitama", "Lil Wayne", "Kanye West", "Ty Dolla Sign", "Tinashe"];
+    var userName = ["nakam052@umn.edu", "Pico Taro", "Kosaka Daimaou", "Ninja Slayer", "Serval Chan", "One-Punch man", "Saitama", "Lil Wayne", "Kanye West", "Ty Dolla Sign", "Tinashe"];
     var errorCount = 0;
     for(var i = 0; i < userName.length; i++){
         var user = new User();
@@ -145,7 +145,7 @@ function generateNote(){
             function getLikeDislikeUserItem(userName){
                 var result = {};
                 var userData = findUserByUserName(userName);
-                console.log("like dislike insde: ",userData);
+                // console.log("like dislike insde: ",userData);
                 if(isSet(userData._id, false)){
                     result.userId = userData._id;
                     result.createdAt = new Date();
@@ -181,19 +181,25 @@ function generateNote(){
             note8.tags = getTagIdList(["Song", "Addictive", "Hio-Hop"]);
             note9.tags = getTagIdList(["Song", "Addictive", "Hio-Hop"]);
 
-            note1.shareUser = getSharedUserList(["Demo Nakamachi", "Pico Taro", "Kosaka Daimaou"]);
-            note2.shareUser = getSharedUserList(["Demo Nakamachi", "One-Punch man", "Saitama"]);
-            note3.shareUser = getSharedUserList(["Demo Nakamachi", "Ninja Slayer"]);
-            note4.shareUser = getSharedUserList(["Demo Nakamachi", "Serval Chan"]);
-            note5.shareUser = getSharedUserList(["Demo Nakamachi", "Ty Dolla Sign"]);
-            note6.shareUser = getSharedUserList(["Demo Nakamachi", "Lil Wayne", "Ty Dolla Sign"]);
-            note7.shareUser = getSharedUserList(["Demo Nakamachi", "Tinashe"]);
-            note8.shareUser = getSharedUserList(["Demo Nakamachi"]);
-            note9.shareUser = getSharedUserList(["Demo Nakamachi"]);
+            note1.userId = findUserByUserName("nakam052@umn.edu")._id;
+            note2.userId = findUserByUserName("nakam052@umn.edu")._id;
+            note3.userId = findUserByUserName("nakam052@umn.edu")._id;
+            note4.userId = findUserByUserName("nakam052@umn.edu")._id;
+            note5.userId = findUserByUserName("nakam052@umn.edu")._id;
+
+            note1.shareUser = getSharedUserList(["nakam052@umn.edu", "Pico Taro", "Kosaka Daimaou"]);
+            note2.shareUser = getSharedUserList(["nakam052@umn.edu", "One-Punch man", "Saitama"]);
+            note3.shareUser = getSharedUserList(["nakam052@umn.edu", "Ninja Slayer"]);
+            note4.shareUser = getSharedUserList(["nakam052@umn.edu", "Serval Chan"]);
+            note5.shareUser = getSharedUserList(["nakam052@umn.edu", "Ty Dolla Sign"]);
+            note6.shareUser = getSharedUserList(["nakam052@umn.edu", "Lil Wayne", "Ty Dolla Sign"]);
+            note7.shareUser = getSharedUserList(["nakam052@umn.edu", "Tinashe"]);
+            note8.shareUser = getSharedUserList(["nakam052@umn.edu"]);
+            note9.shareUser = getSharedUserList([]);
 
             note1.like = getLikeDislikeUserList(["Pico Taro", "Kosaka Daimaou"]);
-            note2.like = getLikeDislikeUserList(["Demo Nakamachi", "Pico Taro", "Kosaka Daimaou"]);
-            note3.like = getLikeDislikeUserList(["Demo Nakamachi"]);
+            note2.like = getLikeDislikeUserList(["nakam052@umn.edu", "Pico Taro", "Kosaka Daimaou"]);
+            note3.like = getLikeDislikeUserList(["nakam052@umn.edu"]);
 
             note4.dislike = getLikeDislikeUserItem(["Kosaka Daimaou"]);
 
@@ -211,7 +217,7 @@ function generateNote(){
 }
 
 function generateDemoData(){
-    // generateNote();
+    generateNote();
     // var generateUserPromise = Promise.resolve(generateDemoUser());
     // var generateTagPromise = Promise.resolve(generateDemoTag());
     // Promise.all([generateUserPromise, generateTagPromise]).then(

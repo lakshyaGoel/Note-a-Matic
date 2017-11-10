@@ -13,7 +13,9 @@ const fetch = require('node-fetch');
 
 // send user data in every login time.
 router.post('/user-info', checkJwt, function(req, res, next){
-   console.log("connectStatus: ",req.body.name, req.body.nickname, req.body.picture);
+    // var generateDemo = require("../util/generate_demodata");
+    //     generateDemo();
+   // console.log("connectStatus: ",req.body.name, req.body.nickname, req.body.picture);
     var User = require("../model/User");
     User.find({name: req.body.name, nickname: req.body.nickname, img: req.body.picture}).then(
         function(result){
@@ -41,13 +43,14 @@ router.post('/user-info', checkJwt, function(req, res, next){
 
 
 // get api to show all note in main panel.
-router.get('/all-note', checkJwt, function(req, res, next){
+router.post('/all-note', checkJwt, function(req, res, next){
     var getContent = require("../util/getContent");
     var userExist = require("../util/checkUserExist");
     userExist(req.body).then(function(result){
         if(result){// user exist
             getContent("all", result.toString()).then(
                 function(result){
+                    console.log("check data before send: ",result.length);
                     res.send(result);
                 }
             ).catch(function(err){
@@ -61,7 +64,7 @@ router.get('/all-note', checkJwt, function(req, res, next){
 });// END: router.get('/all-note', checkJwt, function(req, res, next)
 
 // get api to show share note in main panel.
-router.get('/share-note', checkJwt, function(req, res, next){
+router.post('/share-note', checkJwt, function(req, res, next){
     var getContent = require("../util/getContent");
     var userExist = require("../util/checkUserExist");
     userExist(req.body).then(function(result){
@@ -81,7 +84,7 @@ router.get('/share-note', checkJwt, function(req, res, next){
 });// END: router.get('/share-note', checkJwt, function(req, res, next)
 
 // get api to show my note in main panel.
-router.get('/my-note', checkJwt, function(req, res, next){
+router.post('/my-note', checkJwt, function(req, res, next){
     var getContent = require("../util/getContent");
     var userExist = require("../util/checkUserExist");
     userExist(req.body).then(function(result){

@@ -14,7 +14,7 @@
 
 var mongoose = require("mongoose");
 function getContent(param, userId){
-    console.log("run this here");
+    // console.log("find user ",userId);
     var result = [];
     var dbPromise = [];
     const Note = require("../model/Note");
@@ -22,20 +22,21 @@ function getContent(param, userId){
     userId = mongoose.Types.ObjectId(userId);
 
     if(param === "share"){
-        query = {
-            share: true,
-            shareUser: {$in: [{userId: userId, r: true, w: false}, {userId: userId, r: true, w: true}]}
+        query =  {
+            "share": true,
+            shareUser: {$elemMatch: {userId: userId, r: true, w: true}}
         };
     }else if(param === "my"){
-        query.userId = userId;
+        query = {userId: userId};
     }else if(param === "all"){
         query = {
             $or: [
-                {"share": true, shareUser: {$in: [{userId: userId, r: true, w: false}, {userId: userId, r: true, w: true}]}},
+                {"share": true, shareUser: {$elemMatch: {userId: userId, r: true, w: true}}},
                 {"userId": userId}
             ]
         }
     }
+    // console.log(query);
 
     return Note.find(query);
 }
