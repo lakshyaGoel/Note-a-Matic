@@ -12,7 +12,16 @@ class NewNote extends Component{
         this.onShare = this.onShare.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.updateDesc = this.updateDesc.bind(this);
-        this.state = {private: "Yes", noteType:"", noteTitle:"", noteDesc:"", tags:"", shared:""};
+        this.onCodeUpdates = this.onCodeUpdates.bind(this);
+        this.state = {  private: "Yes", 
+                        noteType:"", 
+                        noteTitle:"", 
+                        noteDesc:"", 
+                        tags:"", 
+                        shared:"",
+                        userID:this.props.profile.name,
+                        lastEdit:this.props.profile.name,
+                        editorProp:{mode:"", theme:"", autoComplete:"", lineNumber:""}};
     }
 
     save(){
@@ -55,6 +64,15 @@ class NewNote extends Component{
     updateDesc(value){
         this.setState({noteDesc:value});
     }
+    onCodeUpdates(v){
+        this.setState({
+            noteDesc:v.value,
+            mode:v.mode,
+            theme:v.theme,
+            autoComplete:v.enableLiveAutocompletion,
+            lineNumber:v.showLineNumbers
+        });
+    }
     render(){
         return(
             <div>
@@ -69,7 +87,7 @@ class NewNote extends Component{
                             placeholder="What's your note about?"/>
                     </div>
                 </div>
-                {this.state.noteType === "Text" ? <TextNote onEditDesc={this.updateDesc}/> : <CodeNote/>}
+                {this.state.noteType === "Text" ? <TextNote onEditDesc={this.updateDesc}/> : <CodeNote onCodeUpdates={this.onCodeUpdates}/>}
                 <div className="field">
                     <label className="label">#Tags</label>
                     <div className="control">

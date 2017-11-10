@@ -5,18 +5,7 @@ import LoginLogout from './LoginLogout';
 class Header extends Component {
   constructor(props){
     super(props);
-    this.state = {disabled: false, };
-  }
-  componentDidMount(){
-    var path = window.location.pathname;
-    if(path === "/"){// TODO: use React Vertual Dom instead of real dom(document.getElement....)
-      document.getElementById("dropDownMenu").classList.add("is-hoverable");
-    }else{
-      document.getElementById("dropDownMenu").classList.remove("is-hoverable");
-    }
-  }
-  shouldComponentUpdate(){
-    document.getElementById("dropDownMenu").classList.remove("is-hoverable");
+    this.state = {disabled: false};
   }
   render() {
     return (
@@ -34,7 +23,7 @@ class Header extends Component {
         <div className="navbar-end">
           <div id="navMenuTransparentExample" className="navbar-menu">
             <div className="navbar-start">
-              <div className="navbar-item has-dropdown" id="dropDownMenu">
+              <div className="navbar-item has-dropdown is-hoverable" id="dropDownMenu">
                 <div className="navbar-link">Add A Note</div>
                 <div id="moreDropdown" className="navbar-dropdown is-boxed">
                   <Link to={'/new/Text'} className="navbar-item">
