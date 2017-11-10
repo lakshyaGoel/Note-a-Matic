@@ -43,13 +43,12 @@ class AllNote extends Component {
         .then(response => {
            if(!response.ok) {
                console.log("Error: could not conect server, in AllNote/index.js");
-
            }
-           console.log("api code detect");
-           return response;
+           return response.json();
         }).then(res => {
-            console.log(res);
-            console.log(res.json());
+            console.log(res);// This is Note data! parse here.
+            // TODO: Tag data fix!
+            this.setState({"dataList": res});
         });
     }
 
