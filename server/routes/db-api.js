@@ -115,12 +115,11 @@ router.post('/add-note', checkJwt, function(req, res, next){
     shareUser = shareUser.split(", ").map(function(b){
         return b
     });
-    console.log("Sharing with: ");
-    console.log(shareUser);
+    // console.log("Sharing with: ");
+    // console.log(shareUser);
     var shareUserIdList = [];
     var userId = req.body.userID;
     var lastEditId = req.body.userID;
-    console.log("lastEditId", lastEditId);
     var mode = req.body.mode;
     var theme = req.body.theme;
     var auto = req.body.autoComplete;
@@ -243,7 +242,7 @@ router.post('/add-note', checkJwt, function(req, res, next){
             // console.log("tagIdList", tagsIdList);
             // console.log(userId);
             // console.log(shareUserIdList);
-            console.log("reach here in db-api");
+            // console.log("reach here in db-api");
             var note = addNote(tagSaveList, shareUserIdList, title, content, share, type, mode, theme, auto, line, userId, userId);
 
             for(var i = 0; i < note.tags.length; i ++){
