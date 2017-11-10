@@ -18,7 +18,7 @@ class MainComponent extends Component{
                     {this.props.description}
                     <CardButtons/>
                     <TagField>
-                        {this.props.tags.map((tagData, key) => <Tag tagName={tagData.tagName} key={key.toString()}/>)}
+                        {/*{this.props.tags.map((tagData, key) => <Tag tagName={tagData.tagName} key={key.toString()}/>)}*/}
                     </TagField>
                 </Card>
             );

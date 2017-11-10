@@ -7,7 +7,7 @@ import {isSet} from "../functions";
 class CardHeadImage extends Component {
     constructor(props){
         super(props);
-        let bgImage = Math.round(Math.random()*10)%2;
+        let bgImage = Math.round(Math.random()*10)%2;// TODO: need some fix,,,
         let imgUrl = "https://bulma.io/images/placeholders/1280x960.png";
         if(bgImage === 0){// FIXME: temporary: pure text image
             imgUrl = textImg;
