@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var _ = require('lodash');
 const checkJwt = require('../auth').checkJwt;
 const fetch = require('node-fetch');
 
@@ -111,6 +110,10 @@ router.post('/add-note', checkJwt, function(req, res, next){
     var share = !req.body.private;
     var type = req.body.noteType;
     var shareUser = req.body.shared;
+    shareUser = shareUser.split(", ").map(function(b){return b});
+    console.log("Sharing with: ");
+    console.log(shareUser);
+    var shareUserIdList = [];
     var userId = req.body.userID;
     var lastEditId = req.body.lastEdit;
     var mode = req.body.mode;
@@ -152,7 +155,23 @@ router.post('/add-note', checkJwt, function(req, res, next){
                     }
                     return result;
                 });
-
+                
+                if(result.length > 0){
+                    result = result[0];
+                }else{
+                    result = {};
+                    result._id = undefined;
+                }
+                return result;
+            }
+            function findUserByNickName(userName){
+                var result = userList.filter(function(userObject){
+                    var result = false;
+                    if(userObject.nickname.indexOf(userName) != -1){
+                        result = true;
+                    }
+                    return result;
+                });
                 if(result.length > 0){
                     result = result[0];
                 }else{
@@ -189,11 +208,14 @@ router.post('/add-note', checkJwt, function(req, res, next){
 
             var tagsIdList = getTagIdList(tags);
             userId = findUserByUserName(userId)._id;
-            console.log("HOLA");
+            shareUser.forEach(element => {
+                shareUserIdList.push({userId: findUserByNickName(element)._id, r: true, w: false});
+            });
             console.log(tagsIdList);
             console.log(userId);
+            console.log(shareUserIdList);
         });
-    //var note = addNote(tags, shareUser, title, content, share, type, mode, them, auto, line, userId, lastEditId);
+    //var note = addNote(tags, shareUserIdList, title, content, share, type, mode, them, auto, line, userId, lastEditId);
 });
 
 function addNote(tagsList, shareUserList, title, content, share, type, mode, theme, autoComplete, lineNumber, userId, lastEdit){
