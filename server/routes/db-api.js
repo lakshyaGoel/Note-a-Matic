@@ -14,7 +14,7 @@ const fetch = require('node-fetch');
 router.post('/user-info', checkJwt, function(req, res, next){
     // var generateDemo = require("../util/generate_demodata");
     //     generateDemo();
-   // console.log("connectStatus: ",req.body.name, req.body.nickname, req.body.picture);
+    // console.log("connectStatus: ",req.body.name, req.body.nickname, req.body.picture);
     var User = require("../model/User");
     User.find({name: req.body.name, nickname: req.body.nickname, img: req.body.picture}).then(
         function(result){
@@ -49,7 +49,7 @@ router.post('/all-note', checkJwt, function(req, res, next){
         if(result){// user exist
             getContent("all", result.toString()).then(
                 function(result){
-                    console.log("check data before send: ",result);
+                    console.log("check data before send: ", result);
                     res.send(result);
                 }
             ).catch(function(err){
@@ -106,11 +106,15 @@ router.post('/add-note', checkJwt, function(req, res, next){
     var title = req.body.noteTitle;
     var content = req.body.noteDesc;
     var tags = req.body.tags;
-    tags = tags.split(", ").map(function(b){return b.substr(1);});
+    tags = tags.split(", ").map(function(b){
+        return b.substr(1);
+    });
     var share = !req.body.private;
     var type = req.body.noteType;
     var shareUser = req.body.shared;
-    shareUser = shareUser.split(", ").map(function(b){return b});
+    shareUser = shareUser.split(", ").map(function(b){
+        return b
+    });
     console.log("Sharing with: ");
     console.log(shareUser);
     var shareUserIdList = [];
@@ -155,7 +159,7 @@ router.post('/add-note', checkJwt, function(req, res, next){
                     }
                     return result;
                 });
-                
+
                 if(result.length > 0){
                     result = result[0];
                 }else{
@@ -164,6 +168,7 @@ router.post('/add-note', checkJwt, function(req, res, next){
                 }
                 return result;
             }
+
             function findUserByNickName(userName){
                 var result = userList.filter(function(userObject){
                     var result = false;
@@ -180,13 +185,15 @@ router.post('/add-note', checkJwt, function(req, res, next){
                 }
                 return result;
             }
+
             function getTagIdList(tagList){
                 var result = [];
                 for(var i = 0; i < tagList.length; i++){
-                    result.push(getTagId(tagList[i]));
+                    result.push({tagName: tagList[i], saveState: getTagId(tagList[i])});
                 }
                 return result;
             }
+
             var isSet = require("../util/isSet");
 
             function getTagId(tagName){
@@ -207,11 +214,31 @@ router.post('/add-note', checkJwt, function(req, res, next){
             // }
 
             var tagsIdList = getTagIdList(tags);
+
+            function saveNewTag(){
+                for(var i = 0; i < tagsIdList.length; i++){
+                    var tag = new Tag();
+                    if(tagsIdList[i].state == null){
+                        tag.tagName = tagsIdList[i].tagName;
+                        tag.save(function(err){
+                        }).then(function(resultDummy){
+                            var Tag = require("../model/Tag");
+                            Tag.find({"tagname": tagsIdList[i].tagName }).then(function(result){
+                                console.log("refreshed tag database after add new tag2", result);
+                            });
+                        });
+                    }
+                }
+            }
+
+
+
+
             userId = findUserByUserName(userId)._id;
-            shareUser.forEach(element => {
+            shareUser.forEach(element =>{
                 shareUserIdList.push({userId: findUserByNickName(element)._id, r: true, w: false});
             });
-            console.log(tagsIdList);
+            console.log("tagIdList", tagsIdList);
             console.log(userId);
             console.log(shareUserIdList);
         });
