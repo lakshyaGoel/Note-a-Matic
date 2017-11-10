@@ -67,29 +67,30 @@ class CodeNote extends Component {
         this.setBoolean = this.setBoolean.bind(this);
     }
 
-    onLoad() {
-      console.log('i\'ve loaded');
-    }
+    // onLoad() {
+    //   console.log('i\'ve loaded');
+    // }
     onChange(newValue) {
-      console.log('change', newValue);
+      //console.log('change', newValue);
       this.setState({
         value: newValue
       })
+      this.props.onCodeUpdates(this.state);
     }
   
-    onSelectionChange(newValue, event) {
-      console.log('select-change', newValue);
-      console.log('select-change-event', event);
-    }
+    // onSelectionChange(newValue, event) {
+    //   console.log('select-change', newValue);
+    //   console.log('select-change-event', event);
+    // }
   
-    onCursorChange(newValue, event) {
-      console.log('cursor-change', newValue);
-      console.log('cursor-change-event', event);
-    }
+    // onCursorChange(newValue, event) {
+    //   console.log('cursor-change', newValue);
+    //   console.log('cursor-change-event', event);
+    // }
   
-    onValidate(annotations) {
-      console.log('onValidate', annotations);
-    }
+    // onValidate(annotations) {
+    //   console.log('onValidate', annotations);
+    // }
   
     setTheme(e) {
       this.setState({

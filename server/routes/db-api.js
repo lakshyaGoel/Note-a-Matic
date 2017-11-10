@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-
+var _ = require('lodash');
 const checkJwt = require('../auth').checkJwt;
 const fetch = require('node-fetch');
 
@@ -104,7 +104,125 @@ router.post('/my-note', checkJwt, function(req, res, next){
 });// END: router.get('/my-note', checkJwt, function(req, res, next)
 
 router.post('/add-note', checkJwt, function(req, res, next){
-    console.log(req.body);
+    var title = req.body.noteTitle;
+    var content = req.body.noteDesc;
+    var tags = req.body.tags;
+    tags = tags.split(", ").map(function(b){return b.substr(1);});
+    var share = !req.body.private;
+    var type = req.body.noteType;
+    var shareUser = req.body.shared;
+    var userId = req.body.userID;
+    var lastEditId = req.body.lastEdit;
+    var mode = req.body.mode;
+    var theme = req.body.theme;
+    var auto = req.body.autoComplete;
+    var line = req.body.lineNumber;
+
+    var Tag = require("../model/Tag");
+    var User = require("../model/User");
+    var tagPromise = Promise.resolve(Tag.find());
+    var userPromise = Promise.resolve(User.find());
+    Promise.all([tagPromise, userPromise]).then(
+        function(result){
+            var tagList = result[0];
+            var userList = result[1];
+            //console.log("tagList: ",tagList);
+            //console.log("userList: ",userList);
+            function findTagByTagName(tagName){
+                var result = tagList.filter(function(tagObject){
+                    var result = false;
+                    if(tagObject.tagName.indexOf(tagName) != -1){
+                        result = true;
+                    }
+                    return result;
+                });
+                if(result.length > 0){
+                    result = result[0];
+                }else{
+                    result = {_id: undefined};
+                }
+                return result;
+            }
+
+            function findUserByUserName(userName){
+                var result = userList.filter(function(userObject){
+                    var result = false;
+                    if(userObject.name.indexOf(userName) != -1){
+                        result = true;
+                    }
+                    return result;
+                });
+
+                if(result.length > 0){
+                    result = result[0];
+                }else{
+                    result = {};
+                    result._id = undefined;
+                }
+                return result;
+            }
+            function getTagIdList(tagList){
+                var result = [];
+                for(var i = 0; i < tagList.length; i++){
+                    result.push(getTagId(tagList[i]));
+                }
+                return result;
+            }
+            var isSet = require("../util/isSet");
+
+            function getTagId(tagName){
+                return isSet(findTagByTagName(tagName)._id, null);
+            }
+
+            // function insertNewTag(tName){
+            //     var tag = new Tag();
+            //     tag.tagName = tName;
+            //     tag.save(function(err, d){
+            //         if(err){
+            //             console.log(err);
+            //         }else{
+            //             console.log("Success Tag");
+            //             return d._id;
+            //         }
+            //     });
+            // }
+
+            var tagsIdList = getTagIdList(tags);
+            userId = findUserByUserName(userId)._id;
+            console.log("HOLA");
+            console.log(tagsIdList);
+            console.log(userId);
+        });
+    //var note = addNote(tags, shareUser, title, content, share, type, mode, them, auto, line, userId, lastEditId);
 });
+
+function addNote(tagsList, shareUserList, title, content, share, type, mode, theme, autoComplete, lineNumber, userId, lastEdit){
+    const Note = require("../model/Note");
+    var note = new Note();
+    note.userId = userId;
+    note.finalEditUserId = lastEdit;
+    note.title = title;
+    note.content = content;
+    note.description = "save data from api call";
+    note.tags = tagsList;
+    note.share = share;
+    note.shareUser = shareUserList;
+    // note.like = likeUserList;
+    // note.dislike = dislikeUserList;
+    note.type = type;
+    note.codeSetting.mode = mode; // example codeSetting
+    note.codeSetting.theme = theme; // example codeSetting
+    note.codeSetting.autoComplete = autoComplete; //default is false, so change true
+    note.codeSetting.lineNumber = lineNumber;  //default is false, so change true
+    note.save(function(err){
+        if(err){
+            console.log("something else");
+            console.log(err);
+        }else{
+            console.log("save all note data correctly");
+        }
+    })
+    return note;
+}
 
 module.exports = router;
