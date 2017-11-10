@@ -19,6 +19,8 @@ import AllNote from './AllNote/index.js';
 import MyNote from './MyNote/index.js';
 import ShareNote from './ShareNote/index.js';
 
+import {getAuthorizationHeader} from "./functions";
+
 class App extends Component {
   constructor(props){
     super(props);
@@ -49,6 +51,19 @@ class App extends Component {
     console.log("helloSharedNotes");
   }
 
+  // send User profile data to server. to save user data to our own User database
+  componentDidMount(){
+    let request = new Request('/api/db/user-info', {
+      method: 'POST',
+      headers: {
+        "Authorization": getAuthorizationHeader().Authorization,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(this.props.profile),
+    });
+
+    fetch(request).then(response => {return response;});
+  }
 
   render() {
 
@@ -76,12 +91,12 @@ class App extends Component {
 
 
                 <Switch>
-                  <Route exact path="/" children={() => <AllNote />} />
+                  <Route exact path="/" children={() => <AllNote profile={this.props.profile}/>} />
                   <Route path="/new/:type" component={NewNote}/>
                   <Route path="/user-info" children={() => <UserInfo {...this.props}/>}/>
-                  <Route path="/all-note" component={AllNote}/>
-                  <Route path="/my-note" component={MyNote}/>
-                  <Route path="/share-note" component={ShareNote}/>
+                  <Route path="/all-note"  children={() => <AllNote profile={this.props.profile}/>}/>
+                  <Route path="/my-note"  children={() => <MyNote profile={this.props.profile}/>}/>
+                  <Route path="/share-note"  children={() => <ShareNote profile={this.props.profile}/>}/>
                 </Switch>
               <RightSideBar/>
               </div>

@@ -8,6 +8,7 @@ import {getAuthorizationHeader} from "../functions";
 class AllNote extends Component {
     constructor(props){
         super(props);
+        // console.log("check profile from <Route>", props.profile);
         let dataList = [];
         // demo data
         for(let i = 0; i < 20; i++){
@@ -30,7 +31,11 @@ class AllNote extends Component {
     componentDidMount(){
         let request = new Request('/api/db/all-note', {
             method: 'GET',
-            headers: getAuthorizationHeader()
+            headers: {
+                "Authorization": getAuthorizationHeader().Authorization,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(this.props.profile)
         });
 
         // TODO: write re-rendering with setState and binding.
@@ -46,6 +51,7 @@ class AllNote extends Component {
             console.log(res.json());
         });
     }
+
     render(){
         return (
             <div>
