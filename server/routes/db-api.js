@@ -50,7 +50,7 @@ router.post('/all-note', checkJwt, function(req, res, next){
         if(result){// user exist
             getContent("all", result.toString()).then(
                 function(result){
-                    // console.log("check data before send: ",result.length);
+                    console.log("check data before send: ",result);
                     res.send(result);
                 }
             ).catch(function(err){
