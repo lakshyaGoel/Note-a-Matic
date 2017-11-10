@@ -119,7 +119,8 @@ router.post('/add-note', checkJwt, function(req, res, next){
     console.log(shareUser);
     var shareUserIdList = [];
     var userId = req.body.userID;
-    var lastEditId = req.body.lastEdit;
+    var lastEditId = req.body.userID;
+    console.log("lastEditId", lastEditId);
     var mode = req.body.mode;
     var theme = req.body.theme;
     var auto = req.body.autoComplete;
@@ -224,25 +225,33 @@ router.post('/add-note', checkJwt, function(req, res, next){
                         }).then(function(resultDummy){
                             var Tag = require("../model/Tag");
                             Tag.find({"tagname": tagsIdList[i].tagName }).then(function(result){
-                                console.log("refreshed tag database after add new tag2", result);
+                                // console.log("refreshed tag database after add new tag2", result);
                             });
                         });
                     }
                 }
             }
 
-
-
+            var tagSaveList = tagsIdList.map(function(col){
+                return col.saveState;
+            });
 
             userId = findUserByUserName(userId)._id;
             shareUser.forEach(element =>{
                 shareUserIdList.push({userId: findUserByNickName(element)._id, r: true, w: false});
             });
-            console.log("tagIdList", tagsIdList);
-            console.log(userId);
-            console.log(shareUserIdList);
+            // console.log("tagIdList", tagsIdList);
+            // console.log(userId);
+            // console.log(shareUserIdList);
+            console.log("reach here in db-api");
+            var note = addNote(tagSaveList, shareUserIdList, title, content, share, type, mode, theme, auto, line, userId, userId);
+
+            for(var i = 0; i < note.tags.length; i ++){
+                Tag.find({"_id": ObjectId(note.tags[0])});
+
+            }
         });
-    //var note = addNote(tags, shareUserIdList, title, content, share, type, mode, them, auto, line, userId, lastEditId);
+
 });
 
 function addNote(tagsList, shareUserList, title, content, share, type, mode, theme, autoComplete, lineNumber, userId, lastEdit){
@@ -270,7 +279,7 @@ function addNote(tagsList, shareUserList, title, content, share, type, mode, the
         }else{
             console.log("save all note data correctly");
         }
-    })
+    });
     return note;
 }
 
