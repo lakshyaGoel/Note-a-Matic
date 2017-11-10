@@ -30,7 +30,7 @@ class AllNote extends Component {
 
     componentDidMount(){
         let request = new Request('/api/db/all-note', {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 "Authorization": getAuthorizationHeader().Authorization,
                 "Content-Type": "application/json"
