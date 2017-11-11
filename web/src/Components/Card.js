@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import textImg from "./text.png";
 import codeImg from "./code.jpg";
 
-import {isSet} from "../functions";
+import {getAuthorizationHeader, isSet} from "../functions";
 
 class CardHeadImage extends Component {
     constructor(props){
@@ -105,10 +105,56 @@ class CardButtons extends Component {
     }
 
     incrementLike(){
+        let request = new Request('/api/db/like-dislike', {
+            method: 'POST',
+            headers: {
+                "Authorization": getAuthorizationHeader().Authorization,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({userId: this.props.userId, noteId: this.props.noteId, operation: "like"})
+        });
+        // TODO: write re-rendering with setState and binding.
+        fetch(request)
+        .then(response => {
+            if(!response.ok) {
+                console.log("Error: could not conect server, in AllNote/index.js");
+                return false;
+            }
+            return response.json();
+        }).then(res => {
+            // TODO: Tag data fix!
+            if(res){
+                console.log("like ersult2", res);
+            }
+        });
+
         this.setState({"likeCount": this.state.likeCount + 1});
     }
 
     incrementDislike(){
+        let request = new Request('/api/db/like-dislike', {
+            method: 'POST',
+            headers: {
+                "Authorization": getAuthorizationHeader().Authorization,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({userId: this.props.userId, noteId: this.props.noteId, operation: "dislike"})
+        });
+        // TODO: write re-rendering with setState and binding.
+        fetch(request)
+        .then(response => {
+            if(!response.ok) {
+                console.log("Error: could not conect server, in AllNote/index.js");
+                return false;
+            }
+            return response.json();
+        }).then(res => {
+            // TODO: Tag data fix!
+            if(res){
+                console.log("like ersult2", res);
+            }
+        });
+
         this.setState({"dislikeCount": this.state.dislikeCount + 1});
     }
 

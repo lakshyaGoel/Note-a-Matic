@@ -42,21 +42,25 @@ router.post('/user-info', checkJwt, function(req, res, next){
 
 
 // like and dislike
-router.post("like-dislike", checkJwt, function(req, res, next){
+router.post("/like-dislike", checkJwt, function(req, res, next){
     var mongoose = require("mongoose");
     var noteId = mongoose.Types.ObjectId(req.body.noteId);
     var userId = mongoose.Types.ObjectId(req.body.userId);
     var operation = req.body.operation;
 
-    Note.findOne({_id: noteId}, function(database){
+    var Note = require("../model/Note");
+    Note.findOne({_id: noteId}, function(err, database){
         if(operation == "like"){
             // FIXME: more conditional(e.g. if already there, remove it), if already there in dislike, could not run)
             database.like.push({userId: userId});
+            database.save(function(err){});
         }else if(operation == "dislike"){
             // FIXME: more conditional(e.g. if already there, remove it), if already there in like, could not run)
             database.dislike.push({userId: userId});
+            database.save(function(err){});
         }
         // TODO: send data to re-render
+        res.send({"result":"something"});
     });
 });
 
