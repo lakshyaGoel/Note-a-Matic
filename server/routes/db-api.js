@@ -174,7 +174,8 @@ router.post('/my-note', checkJwt, function(req, res, next){
 
 router.post('/add-note', checkJwt, function(req, res, next){
     var title = req.body.noteTitle;
-    var content = req.body.noteDesc;
+    var content = req.body.noteCont;
+    var desc = req.body.noteDesc;
     var tags = req.body.tags;
     tags = tags.split(", ").map(function(b){
         return b.substr(1);
@@ -299,7 +300,7 @@ router.post('/add-note', checkJwt, function(req, res, next){
             // console.log(tagsIdList);
             // console.log(userId);
             // console.log(shareUserIdList);
-            var newNoteId = addNote(tagSaveList, shareUserIdList, title, content, share, type, mode, theme, auto, line, userId, userId);
+            var newNoteId = addNote(tagSaveList, shareUserIdList, title, content, desc, share, type, mode, theme, auto, line, userId, userId);
             
             for(var i = 0; i < tagSaveList.length; i ++){
                 Tag.update({"_id": ObjectId(tagSaveList[i])}, { $push: { noteId: newNoteId } }, function(err){
@@ -316,14 +317,14 @@ router.post('/add-note', checkJwt, function(req, res, next){
 
 });
 
-function addNote(tagsList, shareUserList, title, content, share, type, mode, theme, autoComplete, lineNumber, userId, lastEdit){
+function addNote(tagsList, shareUserList, title, content, desc, share, type, mode, theme, autoComplete, lineNumber, userId, lastEdit){
     const Note = require("../model/Note");
     var note = new Note();
     note.userId = userId;
     note.finalEditUserId = lastEdit;
     note.title = title;
     note.content = content;
-    note.description = "save data from api call";
+    note.description = desc;
     note.tags = tagsList;
     note.share = share;
     note.shareUser = shareUserList;

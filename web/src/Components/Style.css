@@ -21,7 +21,7 @@
   display: table-cell;
   width: 15%;
   text-align: center;
-  background: rgb(34, 236, 209);
+  background: hsl(0, 0%, 96%);
 }
 
 .customRightSideBar{
