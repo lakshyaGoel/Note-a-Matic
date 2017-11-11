@@ -122,7 +122,6 @@ class CardButtons extends Component {
             }
             return response.json();
         }).then(res => {
-            // TODO: Tag data fix!
             if(res){
                 console.log("like ersult2", res);
             }
@@ -149,7 +148,6 @@ class CardButtons extends Component {
             }
             return response.json();
         }).then(res => {
-            // TODO: Tag data fix!
             if(res){
                 console.log("like ersult2", res);
             }
