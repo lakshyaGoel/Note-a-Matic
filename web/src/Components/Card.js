@@ -7,12 +7,12 @@ import {isSet} from "../functions";
 class CardHeadImage extends Component {
     constructor(props){
         super(props);
-        let bgImage = Math.round(Math.random()*10)%2;// TODO: need some fix,,,
+        let bgImage = props.cardType.indexOf("code") != -1;// TODO: need some fix,,,
         let imgUrl = "https://bulma.io/images/placeholders/1280x960.png";
-        if(bgImage === 0){// FIXME: temporary: pure text image
-            imgUrl = textImg;
-        }else{// FIXME: temporary: pure text image
+        if(bgImage){// FIXME: temporary: pure text image
             imgUrl = codeImg;
+        }else{// FIXME: temporary: pure text image
+            imgUrl = textImg;
         }
         this.state = {
             imgURL: isSet(props.imgURL, imgUrl)
@@ -203,7 +203,7 @@ class Card extends Component {
     render(){
         return (
             <CardContainer>
-                <CardHeadImage>
+                <CardHeadImage cardType={this.props.cardType}>
                 <CardHeader title={this.props.cardTitle}/>
                 </CardHeadImage>
                 <CardContent>
