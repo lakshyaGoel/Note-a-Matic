@@ -29,7 +29,7 @@ class NewNote extends Component{
     save(){
      //   console.log("All the updated data: " + JSON.stringify(this.state));
         var auth = getAuthorizationHeader();
-        let request = new Request('/api/db/add-note', {// TODO: if you need to know how it works, fix url to "/api/db/test" instead of "/api/db/test_db". But do not use too much.
+        let request = new Request('/api/db/add-note', {
             method: 'POST',
             headers: {
                 "Authorization": auth.Authorization,
