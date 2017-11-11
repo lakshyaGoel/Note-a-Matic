@@ -56,6 +56,7 @@ router.post("like-dislike", checkJwt, function(req, res, next){
             // FIXME: more conditional(e.g. if already there, remove it), if already there in like, could not run)
             database.dislike.push({userId: userId});
         }
+        // TODO: send data to re-render
     });
 });
 
