@@ -65,17 +65,12 @@ class ModalCardFooter extends Component {
     render(){
         return (
             <footer className="modal-card-foot">
-                {/*temporary same as example,
-                 https://bulma.io/documentation/components/modal/
-                 */}
                  {/*
                  //TODO : need a proper parameter to separate page.
                  see:https://github.com/ReactTraining/react-router/blob/v3/docs/guides/RouteConfiguration.md#adding-an-index
                  */}
-                <Link to="new" className="button is-link">Share</Link>
                 <Link to="new" className="button is-success">Edit</Link>
-                <Link to="new" className="button is-danger">Delete</Link>
-                <button className="button">Cancel</button>
+                <button className="button is-danger">Delete</button>
             </footer>
         )
     }

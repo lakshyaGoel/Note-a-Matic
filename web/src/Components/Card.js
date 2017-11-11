@@ -151,21 +151,13 @@ class Tag extends Component{
         this.state = {
             is_render: isSet(props.is_render, true)
         };
-
-        this.deleteContent = this.deleteContent.bind(this);
-    }
-
-
-    deleteContent(){
-        this.setState({"is_render": false});
     }
 
     render(){
         var renderContent = (
             <div className="control">
                 <div className="tags has-addons">
-                    <a className="tag is-light">{this.props.tagName}</a>
-                    <a className="tag is-delete" onClick={this.deleteContent}> </a>
+                    <span className="tag is-light">{this.props.tagName}</span>
                 </div>
             </div>
         );
