@@ -21,7 +21,7 @@ class MainComponent extends Component{
 
         var deleteFlg = props.currentUserId.indexOf(props.userId) != -1;
         this.footer = (<footer className="card-footer">
-            <Modal title={this.props.title} buttonLabel="show content" content={this.props.content} deleteFlg={deleteFlg} userId={this.props.userId} noteId={this.props._id}/>
+            <Modal title={this.props.title} allProps={this.props} buttonLabel="View Note" content={this.props.content} deleteFlg={deleteFlg} userId={this.props.userId} noteId={this.props._id}/>
         </footer>);
     }
 
