@@ -32,7 +32,19 @@
   }
 
   .ShowCase{
-    width: 70%;
+    width: 55rem;
     /* position: absolute; */
     margin: 2rem;
+  }
+  .navBarLink img{
+    max-height: fit-content;
+  }
+  .navBarLink{
+    padding-top: 0;
+    padding-left: 4rem;
+    font-size: x-large;
+  }
+  .customButtonClass{
+    height: fit-content;
+    padding-top: 0.5rem !important;
   }

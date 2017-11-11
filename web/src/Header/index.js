@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from 'react-router-dom';
 import LoginLogout from './LoginLogout';
+import img from '../landingImg.jpg'
 
 class Header extends Component {
   constructor(props){
@@ -9,21 +10,21 @@ class Header extends Component {
   }
   render() {
     return (
-      <nav className="navbar is-transparent">
+      <nav className="navbar" style={{"background-color": "hsl(0, 0%, 96%)"}}>
         <div className="navbar-brand">
-          <a className="navbar-item" href="/">
+          <a className="navbar-item navBarLink" href="/">
             <img
-              src="https://lh3.googleusercontent.com/JfHCS7xbyFV6U85DMxT92rhND6i8v3XCUmI9A3uIwZGQk6AUFZ445uz9J0vWh5P4XKU=w300"
+              src={img}
               alt="Notes"
-              width="40"
-              height="40"/>
+              width="70"
+              height="70"/>
             Notes
           </a>
         </div>
         <div className="navbar-end">
           <div id="navMenuTransparentExample" className="navbar-menu">
             <div className="navbar-start">
-              <div className="navbar-item has-dropdown is-hoverable" id="dropDownMenu">
+              <div className="navbar-item has-dropdown is-hoverable customButtonClass" id="dropDownMenu">
                 <div className="navbar-link">Add A Note</div>
                 <div id="moreDropdown" className="navbar-dropdown is-boxed">
                   <Link to={'/new/Text'} className="navbar-item">

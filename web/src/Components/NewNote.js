@@ -17,6 +17,7 @@ class NewNote extends Component{
                         noteType:"", 
                         noteTitle:"", 
                         noteDesc:"", 
+                        noteCont:"",
                         tags:"", 
                         shared:"",
                         userID:this.props.profile.name,
@@ -71,11 +72,11 @@ class NewNote extends Component{
         }
     }
     updateDesc(value){
-        this.setState({noteDesc:value});
+        this.setState({noteCont:value});
     }
     onCodeUpdates(v){
         this.setState({
-            noteDesc:v.value,
+            noteCont:v.value,
             mode:v.mode,
             theme:v.theme,
             autoComplete:v.enableLiveAutocompletion,
@@ -96,6 +97,17 @@ class NewNote extends Component{
                                 name="noteTitle"
                                 type="text"
                                 placeholder="What's your note about?"/>
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label className="label">Description</label>
+                        <div className="control">
+                        <input value={this.state.noteDesc}
+                                onChange={this.handleChange} 
+                                className="input" 
+                                name="noteDesc"
+                                type="text"
+                                placeholder="Explain your note in 1 line"/>
                         </div>
                     </div>
                     {this.state.noteType === "Text" ? <TextNote onEditDesc={this.updateDesc}/> : <CodeNote onCodeUpdates={this.onCodeUpdates}/>}
