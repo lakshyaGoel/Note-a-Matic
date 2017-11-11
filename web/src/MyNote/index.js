@@ -11,19 +11,6 @@ class MyNote extends Component {
         super(props);
 
         let dataList = [];
-        // demo data
-        for(let i = 0; i < 5; i++){
-            let data = {
-                "title": "my item" + i,
-                "description": "description" + i,
-                "content": "main content " + i,
-                "tags": []
-            };
-            for(let j = 0; j < 3; j++){
-                data.tags.push({"tagName": "tag" + j});
-            }
-            dataList.push(data);
-        }
 
         this.state = {"dataList": dataList};
     }

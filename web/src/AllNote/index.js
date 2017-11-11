@@ -10,19 +10,6 @@ class AllNote extends Component {
         super(props);
         // console.log("check profile from <Route>", props.profile);
         let dataList = [];
-        // demo data
-        for(let i = 0; i < 20; i++){
-            let data = {
-                "title": "main item" + i,
-                "description": "description" + i,
-                "content": "main content " + i,
-                "tags": []
-            };
-            for(let j = 0; j < 3; j++){
-                data.tags.push({"tagName": "tag" + j});
-            }
-            dataList.push(data);
-        }
 
         this.state = {"dataList": dataList};
     }
