@@ -71,7 +71,6 @@ function getContent(param, userId){
                     result.push(name);
                 }
             }
-            console.log("tagNameList",result);
             return result;
         }
 

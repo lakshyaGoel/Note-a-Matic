@@ -30,9 +30,9 @@ router.post('/user-info', checkJwt, function(req, res, next){
                     }
                 })
             }else{
-                console.log("there is data already.");
+                console.log("exist user", {"result": true, "userId": String(result[0]._id)});
+                res.send({"result": true, "userId": String(result[0]._id)});
             }
-            res.send({"result": true, "content": "done correclty"});
         }
     ).catch(function(err){
         console.log("something wrong happen: ", err);
@@ -45,12 +45,13 @@ router.post('/user-info', checkJwt, function(req, res, next){
 router.post('/all-note', checkJwt, function(req, res, next){
     var getContent = require("../util/getContent");
     var userExist = require("../util/checkUserExist");
-    userExist(req.body).then(function(result){
-        if(result){// user exist
-            getContent("all", result.toString()).then(
+    userExist(req.body).then(function(userId){
+        if(userId){// user exist
+            getContent("all", userId.toString()).then(
                 function(result){
-                    console.log("check data before send: ", result);
-                    res.send(result);
+                    // console.log("check data before send: ", result);
+
+                    res.send({content:result, currentUserId: userId});
                 }
             ).catch(function(err){
                 console.log("something wrong:" + err);
@@ -66,11 +67,13 @@ router.post('/all-note', checkJwt, function(req, res, next){
 router.post('/share-note', checkJwt, function(req, res, next){
     var getContent = require("../util/getContent");
     var userExist = require("../util/checkUserExist");
-    userExist(req.body).then(function(result){
-        if(result){// user exist
-            getContent("share", result.toString()).then(
+    userExist(req.body).then(function(userId){
+        if(userId){// user exist
+            getContent("share", userId.toString()).then(
                 function(result){
-                    res.send(result);
+                    // console.log("check data before send: ", result);
+
+                    res.send({content:result, currentUserId: userId});
                 }
             ).catch(function(err){
                 console.log("something wrong:" + err);
@@ -86,11 +89,13 @@ router.post('/share-note', checkJwt, function(req, res, next){
 router.post('/my-note', checkJwt, function(req, res, next){
     var getContent = require("../util/getContent");
     var userExist = require("../util/checkUserExist");
-    userExist(req.body).then(function(result){
-        if(result){// user exist
-            getContent("my", result.toString()).then(
+    userExist(req.body).then(function(userId){
+        if(userId){// user exist
+            getContent("my", userId.toString()).then(
                 function(result){
-                    res.send(result);
+                    // console.log("check data before send: ", result);
+
+                    res.send({content:result, currentUserId: userId});
                 }
             ).catch(function(err){
                 console.log("something wrong:" + err);
@@ -109,7 +114,7 @@ router.post('/add-note', checkJwt, function(req, res, next){
     tags = tags.split(", ").map(function(b){
         return b.substr(1);
     });
-    var share = !req.body.private;
+    var share = req.body.private === "No";// share message is string "Yes"/"No" not Boolean: true/false. it cause problem
     var type = req.body.noteType;
     var shareUser = req.body.shared;
     shareUser = shareUser.split(", ").map(function(b){

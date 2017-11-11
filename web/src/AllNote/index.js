@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react';
 import MainComponent from "../Components/mainComponentPart";
-import {getAuthorizationHeader} from "../functions";
+import {getAuthorizationHeader, getUserId} from "../functions";
 
 class AllNote extends Component {
     constructor(props){
@@ -11,7 +11,7 @@ class AllNote extends Component {
         // console.log("check profile from <Route>", props.profile);
         let dataList = [];
 
-        this.state = {"dataList": dataList};
+        this.state = {"dataList": dataList, "currentUserId": ""};
     }
 
 
@@ -34,10 +34,9 @@ class AllNote extends Component {
            }
            return response.json();
         }).then(res => {
-            console.log("this is allnote result",res);// This is Note data! parse here.
             // TODO: Tag data fix!
             if(res){
-                this.setState({"dataList": res});
+                this.setState({"dataList": res.content, "currentUserId": res.currentUserId});
             }
         });
     }
@@ -50,7 +49,7 @@ class AllNote extends Component {
                 </div>
 
                 <div className="columns is-multiline">
-                    {this.state.dataList.map((data, index) => <MainComponent {...data} key={index}/>)}
+                    {this.state.dataList.map((data, index) => <MainComponent {...data} currentUserId={this.state.currentUserId} key={index} />)}
                 </div>
             </div>
         );

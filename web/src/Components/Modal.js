@@ -62,6 +62,10 @@ class ModalCardBody extends Component {
 }
 
 class ModalCardFooter extends Component {
+    constructor(props){
+        super(props);
+        console.log("ModalCardFooter ",this.props.deleteFlg);
+    }
     render(){
         return (
             <footer className="modal-card-foot">
@@ -70,7 +74,7 @@ class ModalCardFooter extends Component {
                  see:https://github.com/ReactTraining/react-router/blob/v3/docs/guides/RouteConfiguration.md#adding-an-index
                  */}
                 <Link to="new" className="button is-success">Edit</Link>
-                <button className="button is-danger">Delete</button>
+                {this.props.deleteFlg? <button className="button is-danger">Delete</button>: ""}
             </footer>
         )
     }
@@ -90,11 +94,11 @@ class Modal extends Component {
 
     render(){
         return (
-            <ModalContainer active={this.state.active} buttonLabel={this.props.buttonLabel} title={this.props.title}>
+            <ModalContainer active={this.state.active} buttonLabel={this.props.buttonLabel} title={this.props.title} >
                 <ModalCardBody>
                     {this.props.content}
                 </ModalCardBody>
-                <ModalCardFooter/>
+                <ModalCardFooter deleteFlg={this.props.deleteFlg}/>
             </ModalContainer>
         );
     }
