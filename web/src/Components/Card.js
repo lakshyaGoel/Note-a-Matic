@@ -9,9 +9,9 @@ class CardHeadImage extends Component {
         super(props);
         let bgImage = props.cardType.indexOf("code") != -1;// TODO: need some fix,,,
         let imgUrl = "https://bulma.io/images/placeholders/1280x960.png";
-        if(bgImage){// FIXME: temporary: pure text image
+        if(bgImage){
             imgUrl = codeImg;
-        }else{// FIXME: temporary: pure text image
+        }else{
             imgUrl = textImg;
         }
         this.state = {

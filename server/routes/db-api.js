@@ -49,7 +49,7 @@ router.post('/all-note', checkJwt, function(req, res, next){
         if(userId){// user exist
             getContent("all", userId.toString()).then(
                 function(result){
-                    console.log("check data before send: ", result);
+                    // console.log("check data before send: ", result);
 
                     res.send({content:result, currentUserId: userId});
                 }
@@ -71,7 +71,7 @@ router.post('/share-note', checkJwt, function(req, res, next){
         if(userId){// user exist
             getContent("share", userId.toString()).then(
                 function(result){
-                    console.log("check data before send: ", result);
+                    // console.log("check data before send: ", result);
 
                     res.send({content:result, currentUserId: userId});
                 }
@@ -93,7 +93,7 @@ router.post('/my-note', checkJwt, function(req, res, next){
         if(userId){// user exist
             getContent("my", userId.toString()).then(
                 function(result){
-                    console.log("check data before send: ", result);
+                    // console.log("check data before send: ", result);
 
                     res.send({content:result, currentUserId: userId});
                 }
