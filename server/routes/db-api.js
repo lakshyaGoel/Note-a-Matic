@@ -52,7 +52,49 @@ router.post("/like-dislike", checkJwt, function(req, res, next){
     Note.findOne({_id: noteId}, function(err, database){
         if(operation == "like"){
             // FIXME: more conditional(e.g. if already there, remove it), if already there in dislike, could not run)
-            database.like.push({userId: userId});
+            var likeListExist = false;
+            var dislikeListExist = false;
+            for(var i = 0; i < database.like.length; i++){
+                likeListExist = database.like[i].userId == String(userId);
+                if(likeListExist){
+                    break;
+                }
+            }
+
+            for(var i = 0; i <database.dislike.length; i++){
+                dislikeListExist = String(database.dislike[i].userId) == String(userId);
+                if(dislikeListExist){
+                    break;
+                }
+            }
+
+            /**
+             * TODO: make function to remove id if existed,
+             */
+            if(!likeListExist){
+                database.like.push({userId: userId});
+            }else{
+                for(i=0; i<database.like.length; i++){
+                    if(String(database.like[i]._id) == String(userId)){
+                        database.like.splice(i--, 1);
+                    }
+                }
+                var last = 0;
+                for(var i = 0; i < database.like.length; i++){
+                    if(String(database.like[i]._id) == String(userId)){
+                        last = i;
+                        break;
+                    }
+                }
+                database.like.splice(last, 1);
+            }
+
+            if(!dislikeListExist){
+
+            }
+
+
+
             database.save(function(err){});
         }else if(operation == "dislike"){
             // FIXME: more conditional(e.g. if already there, remove it), if already there in like, could not run)
