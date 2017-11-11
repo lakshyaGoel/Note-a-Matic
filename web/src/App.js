@@ -89,7 +89,7 @@ class App extends Component {
               <div style={{"display":"table-row"}}>
               <LeftSideBar {...this.props} displayTextUser={this.displayTextUser} displayTextAllNotes={this.displayTextAllNotes} displayTextMyNotes={this.displayTextMyNotes} displayTextSharedNotes={this.displayTextSharedNotes}/>
 
-
+                <div className="ShowCase">
                 <Switch>
                   <Route exact path="/" children={() => <AllNote profile={this.props.profile}/>} />
                   <Route path="/new/:type" component={NewNote}/>
@@ -98,7 +98,7 @@ class App extends Component {
                   <Route path="/my-note"  children={() => <MyNote profile={this.props.profile}/>}/>
                   <Route path="/share-note"  children={() => <ShareNote profile={this.props.profile}/>}/>
                 </Switch>
-             
+                </div>
               </div>
             </div>
           <Footer />
@@ -116,7 +116,7 @@ class App extends Component {
             <div className="floatleft"></div>
             <div className="floatright">
               <center>   
-                <h1 className="title is-1 title-color grey-darker">Notes Pro</h1>
+                <h1 className="title is-1 title-color grey-darker">Notes</h1>
                 <LoginLogout {...this.props} />
                 <Signup {...this.props} />
               </center>

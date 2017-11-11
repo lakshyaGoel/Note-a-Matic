@@ -30,3 +30,9 @@
     justify-content: left ; /* align horizontal */
     align-items: center; /* align vertical */
   }
+
+  .ShowCase{
+    width: 70%;
+    /* position: absolute; */
+    margin: 2rem;
+  }

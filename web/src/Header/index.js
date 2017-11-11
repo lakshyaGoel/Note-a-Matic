@@ -14,10 +14,10 @@ class Header extends Component {
           <a className="navbar-item" href="/">
             <img
               src="https://lh3.googleusercontent.com/JfHCS7xbyFV6U85DMxT92rhND6i8v3XCUmI9A3uIwZGQk6AUFZ445uz9J0vWh5P4XKU=w300"
-              alt="Notes Pro"
+              alt="Notes"
               width="40"
               height="40"/>
-            Notes Pro
+            Notes
           </a>
         </div>
         <div className="navbar-end">

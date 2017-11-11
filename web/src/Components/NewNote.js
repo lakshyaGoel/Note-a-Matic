@@ -85,7 +85,8 @@ class NewNote extends Component{
     render(){
         if(!this.state.redirect){
             return(
-                <div>
+                <div className="NoteClass">
+                    <p className="title">Adding a new {this.state.noteType} Note</p>
                     <div className="field">
                         <label className="label">Title</label>
                         <div className="control">
