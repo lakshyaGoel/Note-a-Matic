@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { withAuth } from '../Auth';
 import './Style.css';
-import {Link} from 'react-router-dom';
+import {Link, Redirect} from 'react-router-dom';
 import CodeNote from './CodeEditor';
 import {getAuthorizationHeader} from "../functions";
 
@@ -21,11 +21,12 @@ class NewNote extends Component{
                         shared:"",
                         userID:this.props.profile.name,
                         lastEdit:this.props.profile.name,
-                        editorProp:{mode:"", theme:"", autoComplete:"", lineNumber:""}};
+                        editorProp:{mode:"", theme:"", autoComplete:"", lineNumber:""},
+                        redirect:false};
     }
 
     save(){
-        console.log("All the updated data: " + JSON.stringify(this.state));
+     //   console.log("All the updated data: " + JSON.stringify(this.state));
         var auth = getAuthorizationHeader();
         let request = new Request('/api/db/add-note', {// TODO: if you need to know how it works, fix url to "/api/db/test" instead of "/api/db/test_db". But do not use too much.
             method: 'POST',
@@ -38,6 +39,14 @@ class NewNote extends Component{
         fetch(request)
         .then(function (data) {
           console.log('Request succeeded with JSON response', data);
+          if(data.status === 200){
+            return true;
+          }
+        })
+        .then(re => {
+            if(re){
+                this.setState({redirect: true});
+            }
         })
         .catch(function (error) {
           console.log('Request failed', error);
@@ -74,66 +83,72 @@ class NewNote extends Component{
         });
     }
     render(){
-        return(
-            <div>
-                <div className="field">
-                    <label className="label">Title</label>
-                    <div className="control">
-                    <input value={this.state.noteTitle}
-                            onChange={this.handleChange} 
-                            className="input" 
-                            name="noteTitle"
-                            type="text"
-                            placeholder="What's your note about?"/>
-                    </div>
-                </div>
-                {this.state.noteType === "Text" ? <TextNote onEditDesc={this.updateDesc}/> : <CodeNote onCodeUpdates={this.onCodeUpdates}/>}
-                <div className="field">
-                    <label className="label">#Tags</label>
-                    <div className="control">
-                        <input value={this.state.tags}
-                                onChange={this.handleChange}
+        if(!this.state.redirect){
+            return(
+                <div>
+                    <div className="field">
+                        <label className="label">Title</label>
+                        <div className="control">
+                        <input value={this.state.noteTitle}
+                                onChange={this.handleChange} 
                                 className="input" 
-                                name="tags"
-                                type="text" 
-                                placeholder="Enter the tags starting with # seperated by ','"/>
+                                name="noteTitle"
+                                type="text"
+                                placeholder="What's your note about?"/>
+                        </div>
+                    </div>
+                    {this.state.noteType === "Text" ? <TextNote onEditDesc={this.updateDesc}/> : <CodeNote onCodeUpdates={this.onCodeUpdates}/>}
+                    <div className="field">
+                        <label className="label">#Tags</label>
+                        <div className="control">
+                            <input value={this.state.tags}
+                                    onChange={this.handleChange}
+                                    className="input" 
+                                    name="tags"
+                                    type="text" 
+                                    placeholder="Enter the tags starting with # seperated by ','"/>
+                        </div>
+                    </div>
+                    <div className="field">
+                        <label className="label">Keep this Note Private?</label>
+                        <div className="control">
+                            <label className="radio">
+                                <input type="radio" name="question" value="Yes" checked={this.state.private === "Yes"} onChange={this.onShare}/>
+                                Yes
+                            </label>
+                            <label className="radio">
+                                <input type="radio" name="question" value="No" checked={this.state.private === "No"} onChange={this.onShare}/>
+                                No
+                            </label>
+                        </div>
+                    </div>
+                    <div className="field shareToggleClassHide" id="shareToggleClass">
+                        <label className="label">People you want to share with</label>
+                        <div className="control">
+                            <input value={this.state.shared}
+                                    onChange={this.handleChange}
+                                    className="input" 
+                                    name="shared"
+                                    type="text" 
+                                    placeholder="Enter your friend's username seperated by ','"/>
+                        </div>
+                    </div>
+                    <div className="field is-grouped">
+                        <div className="control">
+                            <button className="button is-link" onClick={this.save}>Submit</button>
+                        </div>
+                        <div className="control">
+                        <Link to={'/'} className="button is-light">Cancel</Link>
+                        </div>
                     </div>
                 </div>
-                <div className="field">
-                    <label className="label">Keep this Note Private?</label>
-                    <div className="control">
-                        <label className="radio">
-                            <input type="radio" name="question" value="Yes" checked={this.state.private === "Yes"} onChange={this.onShare}/>
-                            Yes
-                        </label>
-                        <label className="radio">
-                            <input type="radio" name="question" value="No" checked={this.state.private === "No"} onChange={this.onShare}/>
-                            No
-                        </label>
-                    </div>
-                </div>
-                <div className="field shareToggleClassHide" id="shareToggleClass">
-                    <label className="label">People you want to share with</label>
-                    <div className="control">
-                        <input value={this.state.shared}
-                                onChange={this.handleChange}
-                                className="input" 
-                                name="shared"
-                                type="text" 
-                                placeholder="Enter your friend's username seperated by ','"/>
-                    </div>
-                </div>
-                <div className="field is-grouped">
-                    <div className="control">
-                        <button className="button is-link" onClick={this.save}>Submit</button>
-                    </div>
-                    <div className="control">
-                    <Link to={'/'} className="button is-light">Cancel</Link>
-                    </div>
-                </div>
-            </div>
+                );
+        }else{
+            return(
+                <Redirect to='/'/>
             );
         }
+    }
 }
 class TextNote extends Component{
     constructor(props){

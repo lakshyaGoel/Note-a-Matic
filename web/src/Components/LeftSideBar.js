@@ -19,7 +19,6 @@ class LeftSideBar extends Component {
       // TODO: use Bulma CSS. Read Bulma documentation.
     return (
         <div className="customLeftSideBar">
-            <p>LeftSideBar</p>
             
             <img className="img-circle" src={this.props.profile.picture} alt="Placeholder" />
             <div><Link className="centre-this is-small is-active" to={"/user-info"} onClick={this.props.displayTextUser.bind(this)}>{this.props.profile.nickname}</Link></div>

@@ -98,7 +98,7 @@ class App extends Component {
                   <Route path="/my-note"  children={() => <MyNote profile={this.props.profile}/>}/>
                   <Route path="/share-note"  children={() => <ShareNote profile={this.props.profile}/>}/>
                 </Switch>
-              <RightSideBar/>
+             
               </div>
             </div>
           <Footer />

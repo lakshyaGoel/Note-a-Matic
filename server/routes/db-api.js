@@ -226,21 +226,22 @@ router.post('/add-note', checkJwt, function(req, res, next){
             shareUser.forEach(element =>{
                 shareUserIdList.push({userId: findUserByNickName(element)._id, r: true, w: false});
             });
-            console.log(tagsIdList);
-            console.log(userId);
-            console.log(shareUserIdList);
+            // console.log(tagsIdList);
+            // console.log(userId);
+            // console.log(shareUserIdList);
             var newNoteId = addNote(tagSaveList, shareUserIdList, title, content, share, type, mode, theme, auto, line, userId, userId);
             
             for(var i = 0; i < tagSaveList.length; i ++){
                 Tag.update({"_id": ObjectId(tagSaveList[i])}, { $push: { noteId: newNoteId } }, function(err){
                     if(err){
                         console.log("Something gone wrong");
-                        console.log(err);
+                        //console.log(err);
                     }else{
                         console.log("Success!!");
                     }
                 });
             }
+            res.send(JSON.stringify({s:"Success"}));
         });
 
 });
