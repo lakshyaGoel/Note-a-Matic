@@ -9,7 +9,7 @@ class MainComponent extends Component{
         /**
          * TODO: What I need to fix React component
          *
-         * - add like and dislike api(get note id, user id from client and add data in Note db): 1hour
+         * - add like and dislike api(get note id, user id from client and add data in Note db): 0.5hour
          * - add like and dislike react trigger: (send note id, user id to server and get result): 0.5 hour
          * - show edit button correctly(if note.userId is same as current user or has user id in shareUserList then show edit): ~0.5hour
          * - make delete api: 0.25 hour
