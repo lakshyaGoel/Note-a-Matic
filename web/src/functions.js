@@ -14,3 +14,15 @@ export function getAuthorizationHeader() {
         'Authorization': `Bearer ${token}`
     };
 }
+
+export function getUserId(profile){
+    let request = new Request('/api/db/user-info', {
+        method: 'POST',
+        headers: {
+            "Authorization": getAuthorizationHeader().Authorization,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(profile),
+    });
+    fetch(request).then(response => {return response;});
+}

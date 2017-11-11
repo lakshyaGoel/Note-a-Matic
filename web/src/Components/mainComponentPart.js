@@ -22,14 +22,16 @@ class MainComponent extends Component{
         super(props);
         // TODO: check props, never push without comment out below.
         // console.log(props.type.toLowerCase());
+
+        var deleteFlg = props.currentUserId.indexOf(props.userId) != -1;
         this.footer = (<footer className="card-footer">
-            <Modal title={this.props.title} buttonLabel="show content" content={this.props.content} />
+            <Modal title={this.props.title} buttonLabel="show content" content={this.props.content} deleteFlg={deleteFlg} />
         </footer>);
     }
 
     render(){
         return  (
-                <Card cardTitle={this.props.title} cardFooter={this.footer} cardType={this.props.type.toLowerCase()}>
+                <Card cardTitle={this.props.title} cardFooter={this.footer} cardType={this.props.type.toLowerCase()} >
                     {this.props.description}
                     <CardButtons likeCount={this.props.like.length} dislikeCount={this.props.dislike.length} />
                     <TagField>
