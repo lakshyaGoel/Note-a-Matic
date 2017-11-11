@@ -11,7 +11,7 @@ class MainComponent extends Component{
          *
          * - add like and dislike api(get note id, user id from client and add data in Note db): 0.5hour
          * - show edit button correctly(if note.userId is same as current user or has user id in shareUserList then show edit): ~0.5hour
-         * - make delete api: 0.25 hour
+         * - test delete api: 5 minutes.
          *
          * // additional with Lakshya
          * - edit note Route with parameter sending
