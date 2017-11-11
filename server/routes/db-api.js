@@ -41,6 +41,20 @@ router.post('/user-info', checkJwt, function(req, res, next){
 });// END: router.get('/all-note', checkJwt, function(req, res, next)
 
 
+// delete note by id
+router.post("/delete", checkJwt, function(req, res, next){// TODO: check functionality.
+    var mongoose = require("mongoose");
+    var noteId = mongoose.Types.ObjectId(req.body.noteId);
+    // var userId = mongoose.Types.ObjectId(req.body.userId);//
+    Note.findByIdAndRemove(noteId, (err, db) =>{
+        let response = {
+            message: "successfully deleted",
+            id: db._id
+        };
+        res.status(200).send(response);
+    })
+});
+
 // like and dislike
 router.post("/like-dislike", checkJwt, function(req, res, next){
     var mongoose = require("mongoose");
