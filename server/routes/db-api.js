@@ -44,15 +44,19 @@ router.post('/user-info', checkJwt, function(req, res, next){
 // delete note by id
 router.post("/delete", checkJwt, function(req, res, next){// TODO: check functionality.
     var mongoose = require("mongoose");
-    var noteId = mongoose.Types.ObjectId(req.body.noteId);
+    var noteId = req.body.noteId;
+    console.log("detect delete" ,noteId);
     // var userId = mongoose.Types.ObjectId(req.body.userId);//
-    Note.findByIdAndRemove(noteId, (err, db) =>{
+    var Note = require("../model/Note");
+    Note.findOneAndRemove({_id: noteId}, (err, db) =>{
+        // console.log("find it",db);
+
+
         let response = {
-            message: "successfully deleted",
-            id: db._id
+            message: "successfully deleted"
         };
         res.status(200).send(response);
-    })
+    });
 });
 
 // like and dislike
