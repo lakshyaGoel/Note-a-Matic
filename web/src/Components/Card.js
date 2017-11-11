@@ -123,11 +123,12 @@ class CardButtons extends Component {
             return response.json();
         }).then(res => {
             if(res){
-                console.log("like ersult2", res);
+                console.log("like detect",res);
+                if(res.status == 200){
+                    this.setState({"likeCount":res.result.like, "dislikeCount": res.result.dislike});
+                }
             }
         });
-
-        this.setState({"likeCount": this.state.likeCount + 1});
     }
 
     incrementDislike(){
@@ -149,11 +150,12 @@ class CardButtons extends Component {
             return response.json();
         }).then(res => {
             if(res){
-                console.log("like ersult2", res);
+                console.log("dislike detect",res);
+                if(res.status == 200){
+                    this.setState({"likeCount":res.result.like, "dislikeCount": res.result.dislike});
+                }
             }
         });
-
-        this.setState({"dislikeCount": this.state.dislikeCount + 1});
     }
 
 

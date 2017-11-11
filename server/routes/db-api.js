@@ -64,24 +64,24 @@ router.post("/like-dislike", checkJwt, function(req, res, next){
 
     var Note = require("../model/Note");
     Note.findOne({_id: noteId}, function(err, database){
+        var likeListExist = false;
+        var dislikeListExist = false;
+        for(var i = 0; i < database.like.length; i++){
+            likeListExist = database.like[i].userId == String(userId);
+            if(likeListExist){
+                break;
+            }
+        }
+
+        for(var i = 0; i <database.dislike.length; i++){
+            dislikeListExist = String(database.dislike[i].userId) == String(userId);
+            if(dislikeListExist){
+                break;
+            }
+        }
+
         if(operation == "like"){
             // FIXME: more conditional(e.g. if already there, remove it), if already there in dislike, could not run)
-            var likeListExist = false;
-            var dislikeListExist = false;
-            for(var i = 0; i < database.like.length; i++){
-                likeListExist = database.like[i].userId == String(userId);
-                if(likeListExist){
-                    break;
-                }
-            }
-
-            for(var i = 0; i <database.dislike.length; i++){
-                dislikeListExist = String(database.dislike[i].userId) == String(userId);
-                if(dislikeListExist){
-                    break;
-                }
-            }
-
             /**
              * TODO: make function to remove id if existed,
              */
@@ -103,20 +103,74 @@ router.post("/like-dislike", checkJwt, function(req, res, next){
                 database.like.splice(last, 1);
             }
 
-            if(!dislikeListExist){
-
+            if(dislikeListExist){// if user put dislike while clicking "like", remove user id from dislike
+                for(i=0; i<database.dislike.length; i++){
+                    if(String(database.dislike[i]._id) == String(userId)){
+                        database.dislike.splice(i--, 1);
+                    }
+                }
+                var last = 0;
+                for(var i = 0; i < database.dislike.length; i++){
+                    if(String(database.dislike[i]._id) == String(userId)){
+                        last = i;
+                        break;
+                    }
+                }
+                database.dislike.splice(last, 1);
             }
-
-
-
-            database.save(function(err){});
         }else if(operation == "dislike"){
             // FIXME: more conditional(e.g. if already there, remove it), if already there in like, could not run)
-            database.dislike.push({userId: userId});
-            database.save(function(err){});
+            if(!dislikeListExist){
+                database.dislike.push({userId: userId});
+            }else{
+                for(i=0; i<database.dislike.length; i++){
+                    if(String(database.dislike[i]._id) == String(userId)){
+                        database.dislike.splice(i--, 1);
+                    }
+                }
+                var last = 0;
+                for(var i = 0; i < database.dislike.length; i++){
+                    if(String(database.dislike[i]._id) == String(userId)){
+                        last = i;
+                        break;
+                    }
+                }
+                database.dislike.splice(last, 1);
+            }
+
+            if(likeListExist){// if user put like while clicking "dislike", remove user id from like
+                for(i=0; i<database.like.length; i++){
+                    if(String(database.like[i]._id) == String(userId)){
+                        database.like.splice(i--, 1);
+                    }
+                }
+                var last = 0;
+                for(var i = 0; i < database.like.length; i++){
+                    if(String(database.like[i]._id) == String(userId)){
+                        last = i;
+                        break;
+                    }
+                }
+                database.like.splice(last, 1);
+            }
         }
         // TODO: send data to re-render
-        res.send({"result":"something"});
+        database.save(function(err){});
+    }).then(function(dummy){
+        Note.findOne({_id: noteId},function(err, database){
+            var likeCount = 0;
+            var dislikeCount = 0;
+            for(var i = 0; i < database.like.length; i++){
+                likeCount ++;
+            }
+
+            for(var i = 0; i <database.dislike.length; i++){
+                dislikeCount ++;
+            }
+            res.send({"status": 200, result:{like: likeCount, dislike:dislikeCount}});
+        });
+    }).catch(function(err){
+        res.send({"status": 500});
     });
 });
 
