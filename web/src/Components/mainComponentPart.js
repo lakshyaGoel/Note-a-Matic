@@ -10,7 +10,6 @@ class MainComponent extends Component{
          * TODO: What I need to fix React component
          *
          * - show edit button correctly(if note.userId is same as current user or has user id in shareUserList then show edit): ~0.5hour
-         * - test delete api: 5 minutes.
          *
          * // additional with Lakshya
          * - edit note Route with parameter sending
@@ -22,7 +21,7 @@ class MainComponent extends Component{
 
         var deleteFlg = props.currentUserId.indexOf(props.userId) != -1;
         this.footer = (<footer className="card-footer">
-            <Modal title={this.props.title} buttonLabel="show content" content={this.props.content} deleteFlg={deleteFlg} />
+            <Modal title={this.props.title} buttonLabel="show content" content={this.props.content} deleteFlg={deleteFlg} userId={this.props.userId} noteId={this.props._id}/>
         </footer>);
     }
 

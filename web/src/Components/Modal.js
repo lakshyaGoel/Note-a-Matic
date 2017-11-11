@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
-import { isSet } from "../functions";
+import {getAuthorizationHeader, isSet} from "../functions";
 
 class ModalContainer extends Component {
     constructor(props){
@@ -65,6 +65,33 @@ class ModalCardFooter extends Component {
     constructor(props){
         super(props);
         console.log("ModalCardFooter ",this.props.deleteFlg);
+        this.deleteItem = this.deleteItem.bind(this);
+    }
+
+    deleteItem(){
+        let request = new Request('/api/db/delete', {
+            method: 'POST',
+            headers: {
+                "Authorization": getAuthorizationHeader().Authorization,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({userId: this.props.userId, noteId: this.props.noteId})
+        });
+        console.log("send data:",{userId: this.props.userId, noteId: this.props.noteId});
+        console.log(request);
+        // TODO: write re-rendering with setState and binding.
+        fetch(request)
+        .then(response => {
+            if(!response.ok) {
+                console.log("Error: could not conect server, in Modal.js");
+                return false;
+            }
+            return response.json();
+        }).then(res => {
+            if(res){
+                console.log("like detect",res);
+            }
+        });
     }
     render(){
         return (
@@ -74,7 +101,7 @@ class ModalCardFooter extends Component {
                  see:https://github.com/ReactTraining/react-router/blob/v3/docs/guides/RouteConfiguration.md#adding-an-index
                  */}
                 <Link to="new" className="button is-success">Edit</Link>
-                {this.props.deleteFlg? <button className="button is-danger">Delete</button>: ""}
+                {this.props.deleteFlg? <button className="button is-danger" onClick={this.deleteItem}>Delete</button>: ""}
             </footer>
         )
     }
@@ -98,7 +125,7 @@ class Modal extends Component {
                 <ModalCardBody>
                     {this.props.content}
                 </ModalCardBody>
-                <ModalCardFooter deleteFlg={this.props.deleteFlg}/>
+                <ModalCardFooter deleteFlg={this.props.deleteFlg} userId={this.props.userId} noteId={this.props.noteId}/>
             </ModalContainer>
         );
     }
