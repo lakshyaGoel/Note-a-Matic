@@ -248,14 +248,24 @@ router.post('/add-note', checkJwt, function(req, res, next){
     tags = tags.split(", ").map(function(b){
         return b.substr(1);
     });
+    var bIsTagEmpty = false;
+    if(tags.length === 1 && tags[tags.length-1].length === 0){
+        bIsTagEmpty = true;
+    }
     var share = req.body.private === "No";// share message is string "Yes"/"No" not Boolean: true/false. it cause problem
     var type = req.body.noteType;
     var shareUser = req.body.shared;
     shareUser = shareUser.split(", ").map(function(b){
-        return b
+        return b;
     });
-    // console.log("Sharing with: ");
-    // console.log(shareUser);
+    var bIsSharedListEmpty;
+    if(shareUser.length === 1 && shareUser[shareUser.length-1].length === 0){
+        bIsSharedListEmpty = true;
+        share = false;
+    }else{
+        bIsSharedListEmpty = false;
+        share = true;
+    }
     var shareUserIdList = [];
     var userId = req.body.userID;
     var lastEditId = req.body.userID;
@@ -272,8 +282,6 @@ router.post('/add-note', checkJwt, function(req, res, next){
         function(result){
             var tagList = result[0];
             var userList = result[1];
-            //console.log("tagList: ",tagList);
-            //console.log("userList: ",userList);
             function findTagByTagName(tagName){
                 var result = tagList.filter(function(tagObject){
                     var result = false;
@@ -341,8 +349,6 @@ router.post('/add-note', checkJwt, function(req, res, next){
             function getTagId(tagName){
                 return isSet(findTagByTagName(tagName)._id, null);
             }
-
-            var tagsIdList = getTagIdList(tags);
             function saveNewTag(tagsIdList){
                 var newIds = [];
                 var newPromise = []
@@ -356,29 +362,34 @@ router.post('/add-note', checkJwt, function(req, res, next){
                 }
                 return newIds;
             }
-
-            var tagSaveList = tagsIdList.map(function(col){
-                return col.saveState;
-            });
-
+            if(!bIsTagEmpty){
+                var tagsIdList = getTagIdList(tags);
+                var tagSaveList = tagsIdList.map(function(col){
+                    return col.saveState;
+                });
+            }else{
+                tagSaveList = [];
+            }
             userId = findUserByUserName(userId)._id;
-            shareUser.forEach(element =>{
-                shareUserIdList.push({userId: findUserByNickName(element)._id, r: true, w: false});
-            });
-            // console.log(tagsIdList);
-            // console.log(userId);
-            // console.log(shareUserIdList);
+            if(!bIsSharedListEmpty){
+                shareUser.forEach(element =>{
+                    shareUserIdList.push({userId: findUserByNickName(element)._id, r: true, w: false});
+                });
+            }else{
+                shareUserIdList = [];
+            }
             var newNoteId = addNote(tagSaveList, shareUserIdList, title, content, desc, share, type, mode, theme, auto, line, userId, userId);
             
-            for(var i = 0; i < tagSaveList.length; i ++){
-                Tag.update({"_id": ObjectId(tagSaveList[i])}, { $push: { noteId: newNoteId } }, function(err){
-                    if(err){
-                        console.log("Something gone wrong");
-                        //console.log(err);
-                    }else{
-                        console.log("Success!!");
-                    }
-                });
+            if(!bIsTagEmpty){
+                for(var i = 0; i < tagSaveList.length; i ++){
+                    Tag.update({"_id": ObjectId(tagSaveList[i])}, { $push: { noteId: newNoteId } }, function(err){
+                        if(err){
+                            console.log("Something gone wrong");
+                        }else{
+                            console.log("Success!!");
+                        }
+                    });
+                }
             }
             res.send(JSON.stringify({s:"Success"}));
         });
