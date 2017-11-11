@@ -41,6 +41,24 @@ router.post('/user-info', checkJwt, function(req, res, next){
 });// END: router.get('/all-note', checkJwt, function(req, res, next)
 
 
+// like and dislike
+router.post("like-dislike", checkJwt, function(req, res, next){
+    var mongoose = require("mongoose");
+    var noteId = mongoose.Types.ObjectId(req.body.noteId);
+    var userId = mongoose.Types.ObjectId(req.body.userId);
+    var operation = req.body.operation;
+
+    Note.findOne({_id: noteId}, function(database){
+        if(operation == "like"){
+            // FIXME: more conditional(e.g. if already there, remove it), if already there in dislike, could not run)
+            database.like.push({userId: userId});
+        }else if(operation == "dislike"){
+            // FIXME: more conditional(e.g. if already there, remove it), if already there in like, could not run)
+            database.dislike.push({userId: userId});
+        }
+    });
+});
+
 // get api to show all note in main panel.
 router.post('/all-note', checkJwt, function(req, res, next){
     var getContent = require("../util/getContent");
