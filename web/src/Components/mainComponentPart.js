@@ -9,7 +9,7 @@ class MainComponent extends Component{
         /**
          * TODO: What I need to fix React component
          *
-         * - show edit button correctly(if note.userId is same as current user or has user id in shareUserList then show edit): ~0.5hour
+         * - show edit button correctly(if note.userId is same as current user or has user id in shareUserList then show edit): ~1hour
          *
          * // additional with Lakshya
          * - edit note Route with parameter sending
