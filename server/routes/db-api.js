@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const checkJwt = require('../auth').checkJwt;
 const fetch = require('node-fetch');
-
+var ObjectId = require('mongoose').Types.ObjectId;
 // api trigger for generating dummy meaningless demo data,
 // router.get("/generate-data", checkJwt, function(req, res, next){
 //     var generateDemo = require("../util/generate_demodata");
@@ -191,6 +191,9 @@ router.post('/add-note', checkJwt, function(req, res, next){
                 for(var i = 0; i < tagList.length; i++){
                     result.push({tagName: tagList[i], saveState: getTagId(tagList[i])});
                 }
+                var newIds = saveNewTag(result);
+                result = result.filter(o => o.saveState !== null);
+                result = result.concat(newIds);
                 return result;
             }
 
@@ -200,35 +203,19 @@ router.post('/add-note', checkJwt, function(req, res, next){
                 return isSet(findTagByTagName(tagName)._id, null);
             }
 
-            // function insertNewTag(tName){
-            //     var tag = new Tag();
-            //     tag.tagName = tName;
-            //     tag.save(function(err, d){
-            //         if(err){
-            //             console.log(err);
-            //         }else{
-            //             console.log("Success Tag");
-            //             return d._id;
-            //         }
-            //     });
-            // }
-
             var tagsIdList = getTagIdList(tags);
-
-            function saveNewTag(){
+            function saveNewTag(tagsIdList){
+                var newIds = [];
+                var newPromise = []
                 for(var i = 0; i < tagsIdList.length; i++){
                     var tag = new Tag();
-                    if(tagsIdList[i].state == null){
+                    if(tagsIdList[i].saveState == null){
+                        newIds.push({tagName: tagsIdList[i].tagName, saveState: tag._id});
                         tag.tagName = tagsIdList[i].tagName;
-                        tag.save(function(err){
-                        }).then(function(resultDummy){
-                            var Tag = require("../model/Tag");
-                            Tag.find({"tagname": tagsIdList[i].tagName }).then(function(result){
-                                // console.log("refreshed tag database after add new tag2", result);
-                            });
-                        });
+                        tag.save(function(err){});
                     }
                 }
+                return newIds;
             }
 
             var tagSaveList = tagsIdList.map(function(col){
@@ -239,15 +226,20 @@ router.post('/add-note', checkJwt, function(req, res, next){
             shareUser.forEach(element =>{
                 shareUserIdList.push({userId: findUserByNickName(element)._id, r: true, w: false});
             });
-            // console.log("tagIdList", tagsIdList);
-            // console.log(userId);
-            // console.log(shareUserIdList);
-            // console.log("reach here in db-api");
-            var note = addNote(tagSaveList, shareUserIdList, title, content, share, type, mode, theme, auto, line, userId, userId);
-
-            for(var i = 0; i < note.tags.length; i ++){
-                Tag.find({"_id": ObjectId(note.tags[0])});
-
+            console.log(tagsIdList);
+            console.log(userId);
+            console.log(shareUserIdList);
+            var newNoteId = addNote(tagSaveList, shareUserIdList, title, content, share, type, mode, theme, auto, line, userId, userId);
+            
+            for(var i = 0; i < tagSaveList.length; i ++){
+                Tag.update({"_id": ObjectId(tagSaveList[i])}, { $push: { noteId: newNoteId } }, function(err){
+                    if(err){
+                        console.log("Something gone wrong");
+                        console.log(err);
+                    }else{
+                        console.log("Success!!");
+                    }
+                });
             }
         });
 
@@ -279,7 +271,7 @@ function addNote(tagsList, shareUserList, title, content, share, type, mode, the
             console.log("save all note data correctly");
         }
     });
-    return note;
+    return note._id;
 }
 
 module.exports = router;
