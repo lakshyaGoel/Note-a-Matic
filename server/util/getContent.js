@@ -81,7 +81,7 @@ function getContent(param, userId){
                 noteDb[i]["tagNameList"] = getTagNamesByIdList(noteDb[i].tags);
                 // console.log("add tagNameList",noteDb[i]);
             }
-            return noteDb;
+            return noteDb.reverse();
         });
         return noteDB;
     });
