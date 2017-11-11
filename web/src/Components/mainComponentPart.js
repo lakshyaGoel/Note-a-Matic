@@ -16,7 +16,7 @@ class MainComponent extends Component{
         return  (
                 <Card cardTitle={this.props.title} cardFooter={this.footer}>
                     {this.props.description}
-                    <CardButtons/>
+                    <CardButtons likeCount={this.props.like.length} dislikeCount={this.props.dislike.length} />
                     <TagField>
                         {/*{this.props.tags.map((tagData, key) => <Tag tagName={tagData.tagName} key={key.toString()}/>)}*/}
                     </TagField>
