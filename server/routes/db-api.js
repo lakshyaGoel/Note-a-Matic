@@ -109,7 +109,7 @@ router.post('/add-note', checkJwt, function(req, res, next){
     tags = tags.split(", ").map(function(b){
         return b.substr(1);
     });
-    var share = !req.body.private;
+    var share = req.body.private === "No";// share message is string "Yes"/"No" not Boolean: true/false. it cause problem
     var type = req.body.noteType;
     var shareUser = req.body.shared;
     shareUser = shareUser.split(", ").map(function(b){
