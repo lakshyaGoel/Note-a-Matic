@@ -1,9 +1,6 @@
-/**
- * Created by reiven on 2017/11/04.
- */
 import React, { Component } from 'react';
 import MainComponent from "../Components/mainComponentPart";
-import {getAuthorizationHeader, getUserId} from "../functions";
+import {getAuthorizationHeader} from "../functions";
 
 class AllNote extends Component {
     constructor(props){

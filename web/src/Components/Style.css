@@ -82,3 +82,7 @@
 .customBg{
   background-color: #b8b8b8
 }
+.SearchBox{
+  display: flex;
+  padding-top: 0.5rem;
+}

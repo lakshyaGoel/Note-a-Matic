@@ -7,7 +7,7 @@ import {getAuthorizationHeader, isSet} from "../functions";
 class CardHeadImage extends Component {
     constructor(props){
         super(props);
-        let bgImage = props.cardType.indexOf("code") != -1;// TODO: need some fix,,,
+        let bgImage = props.cardType.indexOf("code") !== -1;// TODO: need some fix,,,
         let imgUrl = "https://bulma.io/images/placeholders/1280x960.png";
         if(bgImage){
             imgUrl = codeImg;
@@ -124,7 +124,7 @@ class CardButtons extends Component {
         }).then(res => {
             if(res){
                 console.log("like detect",res);
-                if(res.status == 200){
+                if(res.status === 200){
                     this.setState({"likeCount":res.result.like, "dislikeCount": res.result.dislike});
                 }
             }
@@ -151,7 +151,7 @@ class CardButtons extends Component {
         }).then(res => {
             if(res){
                 console.log("dislike detect",res);
-                if(res.status == 200){
+                if(res.status === 200){
                     this.setState({"likeCount":res.result.like, "dislikeCount": res.result.dislike});
                 }
             }
