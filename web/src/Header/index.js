@@ -29,14 +29,6 @@ class Header extends Component {
             Notes
           </a>
         </div>
-        <div>
-          <input class="input" id="sfield" type="text" placeholder="Enter Search Query" /> 
-        </div>&nbsp;
-        <div>
-          <Link to={'/search'} >
-              <button class="button is-primary" onClick={this.searchCall.bind(this)}>Search</button>
-          </Link>
-        </div>
         <div className="navbar-end">
         <div className="SearchBox">
           <div>
@@ -44,7 +36,7 @@ class Header extends Component {
           </div>&nbsp;
           <div>
             <Link to={'/search'}>
-                <button className="button is-primary">Search</button>
+                <button className="button is-primary" onClick={this.searchCall.bind(this)}>Search</button>
             </Link>
           </div>
         </div>
