@@ -233,8 +233,8 @@ class TagWCount extends Component{
         var renderContent = (
             <div className="control">
                 <div className="tags has-addons">
-                    <a className="tag is-light">{this.props.tagName}</a>
-                    <a className="tag is-light">{this.props.tagCount}</a>
+                <a className="tag is-light" onClick={this.props.setTagValue(this.props.tagName)}>{this.props.tagName}</a>
+                <a className="tag is-light">{this.props.tagCount}</a>
                 </div>
             </div>
         );

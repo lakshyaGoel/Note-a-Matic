@@ -2,17 +2,85 @@ import React, { Component } from 'react';
 import './Style.css';
 import {Link} from 'react-router-dom';
 import {TagWCount, TagField} from "./Card";
+import {getAuthorizationHeader, getUserId} from "../functions";
 
 class LeftSideBar extends Component {
     constructor(props){
         super(props);
+        let dataList = [];
         this.state = {
-            tags: []
+            tags: [], tempTagList:[],tagSS:[], "dataList": dataList, "currentUserId": ""
         };
-        for(let j = 0; j < 3; j++){
-            this.state.tags.push({"tagName": "tag" + j,"count":5});
-        }
+        this.displayTag = this.displayTag.bind(this);
         
+    }
+    
+    displayTag(value){
+        
+      }
+
+    componentDidMount(){
+        let request = new Request('/api/db/all-note', {
+            method: 'POST',
+            headers: {
+                "Authorization": getAuthorizationHeader().Authorization,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(this.props.profile)
+        });
+
+        // TODO: write re-rendering with setState and binding.
+        fetch(request)
+        .then(response => {
+           if(!response.ok) {
+               console.log("Error: could not conect server, in AllNote/index.js");
+               return false;
+           }
+           return response.json();
+        }).then(res => {
+            console.log("this is allnote result",res);// This is Note data! parse here.
+            // TODO: Tag data fix!
+            if(res){
+                this.setState({"dataList": res.content, "currentUserId": res.currentUserId});
+                let tags=[], tagSS=[]
+                for (let i = 0; i <= this.state.dataList.length; i++) {
+                  this.setState({
+                    tempTagList: []
+                  });
+                  this.setState({
+                    tempTagList: this.state.dataList[i].tagNameList
+                  });
+                  console.log(this.state.tempTagList);
+                  console.log("hi");
+                  for (var j = 0; j < this.state.tempTagList.length; j++) {
+                    console.log("hi1");
+                    console.log(this.state.tempTagList[j] in tagSS);
+                    console.log("hi2");
+                    if (Object(this.state.tempTagList[j]) in tagSS) {
+                      tags.push({
+                        "tagName": this.state.tempTagList[j],
+                        "count": tags[tags.findIndex(this.state.tempTagList[j])].count + 1
+                      });
+                      console.log(tags);
+                      console.log("hi3");
+                    } else {
+                      tagSS.push(this.state.tempTagList[j]);
+                      tags.push({
+                        "tagName": this.state.tempTagList[j],
+                        "count": 1
+                      });
+                      console.log(tagSS);
+                      console.log("hi4");
+                    }
+                  }
+                  this.setState({tags, tagSS})
+                  console.log(this.state.tags);
+                  
+                }
+                
+                
+        }
+        });
     }
   render() {
     
@@ -35,7 +103,8 @@ class LeftSideBar extends Component {
             <br/><br/><br/><br/><br/><br/><br/>
              <div><p>My Tags</p>
                 <TagField>
-                    {this.state.tags.map((tagData,count, key) => <TagWCount tagName={tagData.tagName} tagCount={tagData.count} key={key.toString()}/>)}
+                   {/*{this.props.tagNameList.map((tagData, key) => <Tag tagName={tagData} key={key.toString()}/>)}   
+                    */} {this.state.tags.map((tagData, key) => <TagWCount tagName={tagData.tagName} tagCount={tagData.count} setTagValue={this.displayTag} key={key.toString()}/>)}
                 </TagField></div>
         </div>
     );
