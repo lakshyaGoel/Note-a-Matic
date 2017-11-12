@@ -6,8 +6,16 @@ import img from '../landingImg.jpg'
 class Header extends Component {
   constructor(props){
     super(props);
-    this.state = {disabled: false};
+    this.state = {disabled: false, textBoxVal: ""};
   }
+
+  searchCall(){
+    //console.log(document.getElementById('sfield').value);
+    //this.setState({textBoxVal:document.getElementById('sfield').value});
+    //this.props.setSearchValue.bind(this,this.state.textBoxVal);
+    this.props.setSearchValue(document.getElementById('sfield').value);
+  }
+
   render() {
     return (
       <nav className="navbar" style={{"background-color": "hsl(0, 0%, 96%)"}}>
@@ -22,11 +30,11 @@ class Header extends Component {
           </a>
         </div>
         <div>
-          <input class="input" id="sfield" type="text" placeholder="e.g Alex Smith"/> 
+          <input class="input" id="sfield" type="text" placeholder="Enter Search Query" /> 
         </div>&nbsp;
         <div>
-          <Link to={'/search'}>
-              <button class="button is-primary" onClick>Search</button>
+          <Link to={'/search'} >
+              <button class="button is-primary" onClick={this.searchCall.bind(this)}>Search</button>
           </Link>
         </div>
         <div className="navbar-end">
