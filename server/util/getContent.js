@@ -22,14 +22,14 @@ function getContent(param, userId){
     if(param === "share"){
         query =  {
             "share": true,
-            shareUser: {$elemMatch: {userId: userId, r: true, w: true}}
+            shareUser: {$elemMatch: {userId: userId, r: true, w: false}}
         };
     }else if(param === "my"){
         query = {userId: userId};
     }else if(param === "all"){
         query = {
             $or: [
-                {"share": true, shareUser: {$elemMatch: {userId: userId, r: true, w: true}}},
+                {"share": true, shareUser: {$elemMatch: {userId: userId, r: true, w: false}}},
                 {"userId": userId}
             ]
         }
