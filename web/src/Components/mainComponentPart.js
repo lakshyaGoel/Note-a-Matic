@@ -1,10 +1,10 @@
-import React, {Component} from "react";
+import React, { Component } from "react";
 
 import Modal from "./Modal";
-import {Card, CardButtons, Tag, TagField} from "./Card";
+import { Card, CardButtons, Tag, TagField } from "./Card";
 
 
-class MainComponent extends Component{
+class MainComponent extends Component {
     constructor(props){
         /**
          * TODO: What I need to fix React component
@@ -21,20 +21,28 @@ class MainComponent extends Component{
 
         var deleteFlg = props.currentUserId.indexOf(props.userId) != -1;
         this.footer = (<footer className="card-footer">
-            <Modal title={this.props.title} allProps={this.props} buttonLabel="View Note" content={this.props.content} deleteFlg={deleteFlg} userId={this.props.userId} noteId={this.props._id}/>
+            <Modal title={this.props.title}
+                   allProps={this.props}
+                   buttonLabel="View Note"
+                   content={this.props.content}
+                   deleteFlg={deleteFlg}
+                   userId={this.props.userId}
+                   noteId={this.props._id}
+                   currentUserId={this.props.currentUserId}/>
         </footer>);
     }
 
     render(){
-        return  (
-                <Card cardTitle={this.props.title} cardFooter={this.footer} cardType={this.props.type.toLowerCase()} >
-                    {this.props.description}
-                    <CardButtons likeCount={this.props.like.length} dislikeCount={this.props.dislike.length} userId={this.props.userId} noteId={this.props._id}/>
-                    <TagField>
-                        {this.props.tagNameList.map((tagData, key) => <Tag tagName={tagData} key={key.toString()}/>)}
-                    </TagField>
-                </Card>
-            );
+        return (
+            <Card cardTitle={this.props.title} cardFooter={this.footer} cardType={this.props.type.toLowerCase()}>
+                {this.props.description}
+                <CardButtons likeCount={this.props.like.length} dislikeCount={this.props.dislike.length}
+                             userId={this.props.userId} noteId={this.props._id}/>
+                <TagField>
+                    {this.props.tagNameList.map((tagData, key) => <Tag tagName={tagData} key={key.toString()}/>)}
+                </TagField>
+            </Card>
+        );
 
     }
 }

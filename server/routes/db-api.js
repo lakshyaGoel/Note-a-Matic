@@ -40,7 +40,22 @@ router.post('/user-info', checkJwt, function(req, res, next){
     });
 });// END: router.get('/all-note', checkJwt, function(req, res, next)
 
-
+router.post("/get-note", checkJwt, function(req,res, next){
+    var mongoose = require("mongoose");
+    var noteId = req.body.noteId;
+    console.log("detect edit" ,noteId);
+    // var userId = mongoose.Types.ObjectId(req.body.userId);//
+    var Note = require("../model/Note");
+    Note.findOne({_id: noteId}, (err, db) =>{
+        // console.log("find it",db);
+        let response = {
+            message: "success",
+            note: db
+        };
+        console.log(response);
+        res.status(200).send(response);
+    });
+});
 // delete note by id
 router.post("/delete", checkJwt, function(req, res, next){// TODO: check functionality.
     var mongoose = require("mongoose");
