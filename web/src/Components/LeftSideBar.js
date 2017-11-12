@@ -11,12 +11,14 @@ class LeftSideBar extends Component {
         this.state = {
             tags: [], tempTagList:[],tagSS:[], "dataList": dataList, "currentUserId": ""
         };
-        this.displayTag = this.displayTag.bind(this);
+        this.displayTag= this.displayTag.bind(this);
         
     }
     
     displayTag(value){
-        
+        console.log("tag selected");
+        console.log(value);
+        this.props.displayTagValue1(value);
       }
 
     componentDidMount(){
@@ -41,7 +43,7 @@ class LeftSideBar extends Component {
             console.log("this is allnote result",res);// This is Note data! parse here.
             // TODO: Tag data fix!
             if(res){
-                this.setState({"dataList": res.content, "currentUserId": res.currentUserId});
+            this.setState({"dataList": res.content, "currentUserId": res.currentUserId});
                 let tags=[], tagSS=[]
                 for (let i = 0; i <= this.state.dataList.length; i++) {
                   this.setState({
@@ -53,33 +55,24 @@ class LeftSideBar extends Component {
                   console.log(this.state.tempTagList);
                   console.log("hi");
                   for (var j = 0; j < this.state.tempTagList.length; j++) {
-                    console.log("hi1");
-                    console.log(this.state.tempTagList[j] in tagSS);
-                    console.log("hi2");
-                    if (Object(this.state.tempTagList[j]) in tagSS) {
+                    if (tagSS.indexOf(Object(this.state.tempTagList[j])) >-1) {
                       tags.push({
                         "tagName": this.state.tempTagList[j],
                         "count": tags[tags.findIndex(this.state.tempTagList[j])].count + 1
                       });
-                      console.log(tags);
-                      console.log("hi3");
+
                     } else {
                       tagSS.push(this.state.tempTagList[j]);
                       tags.push({
                         "tagName": this.state.tempTagList[j],
                         "count": 1
                       });
-                      console.log(tagSS);
-                      console.log("hi4");
+                      
                     }
                   }
-                  this.setState({tags, tagSS})
-                  console.log(this.state.tags);
-                  
+                  this.setState({tags, tagSS});
                 }
-                
-                
-        }
+            }
         });
     }
   render() {
