@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+
 
 import {getAuthorizationHeader, isSet} from "../functions";
 import AceEditor from 'react-ace';
@@ -105,7 +106,6 @@ class ModalCardFooter extends Component {
         });
         console.log("send data:",{userId: this.props.userId, noteId: this.props.noteId});
         console.log(request);
-        // TODO: write re-rendering with setState and binding.
         fetch(request)
         .then(response => {
             if(!response.ok) {
@@ -115,7 +115,8 @@ class ModalCardFooter extends Component {
             return response.json();
         }).then(res => {
             if(res){
-                console.log("like detect",res);
+                console.log("delete detect",res);
+                window.location.reload();
             }
         });
     }
