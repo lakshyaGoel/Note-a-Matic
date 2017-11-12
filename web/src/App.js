@@ -96,6 +96,7 @@ class App extends Component {
                   <Route exact path="/" children={() => <AllNote profile={this.props.profile}/>} />
                   <Route path="/search"  children={() => <Search profile={this.props.profile}/>}/>
                   <Route path="/new/:type" component={NewNote}/>
+                  <Route path="/:type/:noteId" component={NewNote}/>
                   <Route path="/user-info" children={() => <UserInfo {...this.props}/>}/>
                   <Route path="/all-note"  children={() => <AllNote profile={this.props.profile}/>}/>
                   <Route path="/my-note"  children={() => <MyNote profile={this.props.profile}/>}/>

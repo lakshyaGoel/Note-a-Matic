@@ -85,10 +85,12 @@ class ModalCardBody extends Component {
 class ModalCardFooter extends Component {
     constructor(props){
         super(props);
-        console.log("ModalCardFooter ",this.props.deleteFlg);
+        console.log("ModalCardFooter ",this.props.noteType);
+        var noteLink = "/" + this.props.noteType + "/" + this.props.noteId;
         this.state={
-            tagNameList: props.tags
-        }
+            tagNameList: props.tags,
+            noteLink: noteLink
+        };
         this.deleteItem = this.deleteItem.bind(this);
     }
 
@@ -117,6 +119,7 @@ class ModalCardFooter extends Component {
             }
         });
     }
+
     render(){
         return (
             <footer className="modal-card-foot customBg">
@@ -124,7 +127,7 @@ class ModalCardFooter extends Component {
                  //TODO : need a proper parameter to separate page.
                  see:https://github.com/ReactTraining/react-router/blob/v3/docs/guides/RouteConfiguration.md#adding-an-index
                  */}
-                <Link to="new" className="button is-success">Edit</Link>
+                <Link to={this.state.noteLink} className="button is-success">Edit</Link>
                 {this.props.deleteFlg? <button className="button is-danger" onClick={this.deleteItem}>Delete</button>: ""}
                 <TagField>
                     {this.state.tagNameList.map((tagData, key) => <Tag tagName={tagData} key={key.toString()}/>)}
@@ -149,11 +152,11 @@ class Modal extends Component {
 
     render(){
         return (
-            <ModalContainer active={this.state.active} buttonLabel={this.props.buttonLabel} title={this.props.title} >
+            <ModalContainer active={this.state.active} buttonLabel={this.props.buttonLabel} title={this.props.title} currentUserId={this.props.currentUserId}>
                 <ModalCardBody data={this.state.allData}>
                     {this.props.content}
                 </ModalCardBody>
-                <ModalCardFooter tags={this.state.allData.tagNameList} deleteFlg={this.props.deleteFlg} userId={this.props.userId} noteId={this.props.noteId}/>
+                <ModalCardFooter tags={this.state.allData.tagNameList} deleteFlg={this.props.deleteFlg} userId={this.props.userId} noteId={this.props.noteId} noteType={this.props.allProps.type}/>
             </ModalContainer>
         );
     }

@@ -13,6 +13,7 @@ class NewNote extends Component{
         this.handleChange = this.handleChange.bind(this);
         this.updateDesc = this.updateDesc.bind(this);
         this.onCodeUpdates = this.onCodeUpdates.bind(this);
+        // TODO: Lakshya, need note id to update Note when edit.
         this.state = {  private: "Yes", 
                         noteType:"", 
                         noteTitle:"", 
@@ -55,8 +56,38 @@ class NewNote extends Component{
     }
     componentDidMount(){
         var type = this._reactInternalFiber._debugOwner.stateNode.props.match.params.type;
-        this.setState({noteType:type});
+        var noteId = this._reactInternalFiber._debugOwner.stateNode.props.match.params.noteId;
+        if(noteId){// when editing, not creating new note.
+            let request = new Request('/api/db/get-note', {
+                method: 'POST',
+                headers: {
+                    "Authorization": getAuthorizationHeader().Authorization,
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({"noteId": noteId})
+            });
+
+            fetch(request)
+            .then(response => {
+                if(!response.ok) {
+                    console.log("Error: could not conect server, in AllNote/index.js");
+                    return false;
+                }
+                return response.json();
+            }).then(res => {
+                // TODO: Tag data fix!
+                if(res){
+                    console.log(res);
+                    // TODO: Lakshya: fix here to show content properly.
+                    this.setState({noteType:type});
+                }
+            });
+        }else{// creating new note
+            this.setState({noteType:type});
+        }
     }
+
+
     handleChange(event){
         this.setState({[event.target.name]: event.target.value});
     }
