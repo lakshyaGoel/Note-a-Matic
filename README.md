@@ -34,7 +34,6 @@ along with a very brief caption:**
 
 ## External Dependencies
 
-* jquery3.2.1: parsing dom, form processing
 * react: To render the client
 * AceEditor: To show code editing functionality
 * multer: sending data from client to sever
