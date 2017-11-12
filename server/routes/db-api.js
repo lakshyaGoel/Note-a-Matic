@@ -41,19 +41,57 @@ router.post('/user-info', checkJwt, function(req, res, next){
 });// END: router.get('/all-note', checkJwt, function(req, res, next)
 
 router.post("/get-note", checkJwt, function(req,res, next){
-    var mongoose = require("mongoose");
     var noteId = req.body.noteId;
     console.log("detect edit" ,noteId);
     // var userId = mongoose.Types.ObjectId(req.body.userId);//
     var Note = require("../model/Note");
-    Note.findOne({_id: noteId}, (err, db) =>{
+    Note.findOne({_id: noteId}).lean().exec(function(err, db){
         // console.log("find it",db);
-        let response = {
-            message: "success",
-            note: db
-        };
-        console.log(response);
-        res.status(200).send(response);
+        var promiseList = [];
+
+        var Tag = require("../model/Tag");
+        var tagIdList = db.tags;
+        // pure object, not Promise but no problem.
+        var tagPromise = Tag.find({_id:{$in: tagIdList}}).exec(function(err,db){
+            var result = [];
+            if(!err){
+                result = db.map(function(item){
+                    return item.tagName;
+                });
+            }
+            return result;
+        });
+        promiseList.push(tagPromise);
+
+        var shareFlg = db.share;
+        var shareUser = db.shareUser;
+        var sharePromise = [];
+        if(shareFlg){
+            var User = require("../model/User");
+            var sharePromise = User.find({_id:{$in: shareUser}}).exec(function(err, db){
+               var result = [];
+                if(!err){
+                    result = db.map(function(item){
+                       return item.name;
+                    });
+                }
+                return result;
+            });
+        }
+        promiseList.push(sharePromise);
+        Promise.all(promiseList).then(function(result){
+            var tagNameList = result[0];
+            var shareUserNameList = result[1];
+            db.tagNameList = tagNameList;
+            db.shareUserNameList = shareUserNameList;
+
+            let response = {
+                message: "success",
+                note: db
+            };
+            console.log(response);
+            res.status(200).send(response);
+        });
     });
 });
 
@@ -239,12 +277,13 @@ router.post('/share-note', checkJwt, function(req, res, next){
 });// END: router.get('/share-note', checkJwt, function(req, res, next)
 
 router.post('/search-note', checkJwt, function(req, res, next){
+    //console.log(req.body.val);
     var getContent = require("../util/getSearchContent");
     var userExist = require("../util/checkUserExist");
-    userExist(req.body).then(function(userId){
+    userExist(req.body.profile).then(function(userId){
         if(userId){// user exist
-            console.log("The VALUE"+req.body.val);
-            getContent("all", userId.toString()).then(
+            //console.log("The VALUE"+req.body.val);
+            getContent(req.body.value, userId.toString()).then(
                 function(result){
                     // console.log("check data before send: ", result);
                     res.send({content:result, currentUserId: userId});
@@ -286,19 +325,24 @@ router.post('/add-note', checkJwt, function(req, res, next){
     var content = req.body.noteCont;
     var desc = req.body.noteDesc;
     var tags = req.body.tags;
-    tags = tags.split(", ").map(function(b){
-        return b.substr(1);
-    });
+    if(tags.length != 0){
+        tags = tags.split(", ").map(function(b){
+            return b.substr(1);
+        });
+    }
     var bIsTagEmpty = false;
     if(tags.length === 1 && tags[tags.length-1].length === 0){
         bIsTagEmpty = true;
     }
-    var share = req.body.private === "No";// share message is string "Yes"/"No" not Boolean: true/false. it cause problem
+    var noteId = req.body.noteId;
+    var share = req.body.private === "No";
     var type = req.body.noteType;
     var shareUser = req.body.shared;
-    shareUser = shareUser.split(", ").map(function(b){
-        return b;
-    });
+    if(shareUser.length != 0){
+        shareUser = shareUser.split(", ").map(function(b){
+            return b;
+        });
+    }
     var bIsSharedListEmpty;
     if(shareUser.length === 1 && shareUser[shareUser.length-1].length === 0){
         bIsSharedListEmpty = true;
@@ -317,8 +361,17 @@ router.post('/add-note', checkJwt, function(req, res, next){
 
     var Tag = require("../model/Tag");
     var User = require("../model/User");
+    var Note = require("../model/Note");
     var tagPromise = Promise.resolve(Tag.find());
     var userPromise = Promise.resolve(User.find());
+    if(noteId !== ""){
+        Note.update({_id: noteId},{title:title, content:content, description:desc}, (err, db) =>{
+            let response = {
+                message: "success",
+                note: db
+            };
+        });
+    }else{
     Promise.all([tagPromise, userPromise]).then(
         function(result){
             var tagList = result[0];
@@ -434,6 +487,7 @@ router.post('/add-note', checkJwt, function(req, res, next){
             }
             res.send(JSON.stringify({s:"Success"}));
         });
+    }
 
 });
 

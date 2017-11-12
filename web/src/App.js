@@ -27,13 +27,14 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-        displayText: 'All Notes', displayTag: ' '
+        displayText: 'All Notes', displayTag: ' ', val: ""
     };
     this.displayTextUser = this.displayTextUser.bind(this);
     this.displayTextAllNotes = this.displayTextAllNotes.bind(this);
     this.displayTextMyNotes = this.displayTextMyNotes.bind(this);
     this.displayTextSharedNotes = this.displayTextSharedNotes.bind(this);
     this.displayTagValue=this.displayTagValue.bind(this);
+    this.setval=this.setval.bind(this);
   }
   // functions called when each link in the leftpanel is clicked
   displayTextUser(){
@@ -56,6 +57,12 @@ class App extends Component {
     
     this.setState({displayTag: value});
     
+  }
+
+  //search function
+  setval(value){
+    //console.log("The value passed to App.js is : "+value);
+    this.setState({val : value});
   }
 
   // send User profile data to server. to save user data to our own User database
@@ -91,7 +98,7 @@ class App extends Component {
       return (
         <div className="App">
   
-          <Header {...this.props} />
+          <Header {...this.props}  setSearchValue={this.setval}/>
             <div className="ContentArea" id="contentArea">
               <div style={{"display":"table-row"}}>
               <LeftSideBar {...this.props} displayTextUser={this.displayTextUser} displayTextAllNotes={this.displayTextAllNotes} displayTextMyNotes={this.displayTextMyNotes} displayTextSharedNotes={this.displayTextSharedNotes} displayTagValue1={this.displayTagValue}/>
@@ -99,7 +106,7 @@ class App extends Component {
                 <div className="ShowCase">
                 <Switch>
                   <Route exact path="/" children={() => <AllNote profile={this.props.profile}/>} />
-                  <Route path="/search"  children={() => <Search profile={this.props.profile}/>}/>
+                  <Route path="/search"  children={() => <Search value={this.state.val} profile={this.props.profile}/>}/>
                   <Route path="/new/:type" component={NewNote}/>
                   <Route path="/:type/:noteId" component={NewNote}/>
                   <Route path="/user-info" children={() => <UserInfo {...this.props}/>}/>

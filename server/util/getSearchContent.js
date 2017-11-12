@@ -16,13 +16,14 @@ var mongoose = require("mongoose");
 function getSearchContent(param, userId){
     // console.log("find user ",userId);
     //console.log(this.);
+    //console.log("Parameter Passed is :"+ param);
     const Note = require("../model/Note");
     var query = {};
     userId = mongoose.Types.ObjectId(userId);
 
     query = {
         $and: [
-                {title : { $regex : new RegExp("World", "i") }},
+                {title : { $regex : new RegExp(param, "i") }},
                 {"userId": userId}
         ]
     }
