@@ -150,6 +150,7 @@ class NewNote extends Component {
         this.setState({noteCont: v.value, mode: v.mode, theme: v.theme, autoComplete: v.enableLiveAutocompletion, lineNumber: v.showLineNumbers});
     }
     render() {
+        console.log(this.state.noteCont);
         if (!this.state.redirect) {
             return (
                 <div className="NoteClass">
@@ -179,21 +180,6 @@ class NewNote extends Component {
                                 placeholder="Explain your note in 1 line"/>
                         </div>
                     </div>
-                    {console.log("before the TextNote: ",this.state.noteCont)}
-                    {console.log("state.noteType: ", this.state.noteType)}
-                    {this.state.noteType ==="Text"?
-                        (<div className="field">
-                        <label className="label">Note;</label>
-                        <div className="control">
-                        <textarea
-                        value={this.state.noteCont}
-                        onChange={this.onChange}
-                        className="textarea"
-                        placeholder="Write what you want to save...">{this.state.noteCont}</textarea>
-                        </div>
-                        </div>):
-                        ""
-                    }
                     {this.state.noteType === "Text"
                         ? <TextNote content={this.state.noteCont} onEditDesc={this.updateDesc}/>
                         : <CodeNote
@@ -275,7 +261,6 @@ class TextNote extends Component {
         this.state = {
             desc: props.content
         };
-        console.log("constructor of TextNote: ", props.content);
     }
 
     onChange(event) {

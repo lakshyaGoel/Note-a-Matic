@@ -277,12 +277,13 @@ router.post('/share-note', checkJwt, function(req, res, next){
 });// END: router.get('/share-note', checkJwt, function(req, res, next)
 
 router.post('/search-note', checkJwt, function(req, res, next){
+    //console.log(req.body.val);
     var getContent = require("../util/getSearchContent");
     var userExist = require("../util/checkUserExist");
-    userExist(req.body).then(function(userId){
+    userExist(req.body.profile).then(function(userId){
         if(userId){// user exist
-            console.log("The VALUE"+req.body.val);
-            getContent("all", userId.toString()).then(
+            //console.log("The VALUE"+req.body.val);
+            getContent(req.body.value, userId.toString()).then(
                 function(result){
                     // console.log("check data before send: ", result);
                     res.send({content:result, currentUserId: userId});
@@ -324,19 +325,24 @@ router.post('/add-note', checkJwt, function(req, res, next){
     var content = req.body.noteCont;
     var desc = req.body.noteDesc;
     var tags = req.body.tags;
-    tags = tags.split(", ").map(function(b){
-        return b.substr(1);
-    });
+    if(tags.length != 0){
+        tags = tags.split(", ").map(function(b){
+            return b.substr(1);
+        });
+    }
     var bIsTagEmpty = false;
     if(tags.length === 1 && tags[tags.length-1].length === 0){
         bIsTagEmpty = true;
     }
-    var share = req.body.private === "No";// share message is string "Yes"/"No" not Boolean: true/false. it cause problem
+    var noteId = req.body.noteId;
+    var share = req.body.private === "No";
     var type = req.body.noteType;
     var shareUser = req.body.shared;
-    shareUser = shareUser.split(", ").map(function(b){
-        return b;
-    });
+    if(shareUser.length != 0){
+        shareUser = shareUser.split(", ").map(function(b){
+            return b;
+        });
+    }
     var bIsSharedListEmpty;
     if(shareUser.length === 1 && shareUser[shareUser.length-1].length === 0){
         bIsSharedListEmpty = true;
@@ -355,8 +361,17 @@ router.post('/add-note', checkJwt, function(req, res, next){
 
     var Tag = require("../model/Tag");
     var User = require("../model/User");
+    var Note = require("../model/Note");
     var tagPromise = Promise.resolve(Tag.find());
     var userPromise = Promise.resolve(User.find());
+    if(noteId !== ""){
+        Note.update({_id: noteId},{title:title, content:content, description:desc}, (err, db) =>{
+            let response = {
+                message: "success",
+                note: db
+            };
+        });
+    }else{
     Promise.all([tagPromise, userPromise]).then(
         function(result){
             var tagList = result[0];
@@ -472,6 +487,7 @@ router.post('/add-note', checkJwt, function(req, res, next){
             }
             res.send(JSON.stringify({s:"Success"}));
         });
+    }
 
 });
 
