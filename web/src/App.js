@@ -19,6 +19,8 @@ import AllNote from './AllNote/index.js';
 import MyNote from './MyNote/index.js';
 import ShareNote from './ShareNote/index.js';
 
+import Search from './Search';
+
 import {getAuthorizationHeader} from "./functions";
 
 class App extends Component {
@@ -92,6 +94,7 @@ class App extends Component {
                 <div className="ShowCase">
                 <Switch>
                   <Route exact path="/" children={() => <AllNote profile={this.props.profile}/>} />
+                  <Route path="/search"  children={() => <Search profile={this.props.profile}/>}/>
                   <Route path="/new/:type" component={NewNote}/>
                   <Route path="/:type/:noteId" component={NewNote}/>
                   <Route path="/user-info" children={() => <UserInfo {...this.props}/>}/>

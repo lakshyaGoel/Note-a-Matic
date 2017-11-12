@@ -40,22 +40,29 @@ router.post('/user-info', checkJwt, function(req, res, next){
     });
 });// END: router.get('/all-note', checkJwt, function(req, res, next)
 
-router.post("/get-note", checkJwt, function(req,res, next){
-    var mongoose = require("mongoose");
-    var noteId = req.body.noteId;
-    console.log("detect edit" ,noteId);
-    // var userId = mongoose.Types.ObjectId(req.body.userId);//
-    var Note = require("../model/Note");
-    Note.findOne({_id: noteId}, (err, db) =>{
-        // console.log("find it",db);
-        let response = {
-            message: "success",
-            note: db
-        };
-        console.log(response);
-        res.status(200).send(response);
-    });
-});
+
+// // get api to show share note in main panel.
+// router.post('/share-note', checkJwt, function(req, res, next){
+//     var getContent = require("../util/getContent");
+//     var userExist = require("../util/checkUserExist");
+//     userExist(req.body).then(function(userId){
+//         if(userId){// user exist
+//             getContent("share", userId.toString()).then(
+//                 function(result){
+//                     // console.log("check data before send: ", result);
+
+//                     res.send({content:result, currentUserId: userId});
+//                 }
+//             ).catch(function(err){
+//                 console.log("something wrong:" + err);
+//                 res.send("wrong flg");
+//             });
+//         }else{
+//             res.send("wrong flg");
+//         }
+//     });
+// });// END: router.get('/share-note', checkJwt, function(req, res, next)
+
 // delete note by id
 router.post("/delete", checkJwt, function(req, res, next){// TODO: check functionality.
     var mongoose = require("mongoose");
