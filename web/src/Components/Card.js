@@ -247,6 +247,10 @@ class TagWCount extends Component{
 
 class Card extends Component {
     render(){
+        var dateString;
+        var date = new Date(this.props.cardFooter.props.children.props.allProps.updatedAt);
+        dateString = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear() + " at " + date.getHours() + ":" + date.getMinutes();
+        
         return (
             <CardContainer>
                 <CardHeadImage cardType={this.props.cardType}>
@@ -256,6 +260,8 @@ class Card extends Component {
                     {this.props.children}
                 </CardContent>
                 {this.props.cardFooter}
+                <hr/>
+                <div className="LasteEditedDate">Last Edited at {dateString}</div>
             </CardContainer>
         );
     }
