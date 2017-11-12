@@ -24,7 +24,6 @@ class MyNote extends Component {
             body: JSON.stringify(this.props.profile)
         });
 
-        // TODO: write re-rendering with setState and binding.
         fetch(request)
         .then(response => {
            if(!response.ok) {
@@ -34,7 +33,6 @@ class MyNote extends Component {
            return response.json();
         }).then(res => {
             console.log("this is allnote result",res);// This is Note data! parse here.
-            // TODO: Tag data fix!
             if(res){
                 this.setState({"dataList": res.content, "currentUserId": res.currentUserId});
             }
