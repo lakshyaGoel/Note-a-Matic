@@ -17,6 +17,7 @@ import UserInfo from './UserInfo/index.js';
 import AllNote from './AllNote/index.js';
 import MyNote from './MyNote/index.js';
 import ShareNote from './ShareNote/index.js';
+import TagSearch from './TagSearch/index.js';
 
 import Search from './Search';
 
@@ -26,30 +27,35 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {
-        displayText: 'All Notes'
+        displayText: 'All Notes', displayTag: ' '
     };
     this.displayTextUser = this.displayTextUser.bind(this);
     this.displayTextAllNotes = this.displayTextAllNotes.bind(this);
     this.displayTextMyNotes = this.displayTextMyNotes.bind(this);
     this.displayTextSharedNotes = this.displayTextSharedNotes.bind(this);
+    this.displayTagValue=this.displayTagValue.bind(this);
   }
   // functions called when each link in the leftpanel is clicked
   displayTextUser(){
     this.setState({displayText: 'User Details'});
-    console.log("helloUser");
-    console.log(this.state.displayText);
+    
   }
   displayTextAllNotes(){
     this.setState({displayText: 'All Notes'});
-    console.log("helloAllNotes");
+    
   }
   displayTextMyNotes(){
     this.setState({displayText: 'My Notes'});
-    console.log("helloMyNotes");
+ 
   }
   displayTextSharedNotes(){
     this.setState({displayText: 'Shared Notes'});
-    console.log("helloSharedNotes");
+
+  }
+  displayTagValue(value){
+    
+    this.setState({displayTag: value});
+    
   }
 
   // send User profile data to server. to save user data to our own User database
@@ -88,7 +94,7 @@ class App extends Component {
           <Header {...this.props} />
             <div className="ContentArea" id="contentArea">
               <div style={{"display":"table-row"}}>
-              <LeftSideBar {...this.props} displayTextUser={this.displayTextUser} displayTextAllNotes={this.displayTextAllNotes} displayTextMyNotes={this.displayTextMyNotes} displayTextSharedNotes={this.displayTextSharedNotes}/>
+              <LeftSideBar {...this.props} displayTextUser={this.displayTextUser} displayTextAllNotes={this.displayTextAllNotes} displayTextMyNotes={this.displayTextMyNotes} displayTextSharedNotes={this.displayTextSharedNotes} displayTagValue1={this.displayTagValue}/>
 
                 <div className="ShowCase">
                 <Switch>
@@ -97,9 +103,10 @@ class App extends Component {
                   <Route path="/new/:type" component={NewNote}/>
                   <Route path="/:type/:noteId" component={NewNote}/>
                   <Route path="/user-info" children={() => <UserInfo {...this.props}/>}/>
-                  <Route path="/all-note"  children={() => <AllNote profile={this.props.profile}/>}/>
+                  <Route path="/all-note"  children={() => <AllNote profile={this.props.profile} currentSelectedTag={this.state.displayTag}/>}/>
                   <Route path="/my-note"  children={() => <MyNote profile={this.props.profile}/>}/>
                   <Route path="/share-note"  children={() => <ShareNote profile={this.props.profile}/>}/>
+                  <Route path="/tag-search"  children={() => <TagSearch profile={this.props.profile} currentSelectedTag={this.state.displayTag}/>}/>
                 </Switch>
                 </div>
               </div>

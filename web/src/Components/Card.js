@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import textImg from "./text.png";
 import codeImg from "./code.jpg";
+import {Link} from 'react-router-dom';
+
 
 import {getAuthorizationHeader, isSet} from "../functions";
 
@@ -233,7 +235,8 @@ class TagWCount extends Component{
         var renderContent = (
             <div className="control">
                 <div className="tags has-addons">
-                <a className="tag is-light" onClick={this.props.setTagValue(this.props.tagName)}>{this.props.tagName}</a>
+                <Link className="centre-this" id="myLink" to={"/tag-search"} ><a className="tag is-light" onClick={this.props.setTagValue.bind(this,this.props.tagName)}>{this.props.tagName}</a></Link>
+                
                 <a className="tag is-light">{this.props.tagCount}</a>
                 </div>
             </div>
