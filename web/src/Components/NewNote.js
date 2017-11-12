@@ -16,8 +16,8 @@ class NewNote extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.updateDesc = this.updateDesc.bind(this);
         this.onCodeUpdates = this.onCodeUpdates.bind(this);
-        // TODO: Lakshya, need note id to update Note when edit.
         this.state = {
+            noteId:"",
             private: "Yes",
             noteType: "",
             noteTitle: "",
@@ -84,8 +84,8 @@ class NewNote extends Component {
                 return response.json();
             }).then(res => {
                 if (res) {
-                    console.log(res.note.content);
                     document.getElementById("noteTags").setAttribute("disabled", "");
+                    document.getElementById("noteShreList").setAttribute("disabled", "");
                     this.setState({
                         private: !res.note.share,
                         noteType: res.note.type,
@@ -95,7 +95,8 @@ class NewNote extends Component {
                         tags: [],
                         shared: [],
                         userID: this.props.profile.name,
-                        lastEdit: this.props.profile.name
+                        lastEdit: this.props.profile.name,
+                        noteId: res.note._id
                     })
                     if (res.note.type === "Code") {
                         this.setState({
@@ -111,6 +112,7 @@ class NewNote extends Component {
             });
         } else {
             document.getElementById("noteTags").removeAttribute("disabled");
+            document.getElementById("noteShreList").removeAttribute("disabled");
             this.setState({noteType: type});
         }
     }
@@ -234,6 +236,7 @@ class NewNote extends Component {
                                 className="input"
                                 name="shared"
                                 type="text"
+                                id="noteShreList"
                                 placeholder="Enter your friend's username seperated by ','"/>
                         </div>
                     </div>
