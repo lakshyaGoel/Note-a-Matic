@@ -239,12 +239,13 @@ router.post('/share-note', checkJwt, function(req, res, next){
 });// END: router.get('/share-note', checkJwt, function(req, res, next)
 
 router.post('/search-note', checkJwt, function(req, res, next){
+    //console.log(req.body.val);
     var getContent = require("../util/getSearchContent");
     var userExist = require("../util/checkUserExist");
-    userExist(req.body).then(function(userId){
+    userExist(req.body.profile).then(function(userId){
         if(userId){// user exist
-            console.log("The VALUE"+req.body.val);
-            getContent("all", userId.toString()).then(
+            //console.log("The VALUE"+req.body.val);
+            getContent(req.body.value, userId.toString()).then(
                 function(result){
                     // console.log("check data before send: ", result);
                     res.send({content:result, currentUserId: userId});
