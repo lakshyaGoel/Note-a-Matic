@@ -9,8 +9,7 @@ class AllNote extends Component {
     constructor(props){
         super(props);
         // console.log("check profile from <Route>", props.profile);
-        let dataList = [];
-
+        let dataList = [];    
         this.state = {"dataList": dataList, "currentUserId": ""};
     }
 

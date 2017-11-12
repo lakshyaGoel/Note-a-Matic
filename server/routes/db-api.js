@@ -41,6 +41,28 @@ router.post('/user-info', checkJwt, function(req, res, next){
 });// END: router.get('/all-note', checkJwt, function(req, res, next)
 
 
+// // get api to show share note in main panel.
+// router.post('/share-note', checkJwt, function(req, res, next){
+//     var getContent = require("../util/getContent");
+//     var userExist = require("../util/checkUserExist");
+//     userExist(req.body).then(function(userId){
+//         if(userId){// user exist
+//             getContent("share", userId.toString()).then(
+//                 function(result){
+//                     // console.log("check data before send: ", result);
+
+//                     res.send({content:result, currentUserId: userId});
+//                 }
+//             ).catch(function(err){
+//                 console.log("something wrong:" + err);
+//                 res.send("wrong flg");
+//             });
+//         }else{
+//             res.send("wrong flg");
+//         }
+//     });
+// });// END: router.get('/share-note', checkJwt, function(req, res, next)
+
 // delete note by id
 router.post("/delete", checkJwt, function(req, res, next){// TODO: check functionality.
     var mongoose = require("mongoose");
@@ -200,6 +222,27 @@ router.post('/all-note', checkJwt, function(req, res, next){
     });
 });// END: router.get('/all-note', checkJwt, function(req, res, next)
 
+router.post('/search-note', checkJwt, function(req, res, next){
+    var getContent = require("../util/getSearchContent");
+    var userExist = require("../util/checkUserExist");
+    userExist(req.body).then(function(userId){
+        if(userId){// user exist
+            console.log("The VALUE"+req.body.val);
+            getContent("all", userId.toString()).then(
+                function(result){
+                    // console.log("check data before send: ", result);
+                    res.send({content:result, currentUserId: userId});
+                }
+            ).catch(function(err){
+                console.log("something wrong:" + err);
+                res.send("wrong flg");
+            });
+        }else{
+            res.send("wrong flg");
+        }
+    });
+});// END: router.get('/all-note', checkJwt, function(req, res, next)
+
 // get api to show share note in main panel.
 router.post('/share-note', checkJwt, function(req, res, next){
     var getContent = require("../util/getContent");
@@ -208,8 +251,7 @@ router.post('/share-note', checkJwt, function(req, res, next){
         if(userId){// user exist
             getContent("share", userId.toString()).then(
                 function(result){
-                    // console.log("check data before send: ", result);
-
+                    // console.log("check data before send: ", result);                                     
                     res.send({content:result, currentUserId: userId});
                 }
             ).catch(function(err){
