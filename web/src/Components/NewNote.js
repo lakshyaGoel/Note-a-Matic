@@ -13,6 +13,7 @@ class NewNote extends Component{
         this.handleChange = this.handleChange.bind(this);
         this.updateDesc = this.updateDesc.bind(this);
         this.onCodeUpdates = this.onCodeUpdates.bind(this);
+        // TODO: Lakshya, need note id to update Note when edit.
         this.state = {  private: "Yes", 
                         noteType:"", 
                         noteTitle:"", 
