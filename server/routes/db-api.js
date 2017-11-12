@@ -41,19 +41,57 @@ router.post('/user-info', checkJwt, function(req, res, next){
 });// END: router.get('/all-note', checkJwt, function(req, res, next)
 
 router.post("/get-note", checkJwt, function(req,res, next){
-    var mongoose = require("mongoose");
     var noteId = req.body.noteId;
     console.log("detect edit" ,noteId);
     // var userId = mongoose.Types.ObjectId(req.body.userId);//
     var Note = require("../model/Note");
-    Note.findOne({_id: noteId}, (err, db) =>{
+    Note.findOne({_id: noteId}).lean().exec(function(err, db){
         // console.log("find it",db);
-        let response = {
-            message: "success",
-            note: db
-        };
-        console.log(response);
-        res.status(200).send(response);
+        var promiseList = [];
+
+        var Tag = require("../model/Tag");
+        var tagIdList = db.tags;
+        // pure object, not Promise but no problem.
+        var tagPromise = Tag.find({_id:{$in: tagIdList}}).exec(function(err,db){
+            var result = [];
+            if(!err){
+                result = db.map(function(item){
+                    return item.tagName;
+                });
+            }
+            return result;
+        });
+        promiseList.push(tagPromise);
+
+        var shareFlg = db.share;
+        var shareUser = db.shareUser;
+        var sharePromise = [];
+        if(shareFlg){
+            var User = require("../model/User");
+            var sharePromise = User.find({_id:{$in: shareUser}}).exec(function(err, db){
+               var result = [];
+                if(!err){
+                    result = db.map(function(item){
+                       return item.name;
+                    });
+                }
+                return result;
+            });
+        }
+        promiseList.push(sharePromise);
+        Promise.all(promiseList).then(function(result){
+            var tagNameList = result[0];
+            var shareUserNameList = result[1];
+            db.tagNameList = tagNameList;
+            db.shareUserNameList = shareUserNameList;
+
+            let response = {
+                message: "success",
+                note: db
+            };
+            console.log(response);
+            res.status(200).send(response);
+        });
     });
 });
 
