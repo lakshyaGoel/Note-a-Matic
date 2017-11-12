@@ -82,3 +82,16 @@
 .customBg{
   background-color: #b8b8b8
 }
+.SearchBox{
+  display: flex;
+  padding-top: 0.5rem;
+}
+.LasteEditedDate{
+  font-size: smaller;
+  font-style: italic;
+  padding: 1px;
+  font-weight: 400;
+}
+hr{
+  margin: 0;
+}

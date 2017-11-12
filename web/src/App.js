@@ -5,7 +5,6 @@ import { Route, Switch } from 'react-router-dom';
 
 import LeftSideBar from './Components/LeftSideBar';
 
-import RightSideBar from './RightSideBar';
 import Footer from './Components/Footer'
 import Header from './Header';
 import LoginLogout from './Header/LoginLogout';

@@ -19,7 +19,7 @@ class MainComponent extends Component {
         // TODO: check props, never push without comment out below.
         // console.log(props);
 
-        var deleteFlg = props.currentUserId.indexOf(props.userId) != -1;
+        var deleteFlg = props.currentUserId.indexOf(props.userId) !== -1;
         this.footer = (<footer className="card-footer">
             <Modal title={this.props.title}
                    allProps={this.props}

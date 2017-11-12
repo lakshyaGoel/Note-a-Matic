@@ -18,7 +18,7 @@ class Header extends Component {
 
   render() {
     return (
-      <nav className="navbar" style={{"background-color": "hsl(0, 0%, 96%)"}}>
+      <nav className="navbar" style={{"backgroundColor": "hsl(0, 0%, 96%)"}}>
         <div className="navbar-brand">
           <a className="navbar-item navBarLink" href="/">
             <img
@@ -38,6 +38,16 @@ class Header extends Component {
           </Link>
         </div>
         <div className="navbar-end">
+        <div className="SearchBox">
+          <div>
+            <input className="input" id="sfield" type="text" placeholder="e.g Note Title"/> 
+          </div>&nbsp;
+          <div>
+            <Link to={'/search'}>
+                <button className="button is-primary">Search</button>
+            </Link>
+          </div>
+        </div>
           <div id="navMenuTransparentExample" className="navbar-menu">
             <div className="navbar-start">
               <div className="navbar-item has-dropdown is-hoverable customButtonClass" id="dropDownMenu">
@@ -53,7 +63,7 @@ class Header extends Component {
                   <hr className="navbar-divider"/>
                   <Link to={'/new/Code'} className="navbar-item ">
                     <p>
-                      <strong>Code Note</strong>
+                      <strong>Code Snippet Note</strong>
                       <br/>
                       <small>Add some code to save</small>
                     </p>

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import MainComponent from "../Components/mainComponentPart";
-import {getAuthorizationHeader, getUserId} from "../functions";
+import {getAuthorizationHeader} from "../functions";
 
 class Search extends Component {
   constructor(props){
