@@ -21,6 +21,14 @@ class Header extends Component {
             Notes
           </a>
         </div>
+        <div>
+          <input class="input" id="sfield" type="text" placeholder="e.g Alex Smith"/> 
+        </div>&nbsp;
+        <div>
+          <Link to={'/search'}>
+              <button class="button is-primary" onClick>Search</button>
+          </Link>
+        </div>
         <div className="navbar-end">
           <div id="navMenuTransparentExample" className="navbar-menu">
             <div className="navbar-start">
