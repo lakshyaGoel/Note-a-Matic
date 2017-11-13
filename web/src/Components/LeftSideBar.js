@@ -73,20 +73,17 @@ class LeftSideBar extends Component {
         });
     }
     render() {
-
-        // TODO: use Bulma CSS. Read Bulma documentation.
         return (
             <div className="customLeftSideBar">
 
                 <img className="img-circle" src={this.props.profile.picture} alt="Placeholder"/>
-
                 <div className="sideBarTableRow">
                     <div className="sideBarTableRowImg">
                         <i class="fa fa-user-circle-o"></i>
                     </div>
                     <div className="sideBarTableRowLink">
                         <Link
-                            className="centre-this is-small is-active"
+                            className="centre-this is-small is-active navbar-item"
                             to={"/user-info"}
                             onClick={this
                             .props
@@ -95,13 +92,21 @@ class LeftSideBar extends Component {
                     </div>
                 </div>
                 <div className="sideBarButtons">
+                    <hr/>
+                    <div className="sideBarTableRowTagImg">
+                        <i class="fa fa-file-text "></i>
+                    </div>
+                    <div className="sideBarTableRowTagHeader">
+                        <div className="centre-this is-active navbar-item">Notes</div>
+                    </div>
+                    <hr/>
                     <div className="sideBarTableRow">
                         <div className="sideBarTableRowImg">
                             <i class="fa fa-globe "></i>
                         </div>
                         <div className="sideBarTableRowLink">
                             <Link
-                                className="centre-this is-active"
+                                className="centre-this is-active navbar-item"
                                 id="myLink"
                                 to={"/all-note"}
                                 onClick={this
@@ -116,6 +121,7 @@ class LeftSideBar extends Component {
                         </div>
                         <div className="sideBarTableRowLink">
                             <Link
+                                className="centre-this is-active navbar-item"
                                 id="myLink"
                                 title="Click to do something"
                                 to={"/my-note"}
@@ -131,7 +137,7 @@ class LeftSideBar extends Component {
                         </div>
                         <div className="sideBarTableRowLink">
                             <Link
-                                className="centre-this"
+                                className="centre-this is-active navbar-item"
                                 id="myLink"
                                 to={"/share-note"}
                                 onClick={this
@@ -141,20 +147,28 @@ class LeftSideBar extends Component {
                         </div>
                     </div>
                 </div>
-                <br/><br/><br/><br/><br/><br/><br/>
+                <br/>
                 <div>
-                    <i class="fa fa-tags "></i>
-                    <p>My Tags</p>
-                    <TagField>
-                        {this
-                            .state
-                            .tags
-                            .map((tagData, key) => <TagWCount
-                                tagName={tagData.tagName}
-                                tagCount={tagData.count}
-                                setTagValue={this.displayTag}
-                                key={key.toString()}/>)}
-                    </TagField>
+                    <hr/>
+                    <div>
+                        <div className="sideBarTableRowTagImg">
+                            <i class="fa fa-tags "></i>
+                        </div>
+                        <div className="sideBarTableRowTagHeader">
+                            <div className="centre-this is-active navbar-item">Tags</div>
+                        </div>
+                        <hr/>
+                        <TagField>
+                            {this
+                                .state
+                                .tags
+                                .map((tagData, key) => <TagWCount
+                                    tagName={tagData.tagName}
+                                    tagCount={tagData.count}
+                                    setTagValue={this.displayTag}
+                                    key={key.toString()}/>)}
+                        </TagField>
+                    </div>
                 </div>
             </div>
         );

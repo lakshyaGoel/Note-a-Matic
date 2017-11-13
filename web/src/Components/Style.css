@@ -101,10 +101,31 @@ hr{
 }
 .sideBarTableRowImg{
   width: 20%;
+  padding: 0.5rem 2.5rem;
 }
 .sideBarTableRowLink{
   width: 80%;
 }
 .sideBarButtons{
   padding-top: 5rem;
+}
+.customNoteNav{
+  font-size: x-large;
+  padding-left: 5rem;
+}
+.sideBarTableRowTagImg{
+  width: 20%;
+  float: left;
+  padding-top: 1rem;
+  padding-left: 2.5rem;
+}
+.sideBarTableRowTagImg i{
+  font-size: 1.25rem;
+}
+.sideBarTableRowTagHeader{
+  width: 80%;
+  padding-left: 5rem;
+}
+.sideBarTableRowTagHeader div{
+  font-size: x-large;
 }
