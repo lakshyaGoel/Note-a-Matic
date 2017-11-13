@@ -43,7 +43,7 @@ class MyNote extends Component {
         return (
             <div>
                 <div>
-                    <p className="centre-this title">My Note</p>
+                    <p className="centre-this title" style={{"padding-bottom":"1rem"}}>My Notes</p>
                 </div>
 
                 <div className="columns is-multiline">
