@@ -44,7 +44,7 @@ class ShareNote extends Component {
         return (
             <div>
                 <div>
-                    <p className="centre-this title">Share Note</p>
+                    <p className="centre-this title" style={{"padding-bottom":"1rem"}}>Notes shared with Me</p>
                 </div>
 
                 <div className="columns is-multiline">

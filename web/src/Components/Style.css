@@ -95,3 +95,16 @@
 hr{
   margin: 0;
 }
+.sideBarTableRow{
+  display: flex;
+  width: 100%;
+}
+.sideBarTableRowImg{
+  width: 20%;
+}
+.sideBarTableRowLink{
+  width: 80%;
+}
+.sideBarButtons{
+  padding-top: 5rem;
+}

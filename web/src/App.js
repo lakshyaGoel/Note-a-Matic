@@ -100,7 +100,7 @@ class App extends Component {
   
           <Header {...this.props}  setSearchValue={this.setval}/>
             <div className="ContentArea" id="contentArea">
-              <div style={{"display":"table-row"}}>
+              <div style={{"display":"flex"}}>
               <LeftSideBar {...this.props} displayTextUser={this.displayTextUser} displayTextAllNotes={this.displayTextAllNotes} displayTextMyNotes={this.displayTextMyNotes} displayTextSharedNotes={this.displayTextSharedNotes} displayTagValue1={this.displayTagValue}/>
 
                 <div className="ShowCase">

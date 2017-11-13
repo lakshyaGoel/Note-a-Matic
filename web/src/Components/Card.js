@@ -252,7 +252,7 @@ class Card extends Component {
     render(){
         var dateString;
         var date = new Date(this.props.cardFooter.props.children.props.allProps.updatedAt);
-        dateString = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear() + " at " + date.getHours() + ":" + date.getMinutes();
+        dateString = (date.getMonth() + 1) + '/' + date.getDate() + '/' +  date.getFullYear() + " at " + date.toLocaleTimeString();;
         
         return (
             <CardContainer>
@@ -264,7 +264,7 @@ class Card extends Component {
                 </CardContent>
                 {this.props.cardFooter}
                 <hr/>
-                <div className="LasteEditedDate">Last Edited at {dateString}</div>
+                <div className="LasteEditedDate">Last Edited on {dateString}</div>
             </CardContainer>
         );
     }
