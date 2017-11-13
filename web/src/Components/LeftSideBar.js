@@ -75,20 +75,29 @@ class LeftSideBar extends Component {
     render() {
         return (
             <div className="customLeftSideBar">
-
-                <img className="img-circle" src={this.props.profile.picture} alt="Placeholder"/>
-                <div className="sideBarTableRow">
-                    <div className="sideBarTableRowImg">
-                        <i class="fa fa-user-circle-o"></i>
-                    </div>
-                    <div className="sideBarTableRowLink">
-                        <Link
-                            className="centre-this is-small is-active navbar-item"
-                            to={"/user-info"}
-                            onClick={this
-                            .props
-                            .displayTextUser
-                            .bind(this)}>{this.props.profile.nickname}</Link>
+                <hr/>
+                <div className="sideBarTableRowTagImg">
+                    <i class="fa fa-id-card"></i>
+                </div>
+                <div className="sideBarTableRowTagHeader">
+                    <div className="centre-this is-active navbar-item">Profile</div>
+                </div>
+                <hr/>
+                <div style={{paddingTop:"2rem"}}>
+                    <img className="img-circle" src={this.props.profile.picture} alt="Placeholder"/>
+                    <div className="sideBarTableRow">
+                        <div className="sideBarTableRowImg">
+                            <i class="fa fa-user-circle-o"></i>
+                        </div>
+                        <div className="sideBarTableRowLink">
+                            <Link
+                                className="centre-this is-small is-active navbar-item"
+                                to={"/user-info"}
+                                onClick={this
+                                .props
+                                .displayTextUser
+                                .bind(this)}>{this.props.profile.nickname}</Link>
+                        </div>
                     </div>
                 </div>
                 <div className="sideBarButtons">
