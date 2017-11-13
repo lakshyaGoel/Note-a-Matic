@@ -37,8 +37,8 @@ class TagSearch extends Component {
                 
                 if(this.props.currentSelectedTag!=" "){
                     let list=[]
-                    for (let i = 0; i <= this.state.dataList.length; i++){
-                        for (let j = 0; j <=this.state.dataList[i].tagNameList.length; j++) {
+                    for (let i = 0; i < this.state.dataList.length; i++){
+                        for (let j = 0; j <this.state.dataList[i].tagNameList.length; j++) {
                             if(this.state.dataList[i].tagNameList[j]==this.props.currentSelectedTag){
                                 list.push(this.state.dataList[i]);
                             }

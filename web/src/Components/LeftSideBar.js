@@ -45,7 +45,7 @@ class LeftSideBar extends Component {
             if(res){
             this.setState({"dataList": res.content, "currentUserId": res.currentUserId});
                 let tags=[], tagSS=[]
-                for (let i = 0; i <= this.state.dataList.length; i++) {
+                for (let i = 0; i < this.state.dataList.length; i++) {
                   this.setState({
                     tempTagList: []
                   });
