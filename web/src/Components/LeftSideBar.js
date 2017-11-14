@@ -55,11 +55,9 @@ class LeftSideBar extends Component {
                     this.setState({tempTagList: []});
                     this.setState({tempTagList: this.state.dataList[i].tagNameList});
                     for (var j = 0; j < this.state.tempTagList.length; j++) {
-                        if (tagSS.indexOf(Object(this.state.tempTagList[j])) > -1) {
-                            tags.push({
-                                "tagName": this.state.tempTagList[j],
-                                "count": tags[tags.findIndex(this.state.tempTagList[j])].count + 1
-                            });
+                        if (tagSS.indexOf((this.state.tempTagList[j].toString())) > -1) {
+                            tags[tagSS.indexOf((this.state.tempTagList[j].toString()))].count=tags[tagSS.indexOf((this.state.tempTagList[j].toString()))].count + 1;
+                            
 
                         } else {
                             tagSS.push(this.state.tempTagList[j]);
