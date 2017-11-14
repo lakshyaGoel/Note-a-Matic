@@ -15,7 +15,7 @@ class MyNote extends Component {
         this.state = {"dataList": dataList, "currentUserId": ""};
     }
     componentDidMount(){
-        let request = new Request('/api/db/all-note', {
+        let request = new Request('/api/db/my-note', {
             method: 'POST',
             headers: {
                 "Authorization": getAuthorizationHeader().Authorization,
