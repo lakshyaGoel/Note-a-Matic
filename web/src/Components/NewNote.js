@@ -16,8 +16,8 @@ class NewNote extends Component {
         this.handleChange = this.handleChange.bind(this);
         this.updateDesc = this.updateDesc.bind(this);
         this.onCodeUpdates = this.onCodeUpdates.bind(this);
-        // TODO: Lakshya, need note id to update Note when edit.
         this.state = {
+            noteId:"",
             private: "Yes",
             noteType: "",
             noteTitle: "",
@@ -56,11 +56,11 @@ class NewNote extends Component {
         }).then(re => {
             if (re) {
                 this.setState({redirect: true});
-                }
-            })
-            .catch(function (error) {
-                console.log('Request failed', error);
-            });
+            }
+        })
+        .catch(function (error) {
+            console.log('Request failed', error);
+        });
     }
     componentDidMount() {
         var type = this._reactInternalFiber._debugOwner.stateNode.props.match.params.type;
@@ -84,8 +84,8 @@ class NewNote extends Component {
                 return response.json();
             }).then(res => {
                 if (res) {
-                    console.log("After fetching: ",res.note.content);
                     document.getElementById("noteTags").setAttribute("disabled", "");
+                    document.getElementById("noteShreList").setAttribute("disabled", "");
                     this.setState({
                         private: !res.note.share,
                         noteType: res.note.type,
@@ -95,8 +95,9 @@ class NewNote extends Component {
                         tags: [],
                         shared: [],
                         userID: this.props.profile.name,
-                        lastEdit: this.props.profile.name
-                    });
+                        lastEdit: this.props.profile.name,
+                        noteId: res.note._id
+                    })
                     if (res.note.type === "Code") {
                         this.setState({
                             editorProp: {
@@ -111,6 +112,7 @@ class NewNote extends Component {
             });
         } else {
             document.getElementById("noteTags").removeAttribute("disabled");
+            document.getElementById("noteShreList").removeAttribute("disabled");
             this.setState({noteType: type});
         }
     }
@@ -125,22 +127,22 @@ class NewNote extends Component {
         this.setState({private: checked});
         if (checked === "No") {
             document
-                .getElementById("shareToggleClass")
-                .classList
-                .add("shareToggleClassShow");
+            .getElementById("shareToggleClass")
+            .classList
+            .add("shareToggleClassShow");
             document
-                .getElementById("shareToggleClass")
-                .classList
-                .remove("shareToggleClassHide");
+            .getElementById("shareToggleClass")
+            .classList
+            .remove("shareToggleClassHide");
         } else if (checked === "Yes") {
             document
-                .getElementById("shareToggleClass")
-                .classList
-                .add("shareToggleClassHide");
+            .getElementById("shareToggleClass")
+            .classList
+            .add("shareToggleClassHide");
             document
-                .getElementById("shareToggleClass")
-                .classList
-                .remove("shareToggleClassShow");
+            .getElementById("shareToggleClass")
+            .classList
+            .remove("shareToggleClassShow");
         }
     }
     updateDesc(value) {
@@ -150,6 +152,7 @@ class NewNote extends Component {
         this.setState({noteCont: v.value, mode: v.mode, theme: v.theme, autoComplete: v.enableLiveAutocompletion, lineNumber: v.showLineNumbers});
     }
     render() {
+        console.log(this.state.noteCont);
         if (!this.state.redirect) {
             return (
                 <div className="NoteClass">
@@ -179,31 +182,15 @@ class NewNote extends Component {
                                 placeholder="Explain your note in 1 line"/>
                         </div>
                     </div>
-                    {console.log("before the TextNote: ",this.state.noteCont)}
-                    {console.log("state.noteType: ", this.state.noteType)}
-                    {/*TODO: instead of using component, write raw version here. */}
-                    {this.state.noteType ==="Text"?
-                        (<div className="field">
-                        <label className="label">Note;</label>
-                        <div className="control">
-                        <textarea
-                        value={this.state.noteCont}
-                        onChange={this.onChange}
-                        className="textarea"
-                        placeholder="Write what you want to save...">{this.state.noteCont}</textarea>
-                        </div>
-                        </div>):
-                        ""
-                    }
                     {this.state.noteType === "Text"
                         ? <TextNote content={this.state.noteCont} onEditDesc={this.updateDesc}/>
                         : <CodeNote
-                            mode={this.state.editorProp.mode}
-                            theme={this.state.editorProp.theme}
-                            autoComplete={this.state.editorProp.autoComplete}
-                            lineNumber={this.state.editorProp.lineNumber}
-                            defaultNoteContent={this.state.noteCont}
-                            onCodeUpdates={this.onCodeUpdates}/>}
+                        mode={this.state.editorProp.mode}
+                        theme={this.state.editorProp.theme}
+                        autoComplete={this.state.editorProp.autoComplete}
+                        lineNumber={this.state.editorProp.lineNumber}
+                        defaultNoteContent={this.state.noteCont}
+                        onCodeUpdates={this.onCodeUpdates}/>}
                     <div className="field">
                         <label className="label">#Tags</label>
                         <div className="control">
@@ -249,6 +236,7 @@ class NewNote extends Component {
                                 className="input"
                                 name="shared"
                                 type="text"
+                                id="noteShreList"
                                 placeholder="Enter your friend's username seperated by ','"/>
                         </div>
                     </div>
@@ -271,8 +259,8 @@ class TextNote extends Component {
     constructor(props) {
         super(props);
         this.onChange = this
-            .onChange
-            .bind(this);
+        .onChange
+        .bind(this);
         this.state = {
             desc: props.content
         };
@@ -281,13 +269,13 @@ class TextNote extends Component {
     onChange(event) {
         this.setState({desc: event.target.value});
         this
-            .props
-            .onEditDesc(event.target.value);
+        .props
+        .onEditDesc(event.target.value);
     }
     render() {
         return (
             <div className="field">
-                <label className="label">Note;</label>
+                <label className="label">Note</label>
                 <div className="control">
                     <textarea
                         value={this.state.desc}
