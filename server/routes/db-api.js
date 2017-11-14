@@ -325,24 +325,19 @@ router.post('/add-note', checkJwt, function(req, res, next){
     var content = req.body.noteCont;
     var desc = req.body.noteDesc;
     var tags = req.body.tags;
-    if(tags.length != 0){
-        tags = tags.split(", ").map(function(b){
-            return b.substr(1);
-        });
-    }
+    tags = tags.split(", ").map(function(b){
+        return b.substr(1);
+    });
     var bIsTagEmpty = false;
     if(tags.length === 1 && tags[tags.length-1].length === 0){
         bIsTagEmpty = true;
     }
-    var noteId = req.body.noteId;
-    var share = req.body.private === "No";
+    var share = req.body.private === "No";// share message is string "Yes"/"No" not Boolean: true/false. it cause problem
     var type = req.body.noteType;
     var shareUser = req.body.shared;
-    if(shareUser.length != 0){
-        shareUser = shareUser.split(", ").map(function(b){
-            return b;
-        });
-    }
+    shareUser = shareUser.split(", ").map(function(b){
+        return b;
+    });
     var bIsSharedListEmpty;
     if(shareUser.length === 1 && shareUser[shareUser.length-1].length === 0){
         bIsSharedListEmpty = true;
@@ -361,17 +356,8 @@ router.post('/add-note', checkJwt, function(req, res, next){
 
     var Tag = require("../model/Tag");
     var User = require("../model/User");
-    var Note = require("../model/Note");
     var tagPromise = Promise.resolve(Tag.find());
     var userPromise = Promise.resolve(User.find());
-    if(noteId !== ""){
-        Note.update({_id: noteId},{title:title, content:content, description:desc}, (err, db) =>{
-            let response = {
-                message: "success",
-                note: db
-            };
-        });
-    }else{
     Promise.all([tagPromise, userPromise]).then(
         function(result){
             var tagList = result[0];
@@ -473,7 +459,7 @@ router.post('/add-note', checkJwt, function(req, res, next){
                 shareUserIdList = [];
             }
             var newNoteId = addNote(tagSaveList, shareUserIdList, title, content, desc, share, type, mode, theme, auto, line, userId, userId);
-            
+
             if(!bIsTagEmpty){
                 for(var i = 0; i < tagSaveList.length; i ++){
                     Tag.update({"_id": ObjectId(tagSaveList[i])}, { $push: { noteId: newNoteId } }, function(err){
@@ -487,7 +473,6 @@ router.post('/add-note', checkJwt, function(req, res, next){
             }
             res.send(JSON.stringify({s:"Success"}));
         });
-    }
 
 });
 

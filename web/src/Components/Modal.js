@@ -128,7 +128,6 @@ class ModalCardFooter extends Component {
                  //TODO : need a proper parameter to separate page.
                  see:https://github.com/ReactTraining/react-router/blob/v3/docs/guides/RouteConfiguration.md#adding-an-index
                  */}
-                <Link to={this.state.noteLink} className="button is-success">Edit</Link>
                 {this.props.deleteFlg? <button className="button is-danger" onClick={this.deleteItem}>Delete</button>: ""}
                 <TagField>
                     {this.state.tagNameList.map((tagData, key) => <Tag tagName={tagData} key={key.toString()}/>)}
