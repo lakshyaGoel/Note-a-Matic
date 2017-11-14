@@ -28,13 +28,15 @@ class AllNote extends Component {
                console.log("Error: could not conect server, in AllNote/index.js");
                return false;
            }
-           return response.json();
+           try{
+            return response.json();
+           }catch(e){
+            return false;
+           }
         }).then(res => {
             // TODO: Tag data fix!
             if(res){
-                this.setState({"dataList": res.content, "currentUserId": res.currentUserId});
-             
-                
+                this.setState({"dataList": res.content, "currentUserId": res.currentUserId});   
             }
         });
     }
