@@ -32,9 +32,9 @@ CSCI 5117, Fall 2017, [assignment description](https://docs.google.com/document/
 **[Add a screenshot of each key page (maximum 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository)
 along with a very brief caption:**
 
+![top page](./screenshots/top.jpg)
+![Notes page](./screenshots/notes.png)
 ![code note page](./screenshots/codenote.png)
-![top page](./screenshots/top.png)
-![Notes page](./screenshots/note.png)
 
 
 
