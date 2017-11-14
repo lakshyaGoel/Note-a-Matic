@@ -20,9 +20,11 @@ CSCI 5117, Fall 2017, [assignment description](https://docs.google.com/document/
 
 * Allows to write and save text and code notes.
 * You can write Code snippets.
+* Text Editor allows creating lists with formatting and emoticons using search. 
 * Code Editor provides live Auto Complete suggestions and support for a number of languages.
 * Notes can be shared with the other users of the App.
-* Search can be done based on the Tags.
+* Search can be done based on the Title.
+* Filtering can be done based on tags.
 
 
 ## Screenshots of Site
@@ -36,7 +38,9 @@ along with a very brief caption:**
 ## External Dependencies
 
 * react: To render the client
+* react-router-dom: To enable routing in the App
 * AceEditor: To show code editing functionality
+* DraftJS: Text editor with plugins for Emoji and Text Formatting
 * multer: sending data from client to sever
 * request: controlling http?. Maybe default to express. But to prevent plagiarism, I write that
 * express-hbs: we use express-hbs instead of hbs to customize hbs functionality(e.g. partial, helper)
