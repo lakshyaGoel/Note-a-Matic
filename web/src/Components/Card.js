@@ -264,7 +264,7 @@ class Card extends Component {
                 </CardContent>
                 {this.props.cardFooter}
                 <hr/>
-                <div className="LasteEditedDate">Last Edited on {dateString}</div>
+                <div className="LasteEditedDate">Created on {dateString}</div>
             </CardContainer>
         );
     }

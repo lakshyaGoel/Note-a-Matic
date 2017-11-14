@@ -55,9 +55,9 @@ class TagSearch extends Component {
         return (
             <div>
                 <div>
-                    <p className="centre-this">Displaying the notes with <Tag tagName={this.props.currentSelectedTag}/></p>
+                    <p className="centre-this title">Displaying the notes with </p> <p> <Tag tagName={this.props.currentSelectedTag}/></p>
                 </div>
-
+                <br/><br/>
                 <div className="columns is-multiline">
                     {this.state.list.map((data, index) => <MainComponent {...data} currentUserId={this.state.currentUserId} key={index} />)}
                 </div>

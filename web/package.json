@@ -5,6 +5,11 @@
   "dependencies": {
     "auth0-js": "^8.10.1",
     "bulma": "^0.6.0",
+    "draft-js": "^0.10.4",
+    "draft-js-emoji-plugin": "^2.0.1",
+    "draft-js-inline-toolbar-plugin": "^2.0.1",
+    "draft-js-plugins-editor": "^2.0.2",
+    "draft-js-static-toolbar-plugin": "^2.0.1",
     "font-awesome": "^4.7.0",
     "react": "^16.0.0",
     "react-dom": "^16.0.0",

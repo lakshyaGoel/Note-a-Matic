@@ -5,6 +5,9 @@ import { Link, Redirect } from 'react-router-dom';
 import {getAuthorizationHeader, isSet} from "../functions";
 import AceEditor from 'react-ace';
 import {Tag, TagField} from "./Card";
+import { EditorState, RichUtils, convertFromRaw } from 'draft-js';
+import Editor from 'draft-js-plugins-editor';
+
 
 class ModalContainer extends Component {
     constructor(props){
@@ -76,9 +79,9 @@ class ModalCardBody extends Component {
             );
         }else{
         return (
-            <section className="modal-card-body">
-                {this.props.children}
-            </section>
+            <div className="modal-card-body">
+                <Draft content={this.state.data.content}/>
+            </div>
         )}
     }
 }
@@ -195,4 +198,24 @@ class Ace extends Component{
     }
 }
 
+class Draft extends Component{
+    constructor(props){
+        super(props);
+        const val = convertFromRaw(JSON.parse(props.content));
+        this.state = {
+            editorState: EditorState.createWithContent(val),
+            readonly:true
+        }
+    }
+    render() {
+        return (
+          <div className="editor">
+            <Editor
+              editorState={this.state.editorState}
+              readOnly={this.state.readonly}
+            />
+          </div>
+        );
+      }
+}
 export default Modal;

@@ -4,6 +4,7 @@ import './Style.css';
 import {Link, Redirect} from 'react-router-dom';
 import CodeNote from './CodeEditor';
 import {getAuthorizationHeader} from "../functions";
+import TextEditor from './TextEditor'
 
 const defaultValue = `function onLoad(editor) {
   console.log("i've loaded");
@@ -152,7 +153,6 @@ class NewNote extends Component {
         this.setState({noteCont: v.value, mode: v.mode, theme: v.theme, autoComplete: v.enableLiveAutocompletion, lineNumber: v.showLineNumbers});
     }
     render() {
-        console.log(this.state.noteCont);
         if (!this.state.redirect) {
             return (
                 <div className="NoteClass">
@@ -182,8 +182,11 @@ class NewNote extends Component {
                                 placeholder="Explain your note in 1 line"/>
                         </div>
                     </div>
+                    <div className="field">
+                        <label className="label">Content</label>
+                    </div>
                     {this.state.noteType === "Text"
-                        ? <TextNote content={this.state.noteCont} onEditDesc={this.updateDesc}/>
+                         ? <TextEditor content={this.state.noteCont} onEditDesc={this.updateDesc}/>
                         : <CodeNote
                         mode={this.state.editorProp.mode}
                         theme={this.state.editorProp.theme}
