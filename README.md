@@ -6,7 +6,7 @@ CSCI 5117, Fall 2017, [assignment description](https://docs.google.com/document/
 
 * Team Name: val=n
 * App Name: Notes
-* App Link: <https://agile-earth-51545.herokuapp.com//>
+* App Link: <https://pacific-sierra-76882.herokuapp.com/>
 
 ### Students
 
@@ -18,10 +18,11 @@ CSCI 5117, Fall 2017, [assignment description](https://docs.google.com/document/
 
 ## Key Features
 
-**Describe the most challenging features you implemented
-(one sentence per bullet, maximum 4 bullets):**
-
-* ...
+* Allows to write and save text and code notes.
+* You can write Code snippets.
+* Code Editor provides live Auto Complete suggestions and support for a number of languages.
+* Notes can be shared with the other users of the App.
+* Search can be done based on the Tags.
 
 
 ## Screenshots of Site
