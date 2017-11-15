@@ -35,6 +35,7 @@ along with a very brief caption:**
 ![top page](./screenshots/top.jpg)
 ![Notes page](./screenshots/notes.png)
 ![code note page](./screenshots/codenote.png)
+![text note page](./screenshots/textNote.png)
 
 
 
