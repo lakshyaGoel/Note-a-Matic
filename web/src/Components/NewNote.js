@@ -18,7 +18,7 @@ class NewNote extends Component {
         this.updateDesc = this.updateDesc.bind(this);
         this.onCodeUpdates = this.onCodeUpdates.bind(this);
         this.state = {
-            noteId:"",
+            noteId: "",
             private: "Yes",
             noteType: "",
             noteTitle: "",
@@ -39,7 +39,6 @@ class NewNote extends Component {
     }
 
     save() {
-        //   console.log("All the updated data: " + JSON.stringify(this.state));
         var auth = getAuthorizationHeader();
         let request = new Request('/api/db/add-note', {
             method: 'POST',
@@ -57,65 +56,16 @@ class NewNote extends Component {
         }).then(re => {
             if (re) {
                 this.setState({redirect: true});
-            }
-        })
-        .catch(function (error) {
-            console.log('Request failed', error);
-        });
+                }
+            })
+            .catch(function (error) {
+                console.log('Request failed', error);
+            });
     }
     componentDidMount() {
-        var type = this._reactInternalFiber._debugOwner.stateNode.props.match.params.type;
-        var noteId = this._reactInternalFiber._debugOwner.stateNode.props.match.params.noteId;
-        if (noteId) { // when editing, not creating new note.
-            this.setState({noteType: type});
-            let request = new Request('/api/db/get-note', {
-                method: 'POST',
-                headers: {
-                    "Authorization": getAuthorizationHeader().Authorization,
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({"noteId": noteId})
-            });
-
-            fetch(request).then(response => {
-                if (!response.ok) {
-                    console.log("Error: could not conect server, in AllNote/index.js");
-                    return false;
-                }
-                return response.json();
-            }).then(res => {
-                if (res) {
-                    document.getElementById("noteTags").setAttribute("disabled", "");
-                    document.getElementById("noteShreList").setAttribute("disabled", "");
-                    this.setState({
-                        private: !res.note.share,
-                        noteType: res.note.type,
-                        noteTitle: res.note.title,
-                        noteDesc: res.note.description,
-                        noteCont: res.note.content,
-                        tags: [],
-                        shared: [],
-                        userID: this.props.profile.name,
-                        lastEdit: this.props.profile.name,
-                        noteId: res.note._id
-                    })
-                    if (res.note.type === "Code") {
-                        this.setState({
-                            editorProp: {
-                                mode: res.note.codeSetting.mode,
-                                theme: res.note.codeSetting.theme,
-                                autoComplete: res.note.codeSetting.autoComplete,
-                                lineNumber: res.note.codeSetting.lineNumber
-                            }
-                        });
-                    }
-                }
-            });
-        } else {
-            document.getElementById("noteTags").removeAttribute("disabled");
-            document.getElementById("noteShreList").removeAttribute("disabled");
-            this.setState({noteType: type});
-        }
+        var l = window.location.pathname.split("/");
+        var type = l[l.length - 1];
+        this.setState({noteType: type});
     }
 
     handleChange(event) {
@@ -127,23 +77,11 @@ class NewNote extends Component {
         var checked = event.target.defaultValue;
         this.setState({private: checked});
         if (checked === "No") {
-            document
-            .getElementById("shareToggleClass")
-            .classList
-            .add("shareToggleClassShow");
-            document
-            .getElementById("shareToggleClass")
-            .classList
-            .remove("shareToggleClassHide");
+            document.getElementById("shareToggleClass").classList.add("shareToggleClassShow");
+            document.getElementById("shareToggleClass").classList.remove("shareToggleClassHide");
         } else if (checked === "Yes") {
-            document
-            .getElementById("shareToggleClass")
-            .classList
-            .add("shareToggleClassHide");
-            document
-            .getElementById("shareToggleClass")
-            .classList
-            .remove("shareToggleClassShow");
+            document.getElementById("shareToggleClass").classList.add("shareToggleClassHide");
+            document.getElementById("shareToggleClass").classList.remove("shareToggleClassShow");
         }
     }
     updateDesc(value) {
@@ -186,14 +124,14 @@ class NewNote extends Component {
                         <label className="label">Content</label>
                     </div>
                     {this.state.noteType === "Text"
-                         ? <TextEditor content={this.state.noteCont} onEditDesc={this.updateDesc}/>
+                        ? <TextEditor content={this.state.noteCont} onEditDesc={this.updateDesc}/>
                         : <CodeNote
-                        mode={this.state.editorProp.mode}
-                        theme={this.state.editorProp.theme}
-                        autoComplete={this.state.editorProp.autoComplete}
-                        lineNumber={this.state.editorProp.lineNumber}
-                        defaultNoteContent={this.state.noteCont}
-                        onCodeUpdates={this.onCodeUpdates}/>}
+                            mode={this.state.editorProp.mode}
+                            theme={this.state.editorProp.theme}
+                            autoComplete={this.state.editorProp.autoComplete}
+                            lineNumber={this.state.editorProp.lineNumber}
+                            defaultNoteContent={this.state.noteCont}
+                            onCodeUpdates={this.onCodeUpdates}/>}
                     <div className="field">
                         <label className="label">#Tags</label>
                         <div className="control">
@@ -262,8 +200,8 @@ class TextNote extends Component {
     constructor(props) {
         super(props);
         this.onChange = this
-        .onChange
-        .bind(this);
+            .onChange
+            .bind(this);
         this.state = {
             desc: props.content
         };
@@ -272,8 +210,8 @@ class TextNote extends Component {
     onChange(event) {
         this.setState({desc: event.target.value});
         this
-        .props
-        .onEditDesc(event.target.value);
+            .props
+            .onEditDesc(event.target.value);
     }
     render() {
         return (

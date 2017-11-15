@@ -75,7 +75,7 @@ class LeftSideBar extends Component {
             <div className="customLeftSideBar">
                 <hr/>
                 <div className="sideBarTableRowTagImg">
-                    <i class="fa fa-id-card"></i>
+                    <i className="fa fa-id-card"></i>
                 </div>
                 <div className="sideBarTableRowTagHeader">
                     <div className="centre-this is-active navbar-item">Profile</div>
@@ -85,7 +85,7 @@ class LeftSideBar extends Component {
                     <img className="img-circle" src={this.props.profile.picture} alt="Placeholder"/>
                     <div className="sideBarTableRow">
                         <div className="sideBarTableRowImg">
-                            <i class="fa fa-user-circle-o"></i>
+                            <i className="fa fa-user-circle-o"></i>
                         </div>
                         <div className="sideBarTableRowLink">
                             <Link
@@ -101,7 +101,7 @@ class LeftSideBar extends Component {
                 <div className="sideBarButtons">
                     <hr/>
                     <div className="sideBarTableRowTagImg">
-                        <i class="fa fa-file-text "></i>
+                        <i className="fa fa-file-text "></i>
                     </div>
                     <div className="sideBarTableRowTagHeader">
                         <div className="centre-this is-active navbar-item">Notes</div>
@@ -109,7 +109,7 @@ class LeftSideBar extends Component {
                     <hr/>
                     <div className="sideBarTableRow">
                         <div className="sideBarTableRowImg">
-                            <i class="fa fa-globe "></i>
+                            <i className="fa fa-globe "></i>
                         </div>
                         <div className="sideBarTableRowLink">
                             <Link
@@ -124,7 +124,7 @@ class LeftSideBar extends Component {
                     </div>
                     <div className="sideBarTableRow">
                         <div className="sideBarTableRowImg">
-                            <i class="fa fa-user-secret"></i>
+                            <i className="fa fa-user-secret"></i>
                         </div>
                         <div className="sideBarTableRowLink">
                             <Link
@@ -140,7 +140,7 @@ class LeftSideBar extends Component {
                     </div>
                     <div className="sideBarTableRow">
                         <div className="sideBarTableRowImg">
-                            <i class="fa fa-share-alt"></i>
+                            <i className="fa fa-share-alt"></i>
                         </div>
                         <div className="sideBarTableRowLink">
                             <Link
@@ -159,7 +159,7 @@ class LeftSideBar extends Component {
                     <hr/>
                     <div>
                         <div className="sideBarTableRowTagImg">
-                            <i class="fa fa-tags "></i>
+                            <i className="fa fa-tags "></i>
                         </div>
                         <div className="sideBarTableRowTagHeader">
                             <div className="centre-this is-active navbar-item">Tags</div>

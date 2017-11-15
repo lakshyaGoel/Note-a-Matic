@@ -45,7 +45,7 @@ class AllNote extends Component {
         return (
             <div>
                 <div>
-                    <p className="centre-this title" style={{"padding-bottom":"1rem"}}>All Notes</p>
+                    <p className="centre-this title" style={{"paddingBottom":"1rem"}}>All Notes</p>
                 </div>
 
                 <div className="columns is-multiline">
